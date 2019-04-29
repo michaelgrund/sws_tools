@@ -11,7 +11,8 @@ Content of the directories:
 Generate stereoplots of splitting results based on output of SplitLab and StackSplit.
 
 - color-code bars of splits with respect to backazimuth (see below for supported colormaps)
-- shade full background or specific wedges
+- shade full background or specific backazimuthal wedges
+- produce publication-ready plots in different formats (pdf, png, jpg...)
 
 Supported colormaps 
   1) standard MATLAB colormaps: parula, winter, summer, copper....

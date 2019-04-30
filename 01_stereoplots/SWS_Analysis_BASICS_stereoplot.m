@@ -92,14 +92,14 @@ linewcirc=2.5;
 splitcol=[.3 .3 .3];
 stackcol=[0 0.4470 0.7410];
 nullcol=[0.8500 0.3250 0.0980];
-
+  
 % Crameri, F. (2018). Scientific colour-maps. Zenodo. http://doi.org/10.5281/zenodo.1243862
-cramericmap={'devon.mat','lajolla.mat','bamako.mat','davos.mat',...
-        'bilbao.mat','nuuk.mat','oslo.mat','grayC.mat',...
-        'hawaii.mat','lapaz.mat','tokyo.mat','buda.mat',...
-        'acton.mat','turku.mat','imola.mat','broc.mat',...
-        'cork.mat','vik.mat','lisbon.mat','tofino.mat',...
-        'berlin.mat','batlow.mat','roma.mat','oleron.mat'};
+cramericmap={'devon','lajolla','bamako','davos',...
+        'bilbao','nuuk','oslo','grayC',...
+        'hawaii','lapaz','tokyo','buda',...
+        'acton','turku','imola','broc',...
+        'cork','vik','lisbon','tofino',...
+        'berlin','batlow','roma','oleron'};    
 
 % MatPlotLib 2.0 Colormaps: Perceptually Uniform and Beautiful  
 mplcmap={'viridis','magma','inferno','plasma'};
@@ -118,34 +118,60 @@ if ~exist('colmap','var')
 elseif strcmp('none',colmap)
     fast_col=0;
 else
-
     fast_col=1;
+    % check MATLAB version
+    vers=SWS_Analysis_BASICS_check_matlab_version;
+
     % check for Scientific colour-maps of F. Crameri on your system
-    checkcmaps=strfind(cramericmap,colmap);
-    idx=find(not(cellfun('isempty',checkcmaps)), 1);
-
+    if vers==1 %2016b or higher
+        idxpre=contains(cramericmap,colmap);
+        idx=sum(double(strcmp(cramericmap(idxpre),colmap))); 
+    else
+        checkcmaps=strfind(cramericmap,colmap);
+        idx=find(not(cellfun('isempty',checkcmaps)));   
+        if isempty(idx) || length(idx) >1 || (length(idx) == 1 && ~strcmp({colmap},cramericmap(1)))
+           idx=0;
+        else
+           idx=1;
+        end
+    end
+    
     % check for matplotlib colormaps on your system
-    checkcmaps2=strfind(mplcmap,colmap);
-    idx2=find(not(cellfun('isempty',checkcmaps2)), 1);
-
-    if ~isempty(idx)
-        loadmap=load([colmap '.mat']);
-        getfname=fieldnames(loadmap);
-        usecmap=loadmap.(getfname{1});
+    if vers==1 %2016b or higher
+        idxpre2=contains(mplcmap,colmap);
+        idx2=sum(double(strcmp(mplcmap(idxpre2),colmap))); 
+    else
+        checkcmaps2=strfind(mplcmap,colmap);
+        idx2=find(not(cellfun('isempty',checkcmaps2)));   
+        if isempty(idx2) || length(idx2) >1 || (length(idx2) == 1 && ~strcmp({colmap},mplcmap(1)))
+           idx2=0;
+        else
+           idx2=1;
+        end
     end
-
-    if ~isempty(idx2)
-        usecmap=colormap([colmap '(181)']);
-    end
-
-    if isempty(idx) && isempty(idx2)
-        if exist(colmap,'file') % check for other cmaps implemented in MATLAB (see MATLAB help: colormap) 
+    
+    % search for input cmap
+    if idx==1 && ~isempty(which([colmap '.mat']))
+            loadmap=load([colmap '.mat']);
+            getfname=fieldnames(loadmap);
+            usecmap=loadmap.(getfname{1});        
+    elseif idx==1 && isempty(which([colmap '.mat']))
+            warning('Scientific colour-maps by F. Crameri not found! Check your MATLAB search path!')
+            return
+    elseif  idx2==1 && ~isempty(which(colmap))
+            usecmap=colormap([colmap '(181)']); 
+    elseif  idx2==1 && isempty(which(colmap))
+            warning('MatPlotLib 2.0 Colormaps not found! Check your MATLAB search path!')
+            return
+    elseif  idx==0 && idx2==0 % check for other cmaps implemented in MATLAB (see MATLAB help: colormap) 
+        if exist(colmap,'file') 
             usecmap=colormap([colmap '(181)']);
         else
             error('Colormap not available!')
         end
     end
 end
+
 %===============================================================================
 % read stacking results if available and make query
 
@@ -229,7 +255,6 @@ lim = [-inf m+5];
 
 axesm ('stereo', 'Frame', 'on', 'Grid', 'on' ,'Origin',[90 0],...
     'MlineLocation', 90, 'PlineLocation', 5, 'fLatLimit',lim, 'fLineWidth',1, 'GLinestyle','-', 'GLinewidth',0.4, 'Gcolor','k');
-
 
 %===============================================================================
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -322,7 +347,7 @@ else
 
     bazi = [bazi(NNull)  bazi(NNull)]';
     inc  = [inc(NNull)   inc(NNull)]';
-    
+
     len  = [-len(NNull)  len(NNull)]';
     azim = (bazi-[azim(NNull) azim(NNull)]');   
 
@@ -438,7 +463,7 @@ colormap(usecmap);
    set(zlab,'fontsize',10);
 
    caxis([-90 90])
-   set(cb,'xtick',[-90:30:90]);
+   set(cb,'xtick',-90:30:90);
    set(cb,'fontsize',10)
    
 %    axpos = get(gca,'position');
@@ -486,7 +511,7 @@ else
    set(zlab,'fontsize',10);
 
    caxis([-90 90])
-   set(cb,'xtick',[-90:30:90]);
+   set(cb,'xtick',-90:30:90);
    set(cb,'fontsize',10)
    
 %    axpos = get(gca,'position');

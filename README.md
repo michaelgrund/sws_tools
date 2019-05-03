@@ -27,3 +27,11 @@ Run function `SWS_Analysis_BASICS_stereoplots` in the MATLAB command window to g
 
 
 ![PLOT_res_ALL](https://user-images.githubusercontent.com/23025878/56903070-dfe03a00-6a9b-11e9-9cc0-606d9c2a4173.png)
+
+## 02_data_handling
+
+Read and visualize the shear wave splitting data available from: https://doi.org/10.5445/IR/1000091427
+
+- generate stereoplots
+- generate histogram
+- generate output structs separated in split and null measurements

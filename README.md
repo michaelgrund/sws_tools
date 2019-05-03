@@ -35,3 +35,5 @@ Read and visualize the shear wave splitting data available from: https://doi.org
 - generate stereoplots
 - generate histogram
 - generate output structs separated in split and null measurements
+
+![PLOTS_merged](https://user-images.githubusercontent.com/23025878/57140316-c864c200-6db7-11e9-933b-b96c452f8349.png)

@@ -7,7 +7,7 @@ If you make use of the content in this repository please acknowledge my PhD thes
 
 Content of the directories:
 
-[01_stereoplots](## https://github.com/michaelgrund/SWStools/tree/master/01_stereoplots)
+[01_stereoplots](https://github.com/michaelgrund/SWStools/tree/master/01_stereoplots)
 Generate stereoplots of splitting results based on output of **SplitLab** and **StackSplit**.
 
 - color-code bars of splits with respect to backazimuth (see below for supported colormaps)

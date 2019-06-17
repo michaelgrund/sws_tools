@@ -7,7 +7,7 @@ If you make use of the content in this repository please acknowledge my PhD thes
 
 Content of the directories:
 
-[01_stereoplots](https://github.com/michaelgrund/SWStools/tree/master/01_stereoplots)
+## [01_stereoplots](https://github.com/michaelgrund/SWStools/tree/master/01_stereoplots)
 Generate stereoplots of splitting results based on output of **SplitLab** and **StackSplit**.
 
 - color-code bars of splits with respect to backazimuth (see below for supported colormaps)
@@ -28,7 +28,7 @@ Run function `SWS_Analysis_BASICS_stereoplots` in the MATLAB command window to g
 
 ![PLOT_res_ALL](https://user-images.githubusercontent.com/23025878/56903070-dfe03a00-6a9b-11e9-9cc0-606d9c2a4173.png)
 
-##[02_data_handling](https://github.com/michaelgrund/SWStools/tree/master/02_data_handling)
+## [02_data_handling](https://github.com/michaelgrund/SWStools/tree/master/02_data_handling)
 
 Read and visualize the shear wave splitting data available from: https://doi.org/10.5445/IR/1000091427
 

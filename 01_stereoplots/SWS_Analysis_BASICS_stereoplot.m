@@ -129,7 +129,7 @@ else
     else
         checkcmaps=strfind(cramericmap,colmap);
         idx=find(not(cellfun('isempty',checkcmaps)));   
-        if isempty(idx) || length(idx) >1 || (length(idx) == 1 && ~strcmp({colmap},cramericmap(1)))
+        if isempty(idx) || length(idx) >1 || (length(idx) == 1 && ~strcmp({colmap},cramericmap(idx)))
            idx=0;
         else
            idx=1;
@@ -143,7 +143,7 @@ else
     else
         checkcmaps2=strfind(mplcmap,colmap);
         idx2=find(not(cellfun('isempty',checkcmaps2)));   
-        if isempty(idx2) || length(idx2) >1 || (length(idx2) == 1 && ~strcmp({colmap},mplcmap(1)))
+        if isempty(idx2) || length(idx2) >1 || (length(idx2) == 1 && ~strcmp({colmap},mplcmap(idx2)))
            idx2=0;
         else
            idx2=1;
@@ -171,6 +171,8 @@ else
         end
     end
 end
+
+close all
 
 %===============================================================================
 % read stacking results if available and make query

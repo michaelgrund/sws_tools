@@ -7,9 +7,38 @@ function [RES_split, RES_nulls]=SWS_Analysis_BASICS_read_SLresults(varargin)
 % Main author: Michael Grund (michael.grund@kit.edu)
 %
 % created: 2016-08-22 -MG-
+%     mod: 2019-06-17 -MG-
 %===============================================================================
 
-%clear all
+%===========================================================================================================
+% CHECK SplitLab version
+
+% search for original SL folder
+curr_dir=pwd;
+
+[folderSL, name, ext]=fileparts(which('install_SplitLab.m'));
+
+% check if RP version is available
+[folderSLRP, name, ext]=fileparts(which('SL_swap_QT_components.m'));
+
+if ~isempty(folderSL) && isempty(folderSLRP)
+    cd(folderSL)
+    SL_version=1;
+    disp(' ')
+    disp('SplitLab version 1.0.5 was found on your system!')
+elseif ~isempty(folderSL) && ~isempty(folderSLRP) && strcmp(folderSL,folderSLRP)
+    cd(folderSL)
+    SL_version=2;
+    disp(' ')
+    disp('SplitLab version 1.2.1 (by Rob Porritt) was found on your system!')
+else
+    errordlg('No SplitLab version found!')
+    return
+end
+
+cd(curr_dir)
+disp(' ')
+%===========================================================================================================
 
 if isempty(varargin)
 
@@ -55,7 +84,7 @@ if isempty(dir_res_split)
    RES_split=[];
 else
    scaling_factor=1; % DEFAULT 1, adjust length of delay time vector if needed
-   RES_split=read_results(dir_res_split,select_qual,scaling_factor);
+   RES_split=read_results(dir_res_split,select_qual,scaling_factor,SL_version);
 end
 
 if isempty(dir_res_nulls)
@@ -63,7 +92,7 @@ if isempty(dir_res_nulls)
    RES_nulls=[];
 else
    scaling_factor=1; % DEFAULT 1,  adjust length of delay time vector for nulls, in general 1 is a good choice 
-   RES_nulls=read_results(dir_res_nulls,select_qual,scaling_factor);
+   RES_nulls=read_results(dir_res_nulls,select_qual,scaling_factor,SL_version);
 end
 
 if ~isempty(RES_split)
@@ -97,16 +126,13 @@ end
 
 % subfunction 
 
-function RES_out=read_results(dir_res,select_qual,scaling_factor)
-           
-fid=fopen(dir_res.name);
-          
-% allocate fields for speed
-            
+function RES_out=read_results(dir_res,select_qual,scaling_factor,SL_version)
+        
+% allocate fields for speed       
 res_split.date_doy='NaN';     
 res_split.staname='NaN';         
-res_split.sta_lon=NaN;       % still empty          
-res_split.sta_lat=NaN;       % still empty   
+res_split.sta_lon=NaN;               
+res_split.sta_lat=NaN;         
 res_split.phase='NaN';         
 res_split.baz=NaN;            
 res_split.inc=NaN;           
@@ -124,11 +150,14 @@ res_split.dtEV=NaN;
 res_split.SNRSC=NaN;                   
 res_split.quality_manual='NaN';                
 res_split.NULL='NaN';
-        
-C = textscan(fid,'%s %s %s %f %f %s %f %f %s %f %f %f %s %f %s %f %f %s %f %s %f %f %f %f %s %s','headerlines',3);
+res_split.comm='NaN';
+
+if SL_version==1
+
+% SL original version
+fid=fopen(dir_res.name);
+C = textscan(fid,'%s %s %s %f %f %s %f %f %s %f %f %f %s %f %s %f %f %s %f %s %f %f %f %f %s %s %s','headerlines',3);
 fclose(fid);
-    
-%===========================================================================================================
 
 for k=1:length(C{1})          
     res_split(k).date_doy=C{1,1}{k,1};            
@@ -152,6 +181,42 @@ for k=1:length(C{1})
     res_split(k).SNRSC=C{1,24}(k);                 
     res_split(k).quality_manual=C{1,25}{k,1};               
     res_split(k).NULL=C{1,26}{k,1};
+    res_split(k).comm=C{1,27}{k,1};
+
+end
+
+elseif SL_version==2
+
+% SL version by Rob Porritt
+fid=fopen(dir_res.name);
+C = textscan(fid,'%s %s %s %f %f [%f %f] %f %f %f<%f <%f %f< %f <%f %f %f %s %s %s','headerlines',3);
+fclose(fid);
+
+for k=1:length(C{1})          
+    res_split(k).date_doy=C{1,1}{k,1};            
+    res_split(k).staname=C{1,2}{k,1}; 
+    res_split(k).sta_lon=NaN;       % still empty          
+    res_split(k).sta_lat=NaN;       % still empty  
+    res_split(k).phase=C{1,3}{k,1};                    
+    res_split(k).baz=C{1,4}(k);               
+    res_split(k).inc=C{1,5}(k); 
+    res_split(k).filter=[C{1,6}(k) C{1,7}(k)]; 
+    res_split(k).phiRC=C{1,8}(k);                    
+    res_split(k).dtRC=C{1,9}(k); 
+    res_split(k).phiSC_err_min=C{1,10}(k);   
+    res_split(k).phiSC=C{1,11}(k);  
+    res_split(k).phiSC_err_max=C{1,12}(k);  
+    res_split(k).dtSC_err_min=C{1,13}(k);
+    res_split(k).dtSC=C{1,14}(k)/scaling_factor; 
+    res_split(k).dtSC_err_max=C{1,15}(k);
+    res_split(k).phiEV=C{1,16}(k);                   
+    res_split(k).dtEV=C{1,17}(k);                 
+    res_split(k).SNRSC=[];                 
+    res_split(k).quality_manual=C{1,18}{k,1};               
+    res_split(k).NULL=C{1,19}{k,1};
+    res_split(k).comm=C{1,20}{k,1};
+    
+end
 
 end
 

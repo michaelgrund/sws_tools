@@ -1,7 +1,7 @@
 function [SPLITS,NULLS]=SWS_read_evstruct(varargin)
 %
 % This function reads structs with data of the full data set published by
-% Grund & Ritter (2019). Functionality with other data sets is not
+% Grund & Ritter (2020). Functionality with other data sets is not
 % guranteed. For the required mat-file structure see the data available
 % from KITopenData via: 
 %
@@ -9,10 +9,13 @@ function [SPLITS,NULLS]=SWS_read_evstruct(varargin)
 %
 % How to use:
 %
-% 1) switch to directory that contains the content of the downloaded
+% 1) add the directory < 02_data_handling > to the matlab path using
+%    addpath('.../SWStools/02_data_handling') or the Set Path dialog box
+%
+% 2) switch to directory that contains the content of the downloaded
 %    and uzipped splitting data set: <<< mgrund_diss_2019_ELAPP >>>
 %
-% 2) run this m-file in the command window to generate different outputs
+% 3) run this m-file in the command window to generate different outputs
 %    (depending on your choice): 
 %
 %    (a) [SPLITS,NULLS]=SWS_read_evstruct => gives only the full structs 
@@ -41,7 +44,7 @@ if length(dirfold) > 1
    warning('More than one folder in current directory!')   
 end
 
-if ~isempty(dirfold) && isdir(dirfold.name)
+if ~isempty(dirfold) && isfolder(dirfold.name)
     cd(dirfold.name)
 end
 
@@ -152,7 +155,7 @@ function func_makeplot(NULLS,SPLITS,savedir)
 
 % Type in station name
 disp(' ')
-findname=input('Make stereoplot. Please insert station name in string format (e.g. ''PVF''):');
+findname=input('Make stereoplot. Please insert station name (e.g. PVF):','s');
 
 indxNULL= strcmp({NULLS.staname},findname);
 indxSP= strcmp({SPLITS.staname},findname);

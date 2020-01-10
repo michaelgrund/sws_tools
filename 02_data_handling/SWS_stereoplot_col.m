@@ -265,9 +265,14 @@ end
 print ('-dpdf', '-painters','-r600', [savedir '/' filename '.pdf']) 
  
 print ('-depsc', '-painters','-r600', [savedir '/' filename '_cut.eps']) 
-dir_eps_file=dir([savedir '/' filename '_cut.eps']);
-[status,cmdout]=system(['epstopdf ' savedir '/' dir_eps_file.name]);
 
+% epstopdf installed?
+[status,cmdout]=system('which epstopdf');
+
+if status == 0
+    dir_eps_file=dir([savedir '/' filename '_cut.eps']);
+    [status,cmdout]=system(['epstopdf ' savedir '/' dir_eps_file.name]);
+end
 
 end
 

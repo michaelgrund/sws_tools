@@ -118,8 +118,14 @@ filename='PLOT_RESULTS_histo';
 print ('-dpdf', '-painters','-r600', [filename '.pdf']) 
  
 print ('-depsc', '-painters','-r600', [filename '_cut.eps']) 
-dir_eps_file=dir([filename '_cut.eps']);
-[status,cmdout]=system(['epstopdf ' dir_eps_file.name]);
+
+% epstopdf installed?
+[status,cmdout]=system('which epstopdf');
+
+if status == 0
+    dir_eps_file=dir([filename '_cut.eps']);
+    [status,cmdout]=system(['epstopdf ' dir_eps_file.name]);
+end
 
 
 end

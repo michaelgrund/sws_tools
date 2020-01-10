@@ -8,35 +8,33 @@ function [RES_split, RES_nulls]=SWS_Analysis_BASICS_read_SLresults(varargin)
 %
 % created: 2016-08-22 -MG-
 %     mod: 2019-06-17 -MG-
+%     mod: 2020-01-10 -MG- adjusted some content to work with more recent matlab versions
 %===============================================================================
 
 %===========================================================================================================
 % CHECK SplitLab version
 
 % search for original SL folder
-curr_dir=pwd;
-
 [folderSL, name, ext]=fileparts(which('install_SplitLab.m'));
 
 % check if RP version is available
 [folderSLRP, name, ext]=fileparts(which('SL_swap_QT_components.m'));
 
 if ~isempty(folderSL) && isempty(folderSLRP)
-    cd(folderSL)
     SL_version=1;
     disp(' ')
     disp('SplitLab version 1.0.5 was found on your system!')
 elseif ~isempty(folderSL) && ~isempty(folderSLRP) && strcmp(folderSL,folderSLRP)
-    cd(folderSL)
     SL_version=2;
     disp(' ')
     disp('SplitLab version 1.2.1 (by Rob Porritt) was found on your system!')
 else
-    errordlg('No SplitLab version found!')
-    return
+    % if no SplitLab version was found on the system try to run both formats after each other 
+    SL_version=0;
+    disp(' ')
+    disp('No SplitLab version was found on your system! Try different input formats...')
 end
 
-cd(curr_dir)
 disp(' ')
 %===========================================================================================================
 
@@ -159,31 +157,56 @@ fid=fopen(dir_res.name);
 C = textscan(fid,'%s %s %s %f %f %s %f %f %s %f %f %f %s %f %s %f %f %s %f %s %f %f %f %f %s %s %s','headerlines',3);
 fclose(fid);
 
-for k=1:length(C{1})          
-    res_split(k).date_doy=C{1,1}{k,1};            
-    res_split(k).staname=C{1,2}{k,1}; 
-    res_split(k).sta_lon=NaN;       % still empty          
-    res_split(k).sta_lat=NaN;       % still empty  
-    res_split(k).phase=C{1,3}{k,1};                    
-    res_split(k).baz=C{1,4}(k);               
-    res_split(k).inc=C{1,5}(k);                  
-    res_split(k).filter=[C{1,7}(k) C{1,8}(k)];                    
-    res_split(k).phiRC=C{1,10}(k);                    
-    res_split(k).dtRC=C{1,11}(k);                    
-    res_split(k).phiSC_err_min=C{1,12}(k);                    
-    res_split(k).phiSC=C{1,14}(k);                    
-    res_split(k).phiSC_err_max=C{1,16}(k);                    
-    res_split(k).dtSC_err_min=C{1,17}(k);                    
-    res_split(k).dtSC=C{1,19}(k)/scaling_factor;                   
-    res_split(k).dtSC_err_max=C{1,21}(k);                   
-    res_split(k).phiEV=C{1,22}(k);                   
-    res_split(k).dtEV=C{1,23}(k);                 
-    res_split(k).SNRSC=C{1,24}(k);                 
-    res_split(k).quality_manual=C{1,25}{k,1};               
-    res_split(k).NULL=C{1,26}{k,1};
-    res_split(k).comm=C{1,27}{k,1};
+    for k=1:length(C{1})   
 
-end
+        res_split(k).date_doy=C{1,1}{k,1};            
+        res_split(k).staname=C{1,2}{k,1}; 
+        res_split(k).sta_lon=NaN;       % still empty          
+        res_split(k).sta_lat=NaN;       % still empty  
+        res_split(k).phase=C{1,3}{k,1};                    
+        res_split(k).baz=C{1,4}(k);               
+        res_split(k).inc=C{1,5}(k);                  
+        res_split(k).filter=[C{1,7}(k) C{1,8}(k)];                    
+        res_split(k).phiRC=C{1,10}(k);                    
+        res_split(k).dtRC=C{1,11}(k);                    
+        res_split(k).phiSC_err_min=C{1,12}(k);                    
+        res_split(k).phiSC=C{1,14}(k);                    
+        res_split(k).phiSC_err_max=C{1,16}(k);                    
+        res_split(k).dtSC_err_min=C{1,17}(k);                    
+        res_split(k).dtSC=C{1,19}(k)/scaling_factor;                   
+        res_split(k).dtSC_err_max=C{1,21}(k);                   
+        res_split(k).phiEV=C{1,22}(k);                   
+        res_split(k).dtEV=C{1,23}(k);                 
+        res_split(k).SNRSC=C{1,24}(k);                 
+        res_split(k).quality_manual=C{1,25}{k,1};               
+        res_split(k).NULL=C{1,26}{k,1};
+        res_split(k).comm=C{1,27}{k,1};
+    end
+    
+    % sort quality
+
+    sel_ev=[];
+
+    if select_qual==0 % all
+        sel_ev=res_split;
+    elseif select_qual==1 % good
+        find_ev=strcmp({res_split.quality_manual},'good');
+        sel_ev=res_split(find_ev);
+    elseif select_qual==2 % good & fair
+        find_ev=strcmp({res_split.quality_manual},'good') | strcmp({res_split.quality_manual},'fair');
+        sel_ev=res_split(find_ev);
+    elseif select_qual==3 % fair & poor
+        find_ev=strcmp({res_split.quality_manual},'fair') | strcmp({res_split.quality_manual},'poor');
+        sel_ev=res_split(find_ev); 
+    elseif select_qual==4 % fair
+        find_ev=strcmp({res_split.quality_manual},'fair');
+        sel_ev=res_split(find_ev);  
+    elseif select_qual==5 % poor
+        find_ev=strcmp({res_split.quality_manual},'poor');
+        sel_ev=res_split(find_ev);    
+    end
+
+    RES_out=sel_ev;
 
 elseif SL_version==2
 
@@ -192,61 +215,186 @@ fid=fopen(dir_res.name);
 C = textscan(fid,'%s %s %s %f %f [%f %f] %f %f %f<%f <%f %f< %f <%f %f %f %s %s %s','headerlines',3);
 fclose(fid);
 
-for k=1:length(C{1})          
-    res_split(k).date_doy=C{1,1}{k,1};            
-    res_split(k).staname=C{1,2}{k,1}; 
-    res_split(k).sta_lon=NaN;       % still empty          
-    res_split(k).sta_lat=NaN;       % still empty  
-    res_split(k).phase=C{1,3}{k,1};                    
-    res_split(k).baz=C{1,4}(k);               
-    res_split(k).inc=C{1,5}(k); 
-    res_split(k).filter=[C{1,6}(k) C{1,7}(k)]; 
-    res_split(k).phiRC=C{1,8}(k);                    
-    res_split(k).dtRC=C{1,9}(k); 
-    res_split(k).phiSC_err_min=C{1,10}(k);   
-    res_split(k).phiSC=C{1,11}(k);  
-    res_split(k).phiSC_err_max=C{1,12}(k);  
-    res_split(k).dtSC_err_min=C{1,13}(k);
-    res_split(k).dtSC=C{1,14}(k)/scaling_factor; 
-    res_split(k).dtSC_err_max=C{1,15}(k);
-    res_split(k).phiEV=C{1,16}(k);                   
-    res_split(k).dtEV=C{1,17}(k);                 
-    res_split(k).SNRSC=[];                 
-    res_split(k).quality_manual=C{1,18}{k,1};               
-    res_split(k).NULL=C{1,19}{k,1};
-    res_split(k).comm=C{1,20}{k,1};
+    for k=1:length(C{1})          
+        res_split(k).date_doy=C{1,1}{k,1};            
+        res_split(k).staname=C{1,2}{k,1}; 
+        res_split(k).sta_lon=NaN;       % still empty          
+        res_split(k).sta_lat=NaN;       % still empty  
+        res_split(k).phase=C{1,3}{k,1};                    
+        res_split(k).baz=C{1,4}(k);               
+        res_split(k).inc=C{1,5}(k); 
+        res_split(k).filter=[C{1,6}(k) C{1,7}(k)]; 
+        res_split(k).phiRC=C{1,8}(k);                    
+        res_split(k).dtRC=C{1,9}(k); 
+        res_split(k).phiSC_err_min=C{1,10}(k);   
+        res_split(k).phiSC=C{1,11}(k);  
+        res_split(k).phiSC_err_max=C{1,12}(k);  
+        res_split(k).dtSC_err_min=C{1,13}(k);
+        res_split(k).dtSC=C{1,14}(k)/scaling_factor; 
+        res_split(k).dtSC_err_max=C{1,15}(k);
+        res_split(k).phiEV=C{1,16}(k);                   
+        res_split(k).dtEV=C{1,17}(k);                 
+        res_split(k).SNRSC=[];                 
+        res_split(k).quality_manual=C{1,18}{k,1};               
+        res_split(k).NULL=C{1,19}{k,1};
+        res_split(k).comm=C{1,20}{k,1};   
+    end
     
+    % sort quality
+
+    sel_ev=[];
+
+    if select_qual==0 % all
+        sel_ev=res_split;
+    elseif select_qual==1 % good
+        find_ev=strcmp({res_split.quality_manual},'good');
+        sel_ev=res_split(find_ev);
+    elseif select_qual==2 % good & fair
+        find_ev=strcmp({res_split.quality_manual},'good') | strcmp({res_split.quality_manual},'fair');
+        sel_ev=res_split(find_ev);
+    elseif select_qual==3 % fair & poor
+        find_ev=strcmp({res_split.quality_manual},'fair') | strcmp({res_split.quality_manual},'poor');
+        sel_ev=res_split(find_ev); 
+    elseif select_qual==4 % fair
+        find_ev=strcmp({res_split.quality_manual},'fair');
+        sel_ev=res_split(find_ev);  
+    elseif select_qual==5 % poor
+        find_ev=strcmp({res_split.quality_manual},'poor');
+        sel_ev=res_split(find_ev);    
+    end
+
+    RES_out=sel_ev;
+
+% if none of the two SL versions was found try first Rob Porrits format then
+% the original one
+else
+  try
+
+    % SL version by Rob Porritt
+    fid=fopen(dir_res.name);
+    C = textscan(fid,'%s %s %s %f %f [%f %f] %f %f %f<%f <%f %f< %f <%f %f %f %s %s %s','headerlines',3);
+    fclose(fid);
+
+    for k=1:length(C{1})          
+        res_split(k).date_doy=C{1,1}{k,1};            
+        res_split(k).staname=C{1,2}{k,1}; 
+        res_split(k).sta_lon=NaN;       % still empty          
+        res_split(k).sta_lat=NaN;       % still empty  
+        res_split(k).phase=C{1,3}{k,1};                    
+        res_split(k).baz=C{1,4}(k);               
+        res_split(k).inc=C{1,5}(k); 
+        res_split(k).filter=[C{1,6}(k) C{1,7}(k)]; 
+        res_split(k).phiRC=C{1,8}(k);                    
+        res_split(k).dtRC=C{1,9}(k); 
+        res_split(k).phiSC_err_min=C{1,10}(k);   
+        res_split(k).phiSC=C{1,11}(k);  
+        res_split(k).phiSC_err_max=C{1,12}(k);  
+        res_split(k).dtSC_err_min=C{1,13}(k);
+        res_split(k).dtSC=C{1,14}(k)/scaling_factor; 
+        res_split(k).dtSC_err_max=C{1,15}(k);
+        res_split(k).phiEV=C{1,16}(k);                   
+        res_split(k).dtEV=C{1,17}(k);                 
+        res_split(k).SNRSC=[];                 
+        res_split(k).quality_manual=C{1,18}{k,1};               
+        res_split(k).NULL=C{1,19}{k,1};
+        res_split(k).comm=C{1,20}{k,1};   
+    end
+    
+    % sort quality
+
+    sel_ev=[];
+
+    if select_qual==0 % all
+        sel_ev=res_split;
+    elseif select_qual==1 % good
+        find_ev=strcmp({res_split.quality_manual},'good');
+        sel_ev=res_split(find_ev);
+    elseif select_qual==2 % good & fair
+        find_ev=strcmp({res_split.quality_manual},'good') | strcmp({res_split.quality_manual},'fair');
+        sel_ev=res_split(find_ev);
+    elseif select_qual==3 % fair & poor
+        find_ev=strcmp({res_split.quality_manual},'fair') | strcmp({res_split.quality_manual},'poor');
+        sel_ev=res_split(find_ev); 
+    elseif select_qual==4 % fair
+        find_ev=strcmp({res_split.quality_manual},'fair');
+        sel_ev=res_split(find_ev);  
+    elseif select_qual==5 % poor
+        find_ev=strcmp({res_split.quality_manual},'poor');
+        sel_ev=res_split(find_ev);    
+    end
+
+    if isempty(sel_ev)
+        error(' ')
+    end
+
+%     disp(' ')
+%     disp('Format of Rob Porrit''s SL version works!')
+    RES_out=sel_ev;
+                
+  catch % original SL format
+      
+       fid=fopen(dir_res.name);
+       C = textscan(fid,'%s %s %s %f %f %s %f %f %s %f %f %f %s %f %s %f %f %s %f %s %f %f %f %f %s %s %s','headerlines',3);
+       fclose(fid);
+
+       for k=1:length(C{1})   
+            res_split(k).date_doy=C{1,1}{k,1};            
+            res_split(k).staname=C{1,2}{k,1}; 
+            res_split(k).sta_lon=NaN;       % still empty          
+            res_split(k).sta_lat=NaN;       % still empty  
+            res_split(k).phase=C{1,3}{k,1};                    
+            res_split(k).baz=C{1,4}(k);               
+            res_split(k).inc=C{1,5}(k);                  
+            res_split(k).filter=[C{1,7}(k) C{1,8}(k)];                    
+            res_split(k).phiRC=C{1,10}(k);                    
+            res_split(k).dtRC=C{1,11}(k);                    
+            res_split(k).phiSC_err_min=C{1,12}(k);                    
+            res_split(k).phiSC=C{1,14}(k);                    
+            res_split(k).phiSC_err_max=C{1,16}(k);                    
+            res_split(k).dtSC_err_min=C{1,17}(k);                    
+            res_split(k).dtSC=C{1,19}(k)/scaling_factor;                   
+            res_split(k).dtSC_err_max=C{1,21}(k);                   
+            res_split(k).phiEV=C{1,22}(k);                   
+            res_split(k).dtEV=C{1,23}(k);                 
+            res_split(k).SNRSC=C{1,24}(k);                 
+            res_split(k).quality_manual=C{1,25}{k,1};               
+            res_split(k).NULL=C{1,26}{k,1};
+            res_split(k).comm=C{1,27}{k,1};
+       end
+      
+    % sort quality
+
+    sel_ev=[];
+
+    if select_qual==0 % all
+        sel_ev=res_split;
+    elseif select_qual==1 % good
+        find_ev=strcmp({res_split.quality_manual},'good');
+        sel_ev=res_split(find_ev);
+    elseif select_qual==2 % good & fair
+        find_ev=strcmp({res_split.quality_manual},'good') | strcmp({res_split.quality_manual},'fair');
+        sel_ev=res_split(find_ev);
+    elseif select_qual==3 % fair & poor
+        find_ev=strcmp({res_split.quality_manual},'fair') | strcmp({res_split.quality_manual},'poor');
+        sel_ev=res_split(find_ev); 
+    elseif select_qual==4 % fair
+        find_ev=strcmp({res_split.quality_manual},'fair');
+        sel_ev=res_split(find_ev);  
+    elseif select_qual==5 % poor
+        find_ev=strcmp({res_split.quality_manual},'poor');
+        sel_ev=res_split(find_ev);    
+    end
+
+%     disp(' ')
+%     disp('Format of the original SL version works!')
+    RES_out=sel_ev;
+
+  end
+
 end
+
 
 end
 
 %===========================================================================================================
-% sort quality
-
-sel_ev=[];
-
-if select_qual==0 % all
-   sel_ev=res_split;
-elseif select_qual==1 % good
-   find_ev=strcmp({res_split.quality_manual},'good');
-   sel_ev=res_split(find_ev);
-elseif select_qual==2 % good & fair
-   find_ev=strcmp({res_split.quality_manual},'good') | strcmp({res_split.quality_manual},'fair');
-   sel_ev=res_split(find_ev);
-elseif select_qual==3 % fair & poor
-   find_ev=strcmp({res_split.quality_manual},'fair') | strcmp({res_split.quality_manual},'poor');
-   sel_ev=res_split(find_ev); 
-elseif select_qual==4 % fair
-   find_ev=strcmp({res_split.quality_manual},'fair');
-   sel_ev=res_split(find_ev);  
-elseif select_qual==5 % poor
-   find_ev=strcmp({res_split.quality_manual},'poor');
-   sel_ev=res_split(find_ev);    
-end
-
-RES_out=sel_ev;
-
-end
-
 %===========================================================================================================
-%===========================================================

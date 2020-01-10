@@ -7,6 +7,7 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 % Main author: Michael Grund (michael.grund@kit.edu)
 %
 % created: 2018-06-11 -MG-
+%     mod: 2020-01-10 -MG- adjusted some content to work with more recent matlab versions
 %===============================================================================
 % How to:
 %
@@ -59,6 +60,14 @@ clc
 
 % CHANGEABLE SETTINGS 
 %XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+% fontsize of all annotations, adjust for your needs
+fontsize_all = 26;
+
+% plot settings, adjust for your needs
+linew=8;  % linewidth of bars
+marks=20; % size of null circles
+linewcirc=3.5; % linewidth of null circle edges
+
 % plot background (or not considered sector) in 
 % specific color or white (function <<< plot_arc3D >>> required)
 % default is white between 0 and 360 degrees
@@ -74,7 +83,7 @@ upplim=360;   % adjust for your needs
 %        lowlim=0;     
 %        upplim=0.001;   
 %        colfill=[220,220,220]./256;
-
+    
 % color of radial annotation
 annotcol='k';
 %XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -82,11 +91,6 @@ annotcol='k';
 % output settings
 outform='pdf'; % file format: pdf (default), png, jpg...
 outres='600'; % resolution in dpi: 600 (default), 300, 100...
-
-% plot settings
-linew=4;
-marks=9;
-linewcirc=2.5;
 
 % no phi color-coding
 splitcol=[.3 .3 .3];
@@ -439,7 +443,7 @@ if fast_col==1
 
 hold on
 col_leg='k';
-fontsize_leg=12;
+fontsize_leg=fontsize_all;
 
 startval=0.25;
 plot([startval startval],[.18 .18],'o','linewidth',linewcirc,'markersize',marks,'color',col_leg)
@@ -462,11 +466,11 @@ colormap(usecmap);
    cb = colorbar('location','north');
    zlab = get(cb,'xlabel');
    set(zlab,'String','\phi in \circ');
-   set(zlab,'fontsize',10);
+   set(zlab,'fontsize',fontsize_all);
 
    caxis([-90 90])
    set(cb,'xtick',-90:30:90);
-   set(cb,'fontsize',10)
+   set(cb,'fontsize',fontsize_all)
    
 %    axpos = get(gca,'position');
 %    cbpos=get(cb,'position');
@@ -493,7 +497,7 @@ else
    % plot legend and colorbar also for NULL-stations
    hold on
    col_leg='k';
-   fontsize_leg=12;
+   fontsize_leg=fontsize_all;
 
    startval=0.25;
    plot([startval startval],[.18 .18],'o','linewidth',linewcirc,'markersize',marks,'color',col_leg)
@@ -537,11 +541,11 @@ end
 axis tight
 axis off
 L = min(abs(axis));
-text(0 , -L-0.005, 'N','HorizontalAlignment','Center','VerticalAlignment','Base','fontsize',20);
-text(L+0.005, 0,   'E','HorizontalAlignment','Left','verticalAlignment','middle','fontsize',20);
+text(0 , -L-0.005, 'N','HorizontalAlignment','Center','VerticalAlignment','Base','fontsize',fontsize_all+8);
+text(L+0.005, 0,   'E','HorizontalAlignment','Left','verticalAlignment','middle','fontsize',fontsize_all+8);
 
 view([0 -90])
-text(-0.2, -L-0.005, staname,'HorizontalAlignment','Center','VerticalAlignment','Base','fontsize',20,'backgroundcolor','w','edgecolor','k');
+text(-0.2, -L-0.005, staname,'HorizontalAlignment','Center','VerticalAlignment','Base','fontsize',fontsize_all+8,'backgroundcolor','w','edgecolor','k');
 
 %====================================================================
 % annotate radial axis?
@@ -552,27 +556,27 @@ if isempty(plotannot) % default
 end
 
 if plotannot==1
-   text(0.047,-0.047,'5\circ','fontsize',12,'color',annotcol) 
-   text(0.105,-0.105,'10\circ','fontsize',12,'color',annotcol) 
-   text(0.168,-0.168,'15\circ','fontsize',12,'color',annotcol)
+   text(0.047,-0.047,'5\circ','fontsize',fontsize_all,'color',annotcol) 
+   text(0.105,-0.105,'10\circ','fontsize',fontsize_all,'color',annotcol) 
+   text(0.168,-0.168,'15\circ','fontsize',fontsize_all,'color',annotcol)
 end
 
 if plotannot==2
-   text(0.047,0.047,'5\circ','fontsize',12,'color',annotcol) 
-   text(0.105,0.105,'10\circ','fontsize',12,'color',annotcol) 
-   text(0.168,0.168,'15\circ','fontsize',12,'color',annotcol)
+   text(0.047,0.047,'5\circ','fontsize',fontsize_all,'color',annotcol) 
+   text(0.105,0.105,'10\circ','fontsize',fontsize_all,'color',annotcol) 
+   text(0.168,0.168,'15\circ','fontsize',fontsize_all,'color',annotcol)
 end
 
 if plotannot==3
-   text(-0.055,0.055,'5\circ','fontsize',12,'color',annotcol) 
-   text(-0.117,0.117,'10\circ','fontsize',12,'color',annotcol) 
-   text(-0.18,0.18,'15\circ','fontsize',12,'color',annotcol)
+   text(-0.055,0.055,'5\circ','fontsize',fontsize_all,'color',annotcol) 
+   text(-0.117,0.117,'10\circ','fontsize',fontsize_all,'color',annotcol) 
+   text(-0.18,0.18,'15\circ','fontsize',fontsize_all,'color',annotcol)
 end
 
 if plotannot==4
-   text(-0.055,-0.055,'5\circ','fontsize',12,'color',annotcol) 
-   text(-0.117,-0.117,'10\circ','fontsize',12,'color',annotcol) 
-   text(-0.18,-0.18,'15\circ','fontsize',12,'color',annotcol)
+   text(-0.055,-0.055,'5\circ','fontsize',fontsize_all,'color',annotcol) 
+   text(-0.117,-0.117,'10\circ','fontsize',fontsize_all,'color',annotcol) 
+   text(-0.18,-0.18,'15\circ','fontsize',fontsize_all,'color',annotcol)
 end
 
 %===============================================================================

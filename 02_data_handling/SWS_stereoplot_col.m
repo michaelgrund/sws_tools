@@ -8,7 +8,7 @@ function SWS_stereoplot_col(fast_col,RES_split,RES_nulls,savedir)
 % fast axis using the SC method.
 %
 % The function is primarly modified to read the full data set published by
-% Grund & Ritter (2019). Functionality with other data sets is not
+% Grund & Ritter (2020). Functionality with other data sets is not
 % guranteed. For the required mat-file structure see the data available
 % from: 
 %

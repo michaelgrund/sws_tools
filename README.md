@@ -1,4 +1,4 @@
-# SWStools
+# sws_tools
 MATLAB tools for analyzing and plotting of shear wave splitting data
 
 If you make use of the content in this repository please acknowledge my PhD thesis in whose framework several of the scripts and functions were developed:

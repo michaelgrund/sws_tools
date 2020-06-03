@@ -8,6 +8,7 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 %
 % created: 2018-06-11 -MG-
 %     mod: 2020-01-10 -MG- adjusted some content to work with more recent matlab versions
+%     mod: 2020-06-03 -MG- added query for sector plotting
 %===============================================================================
 % How to:
 %
@@ -67,26 +68,8 @@ fontsize_all = 26;
 linew=8;  % linewidth of bars
 marks=20; % size of null circles
 linewcirc=3.5; % linewidth of null circle edges
-
-% plot background (or not considered sector) in 
-% specific color or white (function <<< plot_arc3D >>> required)
-% default is white between 0 and 360 degrees
-lowlim=0;     % adjust for your needs
-upplim=360;   % adjust for your needs 
-
-% Examples: 
-% 1) only show sector between 20 and 120 degrees in white, rest is gray
-%        lowlim=20;     
-%        upplim=120;   
-%        colfill=[190,190,190]./256;
-% 2) shade full background in lighter gray
-%        lowlim=0;     
-%        upplim=0.001;   
-%        colfill=[220,220,220]./256;
-    
-% color of radial annotation
-annotcol='k';
-%XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+colfill=[190,190,190]./256; % colorfill of sector plotting (if applied)
+annotcol='k'; % color of radial annotation
 
 % output settings
 outform='pdf'; % file format: pdf (default), png, jpg...
@@ -96,6 +79,8 @@ outres='600'; % resolution in dpi: 600 (default), 300, 100...
 splitcol=[.3 .3 .3];
 stackcol=[0 0.4470 0.7410];
 nullcol=[0.8500 0.3250 0.0980];
+
+%XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   
 % Crameri, F. (2018). Scientific colour-maps. Zenodo. http://doi.org/10.5281/zenodo.1243862
 cramericmap={'devon','lajolla','bamako','davos',...
@@ -197,6 +182,25 @@ if ~exist('plot_stacks','var')
     end
 
 end
+
+%===============================================================================
+% sector plotting (function <<< plot_arc3D >>> required)
+disp(' ')
+plotsector=input('Plot sector in range (give as vector, e.g. [0,210]). Press Enter to use defaults (no sector plotting):');
+
+if ~isempty(plotsector)
+    
+    if length(plotsector)==2   
+        lowlim=plotsector(1);     
+        upplim=plotsector(2); 
+    else
+        error('Vector length needs to be 2! Give only values between 0 and 360!')
+    end
+else
+    lowlim=0;     
+    upplim=360;   
+end
+
 %===============================================================================
 
 if ~isempty(RES_split)

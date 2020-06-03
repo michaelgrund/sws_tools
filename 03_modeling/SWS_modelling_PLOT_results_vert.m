@@ -67,7 +67,7 @@ end
 
 % set errorbar width
 for FF=1:length(meas_phiSC4plot)
-    errorbar_tick(h1(FF),6,'units') 
+    %errorbar_tick(h1(FF),6,'units') 
 end
 
 
@@ -80,10 +80,6 @@ end
 ylabel('\phi in \circ','fontsize',myfontsize)
 set(gca,'xticklabel',[])
 
-text(0.012,0.97,'\bf(a)\rm' , ...    
-'Units', 'normalized', ...   
-'HorizontalAlignment', 'left', ...
-'VerticalAlignment', 'top','fontsize',fontsize_subletters,'backgroundcolor','w','edgecolor','k');
 
 
 set(gca,'fontsize',myfontsize)
@@ -105,7 +101,7 @@ set(gca,'TickDir','out');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 % plot RMS vlaue 
-text(0.012,0.12,['\bfRMS_{tot} = ' num2str(BEST_models_sort(1).RMS,'%4.2f') ', RMS_{\phi} = ' num2str(BEST_models_sort(1).RMS_phi,'%4.2f') '\circ, RMS_{\deltat} = ' num2str(BEST_models_sort(1).RMS_dt,'%4.2f') ' s'], ...    
+text(0.018,0.18,['\bfRMSE_{tot} = ' num2str(BEST_models_sort(1).RMS,'%4.2f') ', RMSE_{\phi} = ' num2str(BEST_models_sort(1).RMS_phi,'%4.2f') '\circ, RMSE_{\deltat} = ' num2str(BEST_models_sort(1).RMS_dt,'%4.2f') ' s'], ...    
 'Units', 'normalized', ...   
 'HorizontalAlignment', 'left', ...
 'VerticalAlignment', 'top','fontsize',fontsize_subletters,'backgroundcolor','w','edgecolor','k','color',color_SS_bf_1);
@@ -247,7 +243,7 @@ end
 
 % set errorbar width
 for FF=1:length(meas_phiSC4plot)
-    errorbar_tick(h2(FF),6,'units') 
+    %errorbar_tick(h2(FF),6,'units') 
 end
 
 
@@ -275,13 +271,6 @@ end
    
 xlabel('Backazimuth in \circ','fontsize',myfontsize)
 ylabel('\deltat in s','fontsize',myfontsize)
-
-
-text(0.012,0.97,'\bf(b)\rm' , ...    
-'Units', 'normalized', ...   
-'HorizontalAlignment', 'left', ...
-'VerticalAlignment', 'top','fontsize',fontsize_subletters,'backgroundcolor','w','edgecolor','k');
-
 
 set(gca,'fontsize',myfontsize)
 set(gca,'xtick',0:45:360)

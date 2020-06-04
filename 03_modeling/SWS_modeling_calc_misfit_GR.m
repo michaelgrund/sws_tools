@@ -1,4 +1,4 @@
-function SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp)
+function SWS_modeling_calc_misfit_GR(modelsin, modrange_low, modrange_upp, SPLITS, NULLS)
 % modelsin: string with the filename which consists all pre-computed models
 %
 % function to fit measured SWS parameters to synthetic models
@@ -57,6 +57,21 @@ if ~isfield(model_out,'phi_eff') && ~isfield(model_out,'dt_eff')
 end
 
 %================================================================
+% select station
+% Type in station name
+disp(' ')
+findname=input('Please insert station name (e.g. PVF):','s');
+
+% quality is only good/fair 
+indxNULL= strcmp({NULLS.staname},findname);
+indxSP= strcmp({SPLITS.staname},findname);
+
+RES_split=SPLITS(indxSP);
+RES_nulls=NULLS(indxNULL);
+
+staname_split=findname;
+%
+%================================================================
 % fitting method:
 
 disp(' ')
@@ -64,25 +79,10 @@ whichfit=input('Fitting method: [1] only phi (RMSE), [2] joint phi/dt (RMSE)');
 disp(' ')
 
 %================================================================
-% measured data input
-
-dir_res_split=dir('splitresults_PERM_FIN_KEF.txt');
-dir_res_nulls=dir('splitresultsNULL_PERM_FIN_KEF.txt');
-dir_res_stack=dir('KEF_stackresults.mat');
-
-% read in SL data results
-% only good & fair, no query from function >>> SWS_modelling_read_data <<< appears
-use_QUAL=2; 
-
-[RES_split, RES_nulls, RES_stack]=SWS_modeling_read_data(dir_res_split,...
-    dir_res_nulls,dir_res_stack,use_QUAL);
-staname_split=RES_split(1).staname;
-
-%================================================================
 % Ask for phase results that should be plotted
 
-phaselist_split={RES_split.phase};
-phaselist_null={RES_nulls.phase};
+phaselist_split={RES_split.SplitPhase};
+phaselist_null={RES_nulls.SplitPhase};
 phaselist_all=unique(horzcat(phaselist_split,phaselist_null));
 
 disp(' ')
@@ -120,12 +120,10 @@ end
 % prepare variables
 
 % splits
-meas_phiSC=[RES_split.phiSC_err_min; RES_split.phiSC; ...
-    RES_split.phiSC_err_max]'; % create vector with [lower err phi; phi; upper err phi]
+meas_phiSC=cell2mat({RES_split.phiSC}'); % create vector with [lower err phi; phi; upper err phi]
 meas_phiSC(:,4)=1; % 1 in 4th column means single splits for later coloring
-meas_dtSC=[RES_split.dtSC_err_min; RES_split.dtSC; ...
-    RES_split.dtSC_err_max]'; % create vector with [lower err dt; dt; upper err dt]
-meas_BAZ=[RES_split.baz]';
+meas_dtSC=cell2mat({RES_split.dtSC}'); % create vector with [lower err dt; dt; upper err dt]
+meas_BAZ=cell2mat({RES_split.BAZ}');
 
 % round corresponding BAZs of measured SWS parameters (no big difference), 
 % since theoretical values are only available as integers, otherwise no
@@ -133,43 +131,15 @@ meas_BAZ=[RES_split.baz]';
 meas_BAZ_floor=floor(meas_BAZ); 
                
 % same for the nulls                                
-meas_phiSC_null=[RES_nulls.phiSC_err_min; RES_nulls.phiSC; ...
-    RES_nulls.phiSC_err_max]'; 
-meas_dtSC_null=[RES_nulls.dtSC_err_min; RES_nulls.dtSC; ...
-    RES_nulls.dtSC_err_max]';     
-meas_BAZ_null=[RES_nulls.baz]';
+meas_phiSC_null=cell2mat({RES_nulls.phiSC}'); 
+meas_dtSC_null=cell2mat({RES_nulls.dtSC}');     
+meas_BAZ_null=cell2mat({RES_nulls.BAZ}');
 meas_BAZ_floor_null=floor(meas_BAZ_null);  
 
-% same for the stacks 
-if ~isempty(RES_stack)
-    meas_phiSC_stack=[RES_stack.phiSTACK_err_min;...
-        RES_stack.phiSTACK; RES_stack.phiSTACK_err_max]';
-    meas_phiSC_stack(:,4)=2; % 2 in 4th column means stacked splits for later coloring
-    meas_dtSC_stack=[RES_stack.dtSTACK_err_min; ...
-        RES_stack.dtSTACK; RES_stack.dtSTACK_err_max]';     
-    meas_BAZ_stack=[RES_stack.meanbaz]';
-    meas_BAZ_floor_stack=floor(meas_BAZ_stack);  
-    
-    % merge single splits with stacked splits   
-    merged_phiSC=vertcat(meas_phiSC,meas_phiSC_stack);
-    merged_dtSC=vertcat(meas_dtSC,meas_dtSC_stack);
-    merged_BAZ_floor=vertcat(meas_BAZ_floor,meas_BAZ_floor_stack);
-  
-    % rename original variables
-    meas_phiSC=merged_phiSC;
-    meas_dtSC=merged_dtSC;
-    meas_BAZ_floor=merged_BAZ_floor;
+meas_phiSC4plot=meas_phiSC;
+meas_dtSC4plot=meas_dtSC;
+meas_BAZ_floor4plot=meas_BAZ_floor;
 
-    % for plotting only
-    meas_phiSC4plot=merged_phiSC;
-    meas_dtSC4plot=merged_dtSC;
-    meas_BAZ_floor4plot=merged_BAZ_floor;
- 
-else
-    meas_phiSC4plot=meas_phiSC;
-    meas_dtSC4plot=meas_dtSC;
-    meas_BAZ_floor4plot=meas_BAZ_floor;
-end
 %================================================================
 % sort to model range
 
@@ -291,7 +261,7 @@ colorsfill(2,:)=[0.9922    0.5529    0.2353];%./256;
 
 %###########################################
 
-GR_SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
+SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
     meas_BAZ_floor_null,meas_phiSC_null,meas_dtSC_null,...
     modrange_low,modrange_upp,colmod_bf_1,colmod_bf_2max,lw_mod,...
     colorsfill,colorsedge,ms,ms_null,lw_symb,...
@@ -306,7 +276,7 @@ filename=['PLOT_modeling_' staname_split '_' num2str(plot_mod_max) '_best_models
     nameend '_range_' num2str(modrange_low) '_' num2str(modrange_upp)];
 
 % check your matlab version
-vers_out=GR_SWS_modeling_check_matlab_version();
+vers_out=SWS_modeling_check_matlab_version();
 
 if vers_out == 1 %%% requires R2020a or later
     exportgraphics(gcf,[filename '.pdf'],'ContentType','vector')

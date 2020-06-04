@@ -1,15 +1,54 @@
-function SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp)
-% modelsin: string with the filename which consists all pre-computed models
+function SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack)
 %
 % function to fit measured SWS parameters to synthetic models
-% 
+%
+% INPUT:
+% modelsin: string with the filename which consists all pre-computed models
+% modrange_low: lower BAZ limit to model
+% modrange_upp: upper BAZ limit to model
+% datasplit: file name of splitting data (e.g. 'splitresults_PERM_FIN_KEF.txt')
+% datanull: file name of null data (e.g. 'splitresultsNULL_PERM_FIN_KEF.txt')
+% datastack: file name of stacked data (e.g. 'KEF_stackresults.mat')
+%
+% All data (datasplit, datanull, datastack) needs to be in standard SplitLab and/or
+% StackSplit output format! If one file is not available, set the
+% corresponding parameter to empty (e.g. datastack =[]).
+%
 % be sure to e.g. exclude discrepant pairs (SKS-SKKS) from your dataset 
 % before running this function 
+%
 % feel free to modify/adjust the code for your needs
 %
 % bugs etc. can be reported by opening a "New issue" in the GitHub
 % repository
-%================================================================
+%
+% LICENSE
+%
+% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
+% Email: michael.grund@kit.edu
+% 
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% 
+% TERMS OF USE
+%
+% The modeling routines are provided "as is" and without any warranty. 
+% The author cannot be held responsible for anything that happens to you 
+% or your equipment. Use it at your own risk.
+%
+%============================================================== 
+%============================================================== 
+
 clc
 
 % model_out: preprocessed models based on parameters
@@ -66,11 +105,11 @@ disp(' ')
 %================================================================
 % measured data input
 
-dir_res_split=dir('splitresults_PERM_FIN_KEF.txt');
-dir_res_nulls=dir('splitresultsNULL_PERM_FIN_KEF.txt');
-dir_res_stack=dir('KEF_stackresults.mat');
+dir_res_split=dir(datasplit);
+dir_res_nulls=dir(datanull);
+dir_res_stack=dir(datastack);
 
-% read in SL data results
+% read in SL and SS data results
 % only good & fair, no query from function >>> SWS_modelling_read_data <<< appears
 use_QUAL=2; 
 
@@ -291,7 +330,7 @@ colorsfill(2,:)=[0.9922    0.5529    0.2353];%./256;
 
 %###########################################
 
-GR_SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
+SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
     meas_BAZ_floor_null,meas_phiSC_null,meas_dtSC_null,...
     modrange_low,modrange_upp,colmod_bf_1,colmod_bf_2max,lw_mod,...
     colorsfill,colorsedge,ms,ms_null,lw_symb,...
@@ -306,7 +345,7 @@ filename=['PLOT_modeling_' staname_split '_' num2str(plot_mod_max) '_best_models
     nameend '_range_' num2str(modrange_low) '_' num2str(modrange_upp)];
 
 % check your matlab version
-vers_out=GR_SWS_modeling_check_matlab_version();
+vers_out=SWS_modeling_check_matlab_version();
 
 if vers_out == 1 %%% requires R2020a or later
     exportgraphics(gcf,[filename '.pdf'],'ContentType','vector')

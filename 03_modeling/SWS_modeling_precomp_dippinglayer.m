@@ -35,7 +35,7 @@ parfor ii=1:N % if problems occur, replace parfor by standard for loop
     thickness = currmod(3,:);
 
     [fast_eff,tlag_eff]=...
-        GR_SWS_modeling_calc_dipping(inc, dips, downdipdir, thickness, dfreq);
+        SWS_modeling_calc_dipping(inc, dips, downdipdir, thickness, dfreq);
 
      modout(ii).phi_eff = fast_eff;
      modout(ii).dt_eff = tlag_eff;

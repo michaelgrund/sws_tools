@@ -1,8 +1,9 @@
-function GR_SWS_modeling_plot_results(BAZ,BEST_models_sort,plot_mod_max,...
-    meas_BAZ_floor,meas_phiSC,meas_dtSC,meas_BAZ_floor_null,meas_phiSC_null,meas_dtSC_null,...
-    modrange_low,modrange_upp,color_SS_bf_1,color_SS_bf_2max,linewidth_SS,colorsfill,colorsedge,...
-    mymarkersize,mymarkersize_null,linewidth_symbols,linewidth_symbols_null,color_face_null,...
-    color_edge_null,myfontsize,fontsize_subletters,modrange_col,modrange_edcol,meas_BAZ_floor4plot,meas_phiSC4plot,meas_dtSC4plot)
+function GR_SWS_modeling_plot_results(BAZ,models_sort,plot_mod_max,...
+    meas_BAZ_floor_null,meas_phiSC_null,meas_dtSC_null,...
+    modrange_low,modrange_upp,colmod_bf_1,colmod_bf_2max,lw_mod,colfill,...
+    coledge,ms,ms_null,lw_symbols,lw_symbols_null,color_face_null,...
+    col_edge_null,fs,fs_RMSE,modrange_col,modrange_edcol,...
+    meas_BAZ_floor4plot,meas_phiSC4plot,meas_dtSC4plot)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -35,12 +36,12 @@ end
 
 % plot best models #2 -#max
 for ii=2:plot_mod_max % 570:600
-     plot(BAZ,BEST_models_sort(ii).phi_eff,'linewidth',linewidth_SS,'color',color_SS_bf_2max) 
+     plot(BAZ,models_sort(ii).phi_eff,'linewidth',lw_mod,'color',colmod_bf_2max) 
      hold on
 end
 
 % plot best model #1
-plot(BAZ,BEST_models_sort(1).phi_eff,'linewidth',linewidth_SS,'color',color_SS_bf_1)
+plot(BAZ,models_sort(1).phi_eff,'linewidth',lw_mod,'color',colmod_bf_1)
 hold on
 
 % %=========================
@@ -61,8 +62,8 @@ hold on
 % plot measured values
 for FF=1:length(meas_phiSC4plot)
 h1(FF)=errorbar(meas_BAZ_floor4plot(FF),meas_phiSC4plot(FF,2),abs(meas_phiSC4plot(FF,2)-meas_phiSC4plot(FF,1)),...
-    abs(meas_phiSC4plot(FF,2)-meas_phiSC4plot(FF,3)),'ok','markerfacecolor',colorsfill(meas_phiSC4plot(FF,4),:),'markersize',...
-    mymarkersize-1,'LineWidth',linewidth_symbols,'markeredgecolor',colorsedge(meas_phiSC4plot(FF,4),:),'color',colorsedge(meas_phiSC4plot(FF,4),:));
+    abs(meas_phiSC4plot(FF,2)-meas_phiSC4plot(FF,3)),'ok','markerfacecolor',colfill(meas_phiSC4plot(FF,4),:),'markersize',...
+    ms-1,'LineWidth',lw_symbols,'markeredgecolor',coledge(meas_phiSC4plot(FF,4),:),'color',coledge(meas_phiSC4plot(FF,4),:));
 end
 
 % set errorbar width
@@ -74,15 +75,15 @@ end
 for ii=1:length(meas_phiSC_null(:,2))
 % plot measured null values                               
 plot(meas_BAZ_floor_null(ii),meas_phiSC_null(ii,2),'ok','markerfacecolor',color_face_null,...
-    'markersize',mymarkersize_null-2,'LineWidth',linewidth_symbols_null,'markeredgecolor',color_edge_null);
+    'markersize',ms_null-2,'LineWidth',lw_symbols_null,'markeredgecolor',col_edge_null);
 end
 
-ylabel('\phi in \circ','fontsize',myfontsize)
+ylabel('\phi in \circ','fontsize',fs)
 set(gca,'xticklabel',[])
 
 
 
-set(gca,'fontsize',myfontsize)
+set(gca,'fontsize',fs)
 set(gca,'xtick',-90:45:360)
 set(gca,'ytick',-90:45:90)
 set(gca, ...
@@ -101,10 +102,10 @@ set(gca,'TickDir','out');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 % plot RMS vlaue 
-text(0.018,0.18,['\bfRMSE_{tot} = ' num2str(BEST_models_sort(1).RMS,'%4.2f') ', RMSE_{\phi} = ' num2str(BEST_models_sort(1).RMS_phi,'%4.2f') '\circ, RMSE_{\deltat} = ' num2str(BEST_models_sort(1).RMS_dt,'%4.2f') ' s'], ...    
+text(0.018,0.18,['\bfRMSE_{tot} = ' num2str(models_sort(1).RMS,'%4.2f') ', RMSE_{\phi} = ' num2str(models_sort(1).RMS_phi,'%4.2f') '\circ, RMSE_{\deltat} = ' num2str(models_sort(1).RMS_dt,'%4.2f') ' s'], ...    
 'Units', 'normalized', ...   
 'HorizontalAlignment', 'left', ...
-'VerticalAlignment', 'top','fontsize',fontsize_subletters,'backgroundcolor','w','edgecolor','k','color',color_SS_bf_1);
+'VerticalAlignment', 'top','fontsize',fs_RMSE,'backgroundcolor','w','edgecolor','k','color',colmod_bf_1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
@@ -226,19 +227,19 @@ end
 
 % plot best models #2 -#max
 for ii=2:plot_mod_max 
-     plot(BAZ,BEST_models_sort(ii).dt_eff,'linewidth',linewidth_SS,'color',color_SS_bf_2max) 
+     plot(BAZ,models_sort(ii).dt_eff,'linewidth',lw_mod,'color',colmod_bf_2max) 
      hold on
 end
 
 % plot best model #1
-plot(BAZ,BEST_models_sort(1).dt_eff,'linewidth',linewidth_SS,'color',color_SS_bf_1)
+plot(BAZ,models_sort(1).dt_eff,'linewidth',lw_mod,'color',colmod_bf_1)
 hold on
 
 % plot measured values
 for FF=1:length(meas_phiSC4plot)
 h2(FF)=errorbar(meas_BAZ_floor4plot(FF),meas_dtSC4plot(FF,2),abs(meas_dtSC4plot(FF,2)-meas_dtSC4plot(FF,1)),...
-    abs(meas_dtSC4plot(FF,2)-meas_dtSC4plot(FF,3)),'ok','markerfacecolor',colorsfill(meas_phiSC4plot(FF,4),:),'markersize',...
-    mymarkersize-1,'LineWidth',linewidth_symbols,'markeredgecolor',colorsedge(meas_phiSC4plot(FF,4),:),'color',colorsedge(meas_phiSC4plot(FF,4),:));
+    abs(meas_dtSC4plot(FF,2)-meas_dtSC4plot(FF,3)),'ok','markerfacecolor',colfill(meas_phiSC4plot(FF,4),:),'markersize',...
+    ms-1,'LineWidth',lw_symbols,'markeredgecolor',coledge(meas_phiSC4plot(FF,4),:),'color',coledge(meas_phiSC4plot(FF,4),:));
 end
 
 % set errorbar width
@@ -265,14 +266,14 @@ plot([a(2)*0.9 a(2)*0.9], [a(3) a(4)], 'color', cy)
 % plot measured null values, all delay times of nulls are set to zero (0)!!!   
 for ii=1:length(meas_dtSC_null(:,2))
 hnulls=plot(meas_BAZ_floor_null(ii),[0],'ok','markerfacecolor',...
-    color_face_null,'markersize',mymarkersize_null-2,'LineWidth',linewidth_symbols_null,...
-    'markeredgecolor',color_edge_null);
+    color_face_null,'markersize',ms_null-2,'LineWidth',lw_symbols_null,...
+    'markeredgecolor',col_edge_null);
 end
    
-xlabel('Backazimuth in \circ','fontsize',myfontsize)
-ylabel('\deltat in s','fontsize',myfontsize)
+xlabel('Backazimuth in \circ','fontsize',fs)
+ylabel('\deltat in s','fontsize',fs)
 
-set(gca,'fontsize',myfontsize)
+set(gca,'fontsize',fs)
 set(gca,'xtick',0:45:360)
 set(gca,'ytick',0:1:4)
 set(gca, ...

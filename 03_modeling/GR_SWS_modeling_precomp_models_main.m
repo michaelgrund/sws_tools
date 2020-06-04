@@ -6,32 +6,35 @@ function GR_SWS_modeling_precomp_models_main()
 % 2) setup 2-layer models
 % 3) setup dipping layer models 
 
+% MSAT package of Walker & Wookey required!
 
 %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Adjust for your needs
+
+% dominant period to be modeled
+domper = 8; % in s
+
+% settings for single layer models
+stepphis = 45; % in degrees   
+stepdts = 1; % in seconds
+
+% settings for two layer models
+stepphim = 45; % in degrees   
+stepdtm = 1; % in seconds
+
+% settings for dipping layer models
+stepdddir = 45; % in degrees 
+stepdips = 15; % in degrees 
+stepthick = 100; % in km
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 disp(' ')
 disp('Model setup for shear-wave splitting modeling using two-layer and dipping layer models!')
 
-% dominant period to be modeled
-domper=8; % in s
-
-% settings for single layer models
-stepphi=45; % in degrees   
-stepdt=1; % in seconds
-modout1=GR_SWS_modeling_precomp_single_layer(stepphi, stepdt);
-
-% settings for two layer models
-stepphi=45; % in degrees   
-stepdt=1; % in seconds
-modout2 = GR_SWS_modeling_precomp_twolayers(1/domper, stepphi, stepdt);
-
-% settings for dipping layer models
-stepdddir=45; % in degrees 
-stepdips=15; % in degrees 
-stepthick=100; % in km
+modout1 = GR_SWS_modeling_precomp_single_layer(stepphis, stepdts);
+modout2 = GR_SWS_modeling_precomp_twolayers(1/domper, stepphim, stepdtm);
 modout3 = GR_SWS_modeling_precomp_dippinglayer(1/domper, stepdddir, stepdips, stepthick);
 
 % merge models

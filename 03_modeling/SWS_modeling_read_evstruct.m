@@ -55,6 +55,7 @@ if ~isempty(dirN) && ~isempty(dirS)
     cd('02_SWS_splits')
     load 03_SWS_SA_splits_full.mat 
     SPLITS=dataSPLITS;
+    cd ..
 
     clear dataNULLS dataSPLITS;
 

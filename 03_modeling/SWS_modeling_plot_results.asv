@@ -3,39 +3,11 @@ function SWS_modeling_plot_results(BAZ,models_sort,plot_mod_max,...
     modrange_low,modrange_upp,colmod_bf_1,colmod_bf_2max,lw_mod,colfill,...
     coledge,ms,ms_null,lw_symbols,lw_symbols_null,color_face_null,...
     col_edge_null,fs,fs_RMSE,modrange_col,modrange_edcol,...
-    meas_BAZ_floor,meas_phiSC,meas_dtSC,staname_split,nameend)
+    meas_BAZ_floor,meas_phiSC,meas_dtSC)
 
-% plot shear-wave splitting modeling results
-%
-% LICENSE
-%
-% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
-% Email: michael.grund@kit.edu
-% 
-% This program is free software: you can redistribute it and/or modify
-% it under the terms of the GNU General Public License as published by
-% the Free Software Foundation, either version 3 of the License, or
-% (at your option) any later version.
-% 
-% This program is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-% GNU General Public License for more details.
-% 
-% You should have received a copy of the GNU General Public License
-% along with this program.  If not, see <http://www.gnu.org/licenses/>.
-% 
-% TERMS OF USE
-%
-% The modeling routines are provided "as is" and without any warranty. 
-% The author cannot be held responsible for anything that happens to you 
-% or your equipment. Use it at your own risk.
-%
-%============================================================== 
-%==============================================================
+% plot modeling results
 
 %================================================================
-% plot models together with measured data
 figure(1)
 
 %================================================================
@@ -109,7 +81,7 @@ set(gca,'TickDir','out');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % plot RMS vlaue 
-text(0.018,0.165,['\bfRMSE_{tot} = ' num2str(models_sort(1).RMS,'%4.2f') ', RMSE_{\phi} = ' num2str(models_sort(1).RMS_phi,'%4.2f') '\circ, RMSE_{\deltat} = ' num2str(models_sort(1).RMS_dt,'%4.2f') ' s'], ...    
+text(0.018,0.18,['\bfRMSE_{tot} = ' num2str(models_sort(1).RMS,'%4.2f') ', RMSE_{\phi} = ' num2str(models_sort(1).RMS_phi,'%4.2f') '\circ, RMSE_{\deltat} = ' num2str(models_sort(1).RMS_dt,'%4.2f') ' s'], ...    
 'Units', 'normalized', ...   
 'HorizontalAlignment', 'left', ...
 'VerticalAlignment', 'top','fontsize',fs_RMSE,'backgroundcolor','w','edgecolor','k','color',colmod_bf_1);
@@ -217,9 +189,11 @@ if swcols(1)==2 % both, singles and multis in dataset
             'markersize',ms-1,'LineWidth',lw_symbols,'markeredgecolor',...
             [0 0 0]); 
         
-        handvec = [l2(1),l1(1)];
+         handvec = [l1(1),l2(1)];
         strvec = {'split (s)','split (m)'};
- 
+        
+        legend([l2(1),l1(1)],'split (s)','split (m)');
+       
     end
 
 else % only singles or multis in dataset
@@ -229,16 +203,14 @@ else % only singles or multis in dataset
             'markersize',ms-1,'LineWidth',lw_symbols,'markeredgecolor',...
             [0 0 0]);
         
-        handvec = [l1(1)];
-        strvec = {'split (s)'};
- 
+        legend(l1(1),'split (s)');
+        
     else
         l1 = plot(-10,-10,'ok','markerfacecolor',wcols(2,:),...
             'markersize',ms-1,'LineWidth',lw_symbols,'markeredgecolor',...
             [0 0 0]);
         
-        handvec = [l1(1)];
-        strvec = {'split (m)'};
+        legend(l1(1),'split (m)');
     end
 
 end
@@ -286,32 +258,3 @@ pos=get(s2,'Position');
 set(s2,'Position',[pos(1) pos(2)+0.1 pos(3)*0.9 pos(4)]); 
 
 %================================================================
-
-% save file
-filename=['PLOT_modeling_' staname_split '_' num2str(plot_mod_max) '_best_models_'...
-    nameend '_range_' num2str(modrange_low) '_' num2str(modrange_upp)];
-
-% check your matlab version
-vers_out=SWS_modeling_check_matlab_version();
-
-if vers_out == 1 %%% requires R2020a or later
-    exportgraphics(gcf,[filename '.pdf'],'ContentType','vector')
-else %%% if your version is below 2020a use
-    print ('-dpdf', '-painters','-r600', [filename '.pdf'])
-end
-
-%%% if you work on a Linux machine, you can also try:
-%print ('-depsc', '-painters','-r600', [filename '.eps'])
-%dir_eps_file=dir([filename '.eps']);
-%[status,cmdout]=system(['epstopdf ' dir_eps_file.name]);
-
-%================================================================
-%================================================================
-% plot overview and statistics of modeling
-figure(2)
-
-%================================================================
-
-
-
-

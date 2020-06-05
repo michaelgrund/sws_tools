@@ -1,4 +1,4 @@
-function SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack)
+function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack)
 %
 % function to fit measured SWS parameters to synthetic models
 %
@@ -76,9 +76,9 @@ colmod_bf_1=[0.6350 0.0780 0.1840];  % color best model
 colmod_bf_2max=[175 175 175]./256; % color others if plot_mod_max > 1      
 
 % SPLITS plotting
-fs=10; 
+fs=8; 
 ms=7;
-fs_RMSE=8;
+fs_RMSE=7;
 lw_symb=1; % width of edge of symbols
 lw_mod=1.2;
 
@@ -326,7 +326,7 @@ colorsfill(1,:)=[66 91 169]./256;
 
 % multievent
 colorsedge(2,:)=[0 0 0];
-colorsfill(2,:)=[0.9922    0.5529    0.2353];%./256;
+colorsfill(2,:)=[79 197 104]./256;
 
 %###########################################
 
@@ -336,26 +336,8 @@ SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
     colorsfill,colorsedge,ms,ms_null,lw_symb,...
     lw_symb_null,col_face_null,col_edge_null,fs,...
     fs_RMSE,modrange_col,modrange_edcol,meas_BAZ_floor4plot,...
-    meas_phiSC4plot,meas_dtSC4plot)
+    meas_phiSC4plot,meas_dtSC4plot,staname_split,nameend)
 
 %###########################################
-
-% save file
-filename=['PLOT_modeling_' staname_split '_' num2str(plot_mod_max) '_best_models_'...
-    nameend '_range_' num2str(modrange_low) '_' num2str(modrange_upp)];
-
-% check your matlab version
-vers_out=SWS_modeling_check_matlab_version();
-
-if vers_out == 1 %%% requires R2020a or later
-    exportgraphics(gcf,[filename '.pdf'],'ContentType','vector')
-else %%% if your version is below 2020a use
-    print ('-dpdf', '-painters','-r600', [filename '.pdf'])
-end
-
-%%% if you work on a Linux machine, you can also try:
-%print ('-depsc', '-painters','-r600', [filename '.eps'])
-%dir_eps_file=dir([filename '.eps']);
-%[status,cmdout]=system(['epstopdf ' dir_eps_file.name]);
 
 % EOF  

@@ -304,11 +304,97 @@ end
 %print ('-depsc', '-painters','-r600', [filename '.eps'])
 %dir_eps_file=dir([filename '.eps']);
 %[status,cmdout]=system(['epstopdf ' dir_eps_file.name]);
-
+%%
 %================================================================
 %================================================================
 % plot overview and statistics of modeling
 figure(2)
+
+s11=subplot(2,1,1);
+modtype1 = {models_sort.mod_type};
+idx1 = find(strcmp(modtype1, 'dipping'));
+idx2 = find(strcmp(modtype1, 'two_layers'));
+idx3 = find(strcmp(modtype1, 'single_layer'));
+
+models_sort(1).color = 0;
+
+for kk = 1:length(idx1)
+   models_sort(idx1(kk)).color = [0 0.4470 0.7410];
+end
+
+for kk = 1:length(idx2)
+   models_sort(idx2(kk)).color = [0.6350 0.0780 0.1840];
+end
+
+for kk = 1:length(idx3)
+   models_sort(idx3(kk)).color = [0.9290 0.6940 0.1250];
+end
+
+for ii = 1:length(models_sort)
+    plot(ii, models_sort(ii).RMS, 'color', models_sort(ii).color, ...
+        'marker', 'o', ...
+        'markerfacecolor',models_sort(ii).color,...
+        'markersize', 10)
+    hold on
+end
+
+% legend
+ll1=plot(-10, -10, 'ok', 'markeredgecolor', [0 0.4470 0.7410], ...
+        'markerfacecolor',[0 0.4470 0.7410],...
+        'markersize', 10);
+
+hold on
+
+ll2=plot(-10, -10, 'ok', 'markeredgecolor', [0.6350 0.0780 0.1840], ...
+        'markerfacecolor',[0.6350 0.0780 0.1840],...
+        'markersize', 10);
+    
+hold on    
+    
+ll3=plot(-10, -10, 'ok', 'markeredgecolor', [0.9290 0.6940 0.1250],...
+        'markerfacecolor',[0.9290 0.6940 0.1250],...
+        'markersize', 10);
+
+legend([ll1,ll2,ll3],{'dipping','two-layers','single-layer'})           
+
+xlim([0,length(models_sort)])
+ylim([0,max([models_sort.RMS])])
+xlabel('worst \leftarrow sorted models \rightarrow best','fontsize',fs)
+ylabel('RMS_{tot}','fontsize',fs)
+set(gca,'XDir','reverse','fontsize',fs); 
+set(gca, ...
+  'TickLength'  , [.01 .01] , ...
+  'XMinorTick'  , 'on'      , ...
+  'YMinorTick'  , 'on')
+
+% add bar plot to show distribution
+s22=subplot(2,1,2);
+
+b1=bar(1, length(idx1))
+hold on
+b2=bar(2, length(idx2)) 
+hold on
+b3=bar (3, length(idx3))
+
+set(b1,'FaceColor',[0 0.4470 0.7410]);
+set(b2,'FaceColor',[0.6350 0.0780 0.1840]);
+set(b3,'FaceColor',[0.9290 0.6940 0.1250]);
+
+ylabel('count','fontsize',fs)
+
+%================================================================
+% save file
+filename=['PLOT_modeling_' staname_split '_' num2str(plot_mod_max) '_modeldstr_'...
+    nameend '_range_' num2str(modrange_low) '_' num2str(modrange_upp)];
+
+% check your matlab version
+vers_out=SWS_modeling_check_matlab_version();
+
+if vers_out == 1 %%% requires R2020a or later
+    exportgraphics(gcf,[filename '.pdf'],'ContentType','vector')
+else %%% if your version is below 2020a use
+    print ('-dpdf', '-painters','-r600', [filename '.pdf'])
+end
 
 %================================================================
 

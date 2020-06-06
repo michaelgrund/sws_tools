@@ -1,6 +1,10 @@
 # sws_tools
 MATLAB tools for analyzing and plotting of shear-wave splitting data
 
+- 01_stereoplots: Generate stereoplots of splitting results based on output of **SplitLab** and **StackSplit**.
+- 02_data_handling: Read and visualize the shear-wave splitting data available from: https://doi.org/10.5445/IR/1000091427
+- 03_modeling: Model shear-wave splitting results using synthetic splitting parameters computed for single-layer, two-layer and dipping layer scenarios. 
+
 If you make use of the content in this repository please acknowledge our paper published in GJI and/or my PhD thesis in whose framework several of the scripts and functions were developed:
 
 - **_Grund, M. & Ritter, J.R.R. (2020)_**, Shear wave splitting beneath Fennoscandia .....
@@ -45,7 +49,7 @@ Read and visualize the shear-wave splitting data available from: https://doi.org
 
 Under construction!
 
-Model shear-wave splitting results using synthetic splitting parameters computed for single-layer, two-layer and dipping layer scenarios. 
+Model shear-wave splitting results using synthetic splitting parameters computed for single-layer, two-layer and dipping layer scenarios. Resuls plots are generated as well.
 
 - use your own measurements (SplitLab and Stacksplit output format required)
 - reproduce the modeling results presented in our paper Grund & Ritter (2020), GJI using the shear-wave splitting data available from: https://doi.org/10.5445/IR/1000091427

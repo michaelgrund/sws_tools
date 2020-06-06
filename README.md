@@ -45,7 +45,7 @@ Read and visualize the shear-wave splitting data available from: https://doi.org
 
 ![PLOTS_merged](https://user-images.githubusercontent.com/23025878/57140316-c864c200-6db7-11e9-933b-b96c452f8349.png)
 
-## [03_data_handling](https://github.com/michaelgrund/sws_tools/tree/master/03_modeling)
+## [03_modeling](https://github.com/michaelgrund/sws_tools/tree/master/03_modeling)
 
 Under construction!
 

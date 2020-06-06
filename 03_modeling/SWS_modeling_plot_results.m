@@ -367,6 +367,8 @@ set(gca, ...
   'XMinorTick'  , 'on'      , ...
   'YMinorTick'  , 'on')
 
+grid on
+
 % add bar plot to show distribution
 s22=subplot(2,1,2);
 

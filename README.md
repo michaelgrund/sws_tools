@@ -1,5 +1,5 @@
 # sws_tools
-MATLAB tools for analyzing, modeling and plotting of shear-wave splitting data
+MATLAB tools for modeling and plotting of shear-wave splitting data
 
 - 01_stereoplots: Generate stereoplots of splitting results based on output of **SplitLab** and **StackSplit**.
 - 02_data_handling: Read and visualize the shear-wave splitting data available from: https://doi.org/10.5445/IR/1000091427

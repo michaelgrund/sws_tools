@@ -1,13 +1,15 @@
 # sws_tools
-MATLAB tools for analyzing and plotting of shear wave splitting data
+MATLAB tools for analyzing and plotting of shear-wave splitting data
 
-If you make use of the content in this repository please acknowledge my PhD thesis in whose framework several of the scripts and functions were developed:
+If you make use of the content in this repository please acknowledge our paper published in GJI and/or my PhD thesis in whose framework several of the scripts and functions were developed:
+
+- **_Grund, M. & Ritter, J.R.R. (2020)_**, Shear wave splitting beneath Fennoscandia .....
 
 - **_Grund, M. (2019)_**, Exploring geodynamics at different depths with shear wave splitting, Dissertation, Karlsruhe Institute of Technology (KIT), https://doi.org/10.5445/IR/1000091425 
 
 Content of the directories:
 
-## [01_stereoplots](https://github.com/michaelgrund/SWStools/tree/master/01_stereoplots)
+## [01_stereoplots](https://github.com/michaelgrund/sws_tools/tree/master/01_stereoplots)
 Generate stereoplots of splitting results based on output of **SplitLab** and **StackSplit**.
 
 - color-code bars of splits with respect to backazimuth (see below for supported colormaps)
@@ -28,9 +30,9 @@ Run function `SWS_Analysis_BASICS_stereoplot` in the MATLAB command window to ge
 
 ![PLOT_res_ALL](https://user-images.githubusercontent.com/23025878/56903070-dfe03a00-6a9b-11e9-9cc0-606d9c2a4173.png)
 
-## [02_data_handling](https://github.com/michaelgrund/SWStools/tree/master/02_data_handling)
+## [02_data_handling](https://github.com/michaelgrund/sws_tools/tree/master/02_data_handling)
 
-Read and visualize the shear wave splitting data available from: https://doi.org/10.5445/IR/1000091427
+Read and visualize the shear-wave splitting data available from: https://doi.org/10.5445/IR/1000091427
 
 - generate individual stereoplots `SWS_read_evstruct('stereo')` 
 - generate stereoplots of all 266 analyzed stations `SWS_read_evstruct('stereoall')`
@@ -38,3 +40,18 @@ Read and visualize the shear wave splitting data available from: https://doi.org
 - generate output structs separated in split and null measurements `[SPLITS,NULLS]=SWS_read_evstruct`
 
 ![PLOTS_merged](https://user-images.githubusercontent.com/23025878/57140316-c864c200-6db7-11e9-933b-b96c452f8349.png)
+
+## [03_data_handling](https://github.com/michaelgrund/sws_tools/tree/master/03_modeling)
+
+Under construction!
+
+Model shear-wave splitting results using synthetic splitting parameters computed for single-layer, two-layer and dipping layer scenarios. 
+
+- use your own measurements (SplitLab and Stacksplit output format required)
+- reproduce the modeling results presented in our paper Grund & Ritter (2020), GJI using the shear-wave splitting data available from: https://doi.org/10.5445/IR/1000091427
+
+
+
+
+
+

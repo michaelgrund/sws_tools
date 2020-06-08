@@ -260,8 +260,8 @@ for ii=1:length(model_out)
             modsall(count_mods).dt=model_out(ii).mod_paras.dt_in;      
             modsall(count_mods).modrange_low=modrange_low; 
             modsall(count_mods).modrange_upp=modrange_upp; 
-            modsall(count_mods).RMS_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
-            modsall(count_mods).RMS_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
+            modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
+            modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
           
          elseif  strcmp(curr_mod_type,'single_layer')
@@ -273,8 +273,8 @@ for ii=1:length(model_out)
             modsall(count_mods).dt=model_out(ii).mod_paras.dt_in;     
             modsall(count_mods).modrange_low=modrange_low; 
             modsall(count_mods).modrange_upp=modrange_upp; 
-            modsall(count_mods).RMS_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
-            modsall(count_mods).RMS_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
+            modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
+            modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
   
          elseif strcmp(curr_mod_type,'dipping')
@@ -287,21 +287,21 @@ for ii=1:length(model_out)
             modsall(count_mods).thick=model_out(ii).mod_paras.thick; 
             modsall(count_mods).modrange_low=modrange_low; 
             modsall(count_mods).modrange_upp=modrange_upp; 
-            modsall(count_mods).RMS_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
-            modsall(count_mods).RMS_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
+            modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
+            modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
           
          end
 
           if whichfit==2
           % use phi and dt for joint fitting
-            modsall(ii).RMS= modsall(ii).RMS_phi/90+modsall(ii).RMS_dt/4;  
+            modsall(ii).RMSE= modsall(ii).RMSE_phi/90+modsall(ii).RMSE_dt/4;  
             nameend='joint';
           
           elseif whichfit==1
 
           % only use phi for fitting
-            modsall(ii).RMS=modsall(ii).RMS_phi/90;
+            modsall(ii).RMSE=modsall(ii).RMSE_phi/90;
             nameend='only_phi';
 
           end
@@ -311,7 +311,7 @@ end
 
 %================================================================
 % sort models based on total RMSE
-[b,index]=sort([modsall.RMS]); 
+[b,index]=sort([modsall.RMSE]); 
 modsall_sort=modsall(index); % entry 1 corresponds to minimum overall RMSE
 
 % keep only XXX best models

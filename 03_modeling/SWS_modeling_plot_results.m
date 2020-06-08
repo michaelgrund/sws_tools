@@ -35,6 +35,10 @@ function SWS_modeling_plot_results(BAZ,models_sort,plot_mod_max,...
 %==============================================================
 
 %================================================================
+% check your matlab version
+vers_out=SWS_modeling_check_matlab_version();
+
+%================================================================
 % plot models together with measured data
 figure(1)
 
@@ -108,8 +112,8 @@ set(gca,'TickDir','out');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% plot RMS vlaue 
-text(0.018,0.165,['\bfRMSE_{tot} = ' num2str(models_sort(1).RMS,'%4.2f') ', RMSE_{\phi} = ' num2str(models_sort(1).RMS_phi,'%4.2f') '\circ, RMSE_{\deltat} = ' num2str(models_sort(1).RMS_dt,'%4.2f') ' s'], ...    
+% plot RMSE vlaue 
+text(0.018,0.165,['\bfRMSE_{tot} = ' num2str(models_sort(1).RMSE,'%4.2f') ', RMSE_{\phi} = ' num2str(models_sort(1).RMSE_phi,'%4.2f') '\circ, RMSE_{\deltat} = ' num2str(models_sort(1).RMSE_dt,'%4.2f') ' s'], ...    
 'Units', 'normalized', ...   
 'HorizontalAlignment', 'left', ...
 'VerticalAlignment', 'top','fontsize',fs_RMSE,'backgroundcolor','w','edgecolor','k','color',colmod_bf_1);
@@ -291,9 +295,6 @@ set(s2,'Position',[pos(1) pos(2)+0.1 pos(3)*0.9 pos(4)]);
 filename=['PLOT_modeling_' staname_split '_' num2str(plot_mod_max) '_best_models_'...
     nameend '_range_' num2str(modrange_low) '_' num2str(modrange_upp)];
 
-% check your matlab version
-vers_out=SWS_modeling_check_matlab_version();
-
 if vers_out == 1 %%% requires R2020a or later
     exportgraphics(gcf,[filename '.pdf'],'ContentType','vector')
 else %%% if your version is below 2020a use
@@ -331,7 +332,7 @@ for kk = 1:length(idx3)
 end
 
 for ii = 1:length(models_sort)
-    plot(ii, models_sort(ii).RMS, 'color', models_sort(ii).color, ...
+    plot(ii, models_sort(ii).RMSE, 'color', models_sort(ii).color, ...
         'marker', 'o', ...
         'markerfacecolor',models_sort(ii).color,...
         'markersize', 10)
@@ -355,12 +356,20 @@ ll3=plot(-10, -10, 'ok', 'markeredgecolor', [0.9290 0.6940 0.1250],...
         'markerfacecolor',[0.9290 0.6940 0.1250],...
         'markersize', 10);
 
-legend([ll1,ll2,ll3],{'dipping','two-layers','single-layer'})           
+legend([ll1,ll2,ll3],{'dipping layer','two-layers','single-layer'})           
 
 xlim([0,length(models_sort)])
-ylim([0,max([models_sort.RMS])])
+ylim([0,max([models_sort.RMSE])])
 xlabel('worst \leftarrow sorted models \rightarrow best','fontsize',fs)
-ylabel('RMS_{tot}','fontsize',fs)
+ylabel('RMSE_{tot}','fontsize',fs)
+
+
+if vers_out == 1
+    sgtitle([num2str(length(models_sort)) ' best models (based on RMSE)'],'fontsize',fs)
+else
+    title([num2str(length(models_sort)) ' best models (based on RMSE)'],'fontsize',fs)
+end
+
 set(gca,'XDir','reverse','fontsize',fs); 
 set(gca, ...
   'TickLength'  , [.01 .01] , ...
@@ -368,29 +377,32 @@ set(gca, ...
   'YMinorTick'  , 'on')
 
 grid on
+set(gca,'TickDir','out');
+set(gca,'fontsize',fs)
 
 % add bar plot to show distribution
 s22=subplot(2,1,2);
 
-b1=bar(1, length(idx1))
+b1=bar(1, length(idx1));
 hold on
-b2=bar(2, length(idx2)) 
+b2=bar(2, length(idx2));
 hold on
-b3=bar (3, length(idx3))
+b3=bar (3, length(idx3));
 
 set(b1,'FaceColor',[0 0.4470 0.7410]);
 set(b2,'FaceColor',[0.6350 0.0780 0.1840]);
 set(b3,'FaceColor',[0.9290 0.6940 0.1250]);
 
-ylabel('count','fontsize',fs)
+ylabel('model count','fontsize',fs)
+set(gca,'xticklabel',[])
+set(gca,'xtick',[])
+set(gca,'TickDir','out');
+set(gca,'fontsize',fs)
 
 %================================================================
 % save file
 filename=['PLOT_modeling_' staname_split '_' num2str(plot_mod_max) '_modeldstr_'...
     nameend '_range_' num2str(modrange_low) '_' num2str(modrange_upp)];
-
-% check your matlab version
-vers_out=SWS_modeling_check_matlab_version();
 
 if vers_out == 1 %%% requires R2020a or later
     exportgraphics(gcf,[filename '.pdf'],'ContentType','vector')

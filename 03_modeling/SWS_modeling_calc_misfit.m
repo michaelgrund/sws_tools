@@ -1,16 +1,21 @@
 function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack)
 %
-% function to fit measured SWS parameters to synthetic models
+% fit measured SWS parameters to synthetic models
 %
 % INPUT:
 % modelsin: string with the filename which consists all pre-computed models
-% modrange_low: lower BAZ limit to model
-% modrange_upp: upper BAZ limit to model
-% datasplit: file name of splitting data (e.g. 'splitresults_PERM_FIN_KEF.txt')
-% datanull: file name of null data (e.g. 'splitresultsNULL_PERM_FIN_KEF.txt')
-% datastack: file name of stacked data (e.g. 'KEF_stackresults.mat')
+%           (e.g. 'sws_modout_domper8s.mat'), to create models first see 
+%           function SWS_modeling_precomp_models_main 
+% modrange_low: lower BAZ limit to model (e.g. 10)
+% modrange_upp: upper BAZ limit to model (e.g. 270)
+% datasplit: file name of splitting data 
+%           (e.g. 'splitresults_PERM_FIN_KEF.txt')
+% datanull: file name of null data 
+%           (e.g. 'splitresultsNULL_PERM_FIN_KEF.txt')
+% datastack: file name of stacked data 
+%           (e.g. 'KEF_stackresults.mat')
 %
-% All data (datasplit, datanull, datastack) needs to be in standard SplitLab and/or
+% all data (datasplit, datanull, datastack) needs to be in standard SplitLab and/or
 % StackSplit output format! If one file is not available, set the
 % corresponding parameter to empty (e.g. datastack =[]).
 %

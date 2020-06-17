@@ -1,11 +1,13 @@
 function modsall_sort = SWS_modeling_calc_misfit_GR(modelsin, modrange_low, modrange_upp, SPLITS, NULLS)
 %
-% function to fit measured SWS parameters of GR2020 to synthetic models
+% fit measured SWS parameters of GR2020 to synthetic models
 %
 % INPUT:
 % modelsin: string with the filename which consists all pre-computed models
-% modrange_low: lower BAZ limit to model
-% modrange_upp: upper BAZ limit to model
+%           (e.g. 'sws_modout_domper8s.mat'), to create models first see 
+%           function SWS_modeling_precomp_models_main 
+% modrange_low: lower BAZ limit to model (e.g. 10)
+% modrange_upp: upper BAZ limit to model (e.g. 270)
 % SPLITS: splitting measurements of GR2020
 % NULLS: null measurements of GR2020
 % 

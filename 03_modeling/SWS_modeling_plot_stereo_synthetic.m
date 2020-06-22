@@ -3,7 +3,7 @@ function SWS_modeling_plot_stereo_synthetic(modsall_sort)
 % This function generates stereoplots showing the splitting pattern
 % of the best-fitting model
 
-
+% TODO add references
 
 %[hndl, marker] = stereoplot(bazi, inc, azim, len)
 % plot a stereomap of values, at backazimuth bazi, with inclination inc.

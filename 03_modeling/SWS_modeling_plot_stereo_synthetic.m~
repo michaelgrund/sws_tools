@@ -119,7 +119,23 @@ elseif strcmp(modsall_sort(usenum).mod_type, 'two_layers')
     len=dt0/2;  % for JOF scaling normal ==1
 
 
+
+
+
+elseif strcmp(modsall_sort(usenum).mod_type,'single_layer')
+
+    %TODO
+
+
+
 end
+
+
+
+
+
+
+
 
 bazi = [bazi, bazi+180]';  
 inc =ones(size(bazi))*10; %default 10deg inclination
@@ -467,76 +483,45 @@ elseif strcmp(modsall_sort(usenum).mod_type, 'dipping')
     %===============================================
     % PLOT dip dir as arrow
 
-    
-    p0=[-0.07 0]
-    p1=[0.07,0]
-    color_arrow=[120 120 120]./256;
-    
-    %                   'Shaft.Width',       .01, ...
-%                   'Head.Length',      0.04, ...
-%                   'Head.Sweep',         0.02, ...
-%                   'Head.Width',         0.04, ...
+    % adopted from the drawarrow function available here:
+    % https://de.mathworks.com/matlabcentral/fileexchange/55181-drawarrow
     
     
-    % Parameters:
-    W1 = 0.08;   % half width of the arrow head, normalized by length of arrow
+    Matthew Kelly (2020). drawArrow (https://www.mathworks.com/matlabcentral/fileexchange/55181-drawarrow), MATLAB Central File Exchange. Retrieved June 22, 2020. 
+    
+    
+    
+    p0 = [-0.07 0];
+    p1 = [0.07,0];
+    color_arrow = [120 120 120]./256;
+ 
+    W1 = 0.14;   % half width of the arrow head, normalized by length of arrow
     W2 = 0.04;  % half width of the arrow shaft
-    L1 = 0.18;   % Length of the arrow head, normalized by length of arrow
-    L2 = 0.13;  % Length of the arrow inset
-    % Unpack the tail and tip of the arrow
+    L1 = 0.38;   % Length of the arrow head, normalized by length of arrow
+    L2 = 0.33;  % Length of the arrow inset
+
     x0 = p0(1);
     y0 = p0(2);
     x1 = p1(1);
     y1 = p1(2);
-    % Start by drawing an arrow from 0 to 1 on the x-axis
+
     P = [...
         0, (1-L2), (1-L1), 1, (1-L1), (1-L2), 0;
         W2,    W2,     W1, 0,    -W1,    -W2, -W2];
-    % Scale,rotate, shift and plot:
+
     dx = x1-x0;
     dy = y1-y0;
     Length = sqrt(dx*dx + dy*dy);
     Angle = atan2(-dy,dx);
-    P = Length*P;   %Scale
-    P = [cos(Angle), sin(Angle); -sin(Angle), cos(Angle)]*P;  %Rotate
-    P = p0(:)*ones(1,7) + P;  %Shift
-    % Plot!
-    hArrow = patch(P(1,:), P(2,:),color_arrow);  
-    hArrow.EdgeColor = 'k';
+    P = Length*P;  
+    P = [cos(Angle), sin(Angle); -sin(Angle), cos(Angle)]*P; 
+    P = p0(:)*ones(1,7) + P;  
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    color_arrow=[120 120 120]./256;  
-%     dav1=davinci( 'arrow', 'X',             [-0.07 0.07], ...
-%                   'Y',             [0 0], ...
-%                   'ArrowType',   'single', ...
-%                   'Shaft.Width',       .01, ...
-%                   'Head.Length',      0.04, ...
-%                   'Head.Sweep',         0.02, ...
-%                   'Head.Width',         0.04, ...
-%                   'Color',            color_arrow, ...
-%                   'EdgeColor',        'k', ...
-%                   'LineWidth',        1 );
-%               
-%     
-     
-              
-              
-              
-      rotate(hArrow,[0 0 1],downdipdir-90)  
-    
-
-    
+    arrw = patch(P(1,:), P(2,:),color_arrow);  
+    arrw.EdgeColor = 'k';
+    set(arrw,'LineWidth',1.5)
+    rotate(arrw,[0 0 1],downdipdir-90)  
+  
 end
 
 

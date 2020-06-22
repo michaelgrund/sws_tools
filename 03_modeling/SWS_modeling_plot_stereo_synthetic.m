@@ -55,7 +55,7 @@ colfill=[219,219,219]./256;
 col_wedge=[255.9999999999999,255.9999999999999,255.9999999999999]./256;
 
 % modelnumber to be plotted, 1 is best based on RMSE
-usenum=14;
+usenum=14; % TODO allow to plot the stereoplots of a row of numbers
 
 
 if strcmp(modsall_sort(usenum).mod_type,'dipping')
@@ -119,7 +119,23 @@ elseif strcmp(modsall_sort(usenum).mod_type, 'two_layers')
     len=dt0/2;  % for JOF scaling normal ==1
 
 
+
+
+
+elseif strcmp(modsall_sort(usenum).mod_type,'single_layer')
+
+    %TODO
+
+
+
 end
+
+
+
+
+
+
+
 
 bazi = [bazi, bazi+180]';  
 inc =ones(size(bazi))*10; %default 10deg inclination
@@ -469,8 +485,10 @@ elseif strcmp(modsall_sort(usenum).mod_type, 'dipping')
 
     % adopted from the drawarrow function available here:
     % https://de.mathworks.com/matlabcentral/fileexchange/55181-drawarrow
-    
-    
+    %
+    % Matthew Kelly (2020). drawArrow (https://www.mathworks.com/matlabcentral/fileexchange/55181-drawarrow), 
+    % MATLAB Central File Exchange. Retrieved June 22, 2020. 
+
     p0 = [-0.07 0];
     p1 = [0.07,0];
     color_arrow = [120 120 120]./256;

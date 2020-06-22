@@ -366,6 +366,7 @@ colorsfill(2,:)=[79 197 104]./256;
 
 %###########################################
 
+% model fit and model distribution
 SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
     meas_BAZ_floor_null,meas_phiSC_null,meas_dtSC_null,...
     modrange_low,modrange_upp,colmod_bf_1,colmod_bf_2max,lw_mod,...
@@ -373,6 +374,11 @@ SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
     lw_symb_null,col_face_null,col_edge_null,fs,...
     fs_RMSE,modrange_col,modrange_edcol,meas_BAZ_floor4plot,...
     meas_phiSC4plot,meas_dtSC4plot,staname_split,nameend)
+
+
+% stereoplot displaying the splitting parameter distribution of the
+% best models (based on lowest RMSE, see above)
+SWS_modeling_plot_stereo_synthetic(modsall_sort)
 
 %###########################################
 

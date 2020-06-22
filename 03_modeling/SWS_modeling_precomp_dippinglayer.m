@@ -24,7 +24,8 @@ modout = repmat(struct('phi_eff',zeros(1,360), ...
     'dt_eff',zeros(1,360),...
     'mod_paras',struct('downdipdir', 0,...
     'dip', 0,...
-    'thick', 0),...
+    'thick', 0, ...
+    'azi4plot',zeros(1,360)),...
     'type', zeros(1,1)), N, 1);
 
 parfor ii=1:N % if problems occur, replace parfor by standard for loop
@@ -34,7 +35,7 @@ parfor ii=1:N % if problems occur, replace parfor by standard for loop
     dips = currmod(2,:);
     thickness = currmod(3,:);
 
-    [fast_eff,tlag_eff]=...
+    [fast_eff,tlag_eff,azi4plot,fast4plot,tlag4plot]=...
         SWS_modeling_calc_dipping(inc, dips, downdipdir, thickness, dfreq);
 
      modout(ii).phi_eff = fast_eff;
@@ -42,6 +43,10 @@ parfor ii=1:N % if problems occur, replace parfor by standard for loop
      modout(ii).mod_paras.downdipdir = downdipdir;
      modout(ii).mod_paras.dip = dips;
      modout(ii).mod_paras.thick = thickness;
+     modout(ii).mod_paras.azi4plot = azi4plot;
+     modout(ii).mod_paras.fast4plot = fast4plot;
+     modout(ii).mod_paras.dt4plot = tlag4plot;
      modout(ii).type = 'dipping';
+     
 
 end

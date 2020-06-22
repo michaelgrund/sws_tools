@@ -1,4 +1,4 @@
-function [fast_eff,tlag_eff]=SWS_modeling_calc_dipping(incval,dips,downdipdir,thick,dfreq)
+function [fast_eff,tlag_eff,azi4plot, fast4plot, tlag4plot]=SWS_modeling_calc_dipping(incval,dips,downdipdir,thick,dfreq)
 
 % calculate splitting parameters for dipping layer models
 %
@@ -69,7 +69,13 @@ function [fast_eff,tlag_eff]=SWS_modeling_calc_dipping(incval,dips,downdipdir,th
       end
 
 %==============================================================        
-      % recalculate azi to bazi for correct plotting over bazi between 0
+% variables needed for stereoplot displaying synthetic parameters
+fast4plot=fast_eff;
+tlag4plot=tlag_eff;
+azi4plot=azi-180;
+
+%==============================================================
+% recalculate azi to bazi for correct plotting over bazi between 0
       % and 360 degrees
       azi = min_azi:del_azi:max_azi;
 

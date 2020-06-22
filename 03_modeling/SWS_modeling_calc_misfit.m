@@ -19,10 +19,32 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 % StackSplit output format! If one file is not available, set the
 % corresponding parameter to empty (e.g. datastack =[]).
 %
+% .........................................................................
+% .........................................................................
+% EXAMPLE using the test data set provided via the download package
+%
+% 1) change to directory /testdata
+%
+% 2) define input variables
+% 
+%    modelsin = 'sws_modout_domper8s.mat'
+%    modrange_low = 3
+%    modrange_upp = 90
+%    datasplit = 'splitresults_PERM_FIN_KEF.txt'
+%    datanull = 'splitresultsNULL_PERM_FIN_KEF.txt',
+%    datastack = 'KEF_stackresults.mat'
+%
+% 3) run misfit routine
+%    
+%    modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack)
+%
+% .........................................................................
+% .........................................................................
+%
 % be sure to e.g. exclude discrepant pairs (SKS-SKKS) from your dataset 
 % before running this function 
 %
-% feel free to modify/adjust the code for your needs
+% feel free to modify/adjust the code for your needs or submit improvements
 %
 % bugs etc. can be reported by opening a "New issue" in the GitHub
 % repository
@@ -268,6 +290,9 @@ for ii=1:length(model_out)
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
+            modsall(count_mods).azi4plot=[];
+            modsall(count_mods).fast4plot=[];
+            modsall(count_mods).dt4plot=[];
           
          elseif  strcmp(curr_mod_type,'single_layer')
 
@@ -281,6 +306,9 @@ for ii=1:length(model_out)
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
+            modsall(count_mods).azi4plot=[];
+            modsall(count_mods).fast4plot=[];
+            modsall(count_mods).dt4plot=[];
   
          elseif strcmp(curr_mod_type,'dipping')
     
@@ -295,6 +323,9 @@ for ii=1:length(model_out)
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
+            modsall(count_mods).azi4plot=model_out(ii).mod_paras.azi4plot;
+            modsall(count_mods).fast4plot=model_out(ii).mod_paras.fast4plot;
+            modsall(count_mods).dt4plot=model_out(ii).mod_paras.dt4plot;
           
          end
 

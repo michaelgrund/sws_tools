@@ -13,7 +13,7 @@ x = r*cos(t) + h;
 y = r*sin(t) + k;
 x = [x h x(1)];
 y = [y k y(1)];
-P = fill3(x,y,ones(length(x))*1.01,'r');
+P = fill3(x,y,ones(length(x))*0.5,'r');
 set(P,'facecolor',colfill,'edgecolor',colfill,'facealpha',1)
 axis([h-r-1 h+r+1 k-r-1 k+r+1]) 
 axis tight;

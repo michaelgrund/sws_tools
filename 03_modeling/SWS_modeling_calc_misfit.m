@@ -375,10 +375,13 @@ SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
     fs_RMSE,modrange_col,modrange_edcol,meas_BAZ_floor4plot,...
     meas_phiSC4plot,meas_dtSC4plot,staname_split,nameend)
 
-
 % stereoplot displaying the splitting parameter distribution of the
 % best models (based on lowest RMSE, see above)
-SWS_modeling_plot_stereo_synthetic(modsall_sort)
+plotnum = 1; % e.g. 1:5 to plot stereoplot for 5 best models 
+
+for ii=plotnum
+    SWS_modeling_plot_stereo_synthetic(modsall_sort,ii)
+end
 
 %###########################################
 

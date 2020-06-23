@@ -5,7 +5,7 @@ function modout=SWS_modeling_precomp_dippinglayer(dfreq, stepdddir, stepdips, st
 %============================================================== 
 %============================================================== 
 % define incidence angle that should be used
-inc=11;
+inc=10;
 
 % set up parameters
 downdipdir=0:stepdddir:360; 

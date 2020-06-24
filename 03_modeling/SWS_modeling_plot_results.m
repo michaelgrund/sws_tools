@@ -76,7 +76,8 @@ plot(BAZ,models_sort(1).phi_eff,'linewidth',lw_mod,'color',colmod_bf_1)
 hold on
 
 % plot measured values
-for FF=1:length(meas_phiSC)
+sizeSC = size(meas_phiSC);
+for FF=1:sizeSC
     h1(FF)=errorbar(meas_BAZ_floor(FF),meas_phiSC(FF,2),...
         abs(meas_phiSC(FF,2)-meas_phiSC(FF,1)),...
         abs(meas_phiSC(FF,2)-meas_phiSC(FF,3)),...
@@ -151,7 +152,7 @@ plot(BAZ,models_sort(1).dt_eff,'linewidth',lw_mod,'color',colmod_bf_1)
 hold on
 
 % plot measured values
-for FF=1:length(meas_phiSC)
+for FF=1:sizeSC
     h2(FF)=errorbar(meas_BAZ_floor(FF),meas_dtSC(FF,2),...
         abs(meas_dtSC(FF,2)-meas_dtSC(FF,1)),...
         abs(meas_dtSC(FF,2)-meas_dtSC(FF,3)),...
@@ -252,8 +253,8 @@ if ~isempty(meas_dtSC_null)
     n1 = plot(-10,-10,'ok','markerfacecolor',...
         color_face_null,'markersize',ms_null-2,'LineWidth',lw_symbols_null,...
         'markeredgecolor',col_edge_null);
-    handvec(3)=n1;
-    strvec{3}='null';
+    handvec(end+1)=n1;
+    strvec{end+1}='null';
 
 end
 

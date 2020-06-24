@@ -36,6 +36,8 @@ function SWS_modeling_plot_stereo_synthetic(modsall_sort,plotnum)
 %============================================================== 
 %============================================================== 
 
+figure()
+
 % plotting settings
 linew=3;
 marks=8;
@@ -532,10 +534,10 @@ end
 axis tight
 axis off
 
-L = min(abs(axis));
-text(0 , -L - 0.005, 'N','HorizontalAlignment','Center',...
+lval = min(abs(axis));
+text(0 , -lval - 0.005, 'N','HorizontalAlignment','Center',...
     'VerticalAlignment','Base','fontsize',20);
-text(L + 0.005, 0,   'E','HorizontalAlignment','Left',...
+text(lval + 0.005, 0,   'E','HorizontalAlignment','Left',...
     'verticalAlignment','middle','fontsize',20);
 
 view([0 -90])

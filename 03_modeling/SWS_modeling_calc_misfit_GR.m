@@ -47,6 +47,7 @@ function modsall_sort = SWS_modeling_calc_misfit_GR(modelsin, modrange_low, modr
 %============================================================== 
 
 clc
+close all
 
 % model_out: preprocessed models based on parameters
 models = load(modelsin);

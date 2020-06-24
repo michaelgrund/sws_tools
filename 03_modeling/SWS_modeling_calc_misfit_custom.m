@@ -1,6 +1,11 @@
-function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack)
+function modsall_sort = SWS_modeling_calc_misfit_custom(modelsin, modrange_low, modrange_upp)
 %
-% fit measured SWS parameters to synthetic models
+% fit customly prepared SWS parameters to synthetic models
+%
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% below all data is loaded from structs which have to be 
+% prepared using function SWS_modeling_prep_custom_data
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %
 % INPUT:
 % modelsin: string with the filename which consists all pre-computed models
@@ -8,38 +13,7 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 %           function SWS_modeling_precomp_models_main 
 % modrange_low: lower BAZ limit to model (e.g. 10)
 % modrange_upp: upper BAZ limit to model (e.g. 270)
-% datasplit: file name of splitting data 
-%           (e.g. 'splitresults_PERM_FIN_KEF.txt')
-% datanull: file name of null data 
-%           (e.g. 'splitresultsNULL_PERM_FIN_KEF.txt')
-% datastack: file name of stacked data 
-%           (e.g. 'KEF_stackresults.mat')
 %
-% all data (datasplit, datanull, datastack) needs to be in standard SplitLab and/or
-% StackSplit output format! If one file is not available, set the
-% corresponding parameter to empty (e.g. datastack =[]).
-%
-% .........................................................................
-% .........................................................................
-% EXAMPLE using the test data set provided via the download package
-%
-% 1) change to directory /testdata
-%
-% 2) define input variables
-% 
-%    modelsin = 'sws_modout_domper8s.mat'
-%    modrange_low = 3
-%    modrange_upp = 90
-%    datasplit = 'splitresults_PERM_FIN_KEF.txt'
-%    datanull = 'splitresultsNULL_PERM_FIN_KEF.txt',
-%    datastack = 'KEF_stackresults.mat'
-%
-% 3) run misfit routine
-%    
-%    modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack)
-%
-% .........................................................................
-% .........................................................................
 %
 % be sure to e.g. exclude discrepant pairs (SKS-SKKS) from your dataset 
 % before running this function 
@@ -77,6 +51,7 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 %============================================================== 
 
 clc
+close all
 
 % model_out: preprocessed models based on parameters
 models = load(modelsin);
@@ -123,32 +98,54 @@ if ~isfield(model_out,'phi_eff') && ~isfield(model_out,'dt_eff')
 end
 
 %================================================================
+% load custom data 
+
+dir_res_split=dir('RES_split_cust.mat');
+dir_res_nulls=dir('RES_nulls_cust.mat');
+dir_res_stack=dir('RES_stack_cust.mat');
+
+if ~isempty(dir_res_split)
+    Splits = load(dir_res_split.name);
+    RES_split = Splits.RES_split;
+    staname_split=RES_split(1).staname;
+else
+    RES_split = [];
+end
+    
+if ~isempty(dir_res_nulls)
+    Nulls = load(dir_res_nulls.name);
+    RES_nulls = Nulls.RES_nulls;
+    staname_split=RES_nulls(1).staname;
+else
+    RES_nulls = [];
+end
+
+
+if ~isempty(dir_res_stack)
+    Stacks = load(dir_res_stack.name);
+    RES_stack =Stacks.RES_stack;
+    staname_split=RES_stack(1).staname;
+else
+    RES_stack = [];   
+end
+
+%================================================================
 % fitting method:
 
 disp(' ')
 whichfit=input('Fitting method: [1] only phi (RMSE), [2] joint phi/dt (RMSE)');
+
+if isempty(whichfit)
+    whichfit = 2;
+end
+
 disp(' ')
-
-%================================================================
-% measured data input
-
-dir_res_split=dir(datasplit);
-dir_res_nulls=dir(datanull);
-dir_res_stack=dir(datastack);
-
-% read in SL and SS data results
-% only good & fair, no query from function >>> SWS_modelling_read_data <<< appears
-use_QUAL=2; 
-
-[RES_split, RES_nulls, RES_stack]=SWS_modeling_read_data(dir_res_split,...
-    dir_res_nulls,dir_res_stack,use_QUAL);
-staname_split=RES_split(1).staname;
 
 %================================================================
 % Ask for phase results that should be plotted
 
-phaselist_split={RES_split.phase};
-phaselist_null={RES_nulls.phase};
+phaselist_split=RES_split.phase;
+phaselist_null=RES_nulls.phase;
 phaselist_all=unique(horzcat(phaselist_split,phaselist_null));
 
 disp(' ')
@@ -260,8 +257,10 @@ for ii=1:length(model_out)
     curr_mod_dt=model_out(ii).dt_eff;
     curr_mod_type=model_out(ii).type;
 
-    for kk=1:length(meas_phiSC)
-        
+    sizeSC = size(meas_phiSC);
+    
+    for kk=1:sizeSC(1)
+
         % find theoretical value for BAZ of corresponding measured value
         find_theo_phi=curr_mod_phi(meas_BAZ_floor(kk));
         find_theo_dt=curr_mod_dt(meas_BAZ_floor(kk));
@@ -375,9 +374,13 @@ SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
     fs_RMSE,modrange_col,modrange_edcol,meas_BAZ_floor4plot,...
     meas_phiSC4plot,meas_dtSC4plot,staname_split,nameend)
 
+% stereoplot displaying the splitting parameter distribution of the
+% best models (based on lowest RMSE, see above)
+plotnum = 1; % e.g. 1:5 to plot stereoplot for 5 best models 
 
-% stereoplot displaying 
-SWS_modeling_plot_stereo_synthetic(modsall_sort)
+for ii=plotnum
+    SWS_modeling_plot_stereo_synthetic(modsall_sort,ii)
+end
 
 %###########################################
 

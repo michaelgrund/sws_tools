@@ -77,6 +77,7 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 %============================================================== 
 
 clc
+close all
 
 % model_out: preprocessed models based on parameters
 models = load(modelsin);
@@ -127,6 +128,10 @@ end
 
 disp(' ')
 whichfit=input('Fitting method: [1] only phi (RMSE), [2] joint phi/dt (RMSE)');
+
+if isempty(whichfit)
+    whichfit = 2;
+end
 disp(' ')
 
 %================================================================
@@ -142,6 +147,7 @@ use_QUAL=2;
 
 [RES_split, RES_nulls, RES_stack]=SWS_modeling_read_data(dir_res_split,...
     dir_res_nulls,dir_res_stack,use_QUAL);
+
 staname_split=RES_split(1).staname;
 
 %================================================================
@@ -260,8 +266,10 @@ for ii=1:length(model_out)
     curr_mod_dt=model_out(ii).dt_eff;
     curr_mod_type=model_out(ii).type;
 
-    for kk=1:length(meas_phiSC)
-        
+    sizeSC = size(meas_phiSC);
+    
+    for kk=1:sizeSC(1)
+
         % find theoretical value for BAZ of corresponding measured value
         find_theo_phi=curr_mod_phi(meas_BAZ_floor(kk));
         find_theo_dt=curr_mod_dt(meas_BAZ_floor(kk));

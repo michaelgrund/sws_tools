@@ -51,11 +51,9 @@ Under construction!
 
 Model shear-wave splitting results using synthetic splitting parameters computed for single-layer, two-layer and dipping layer scenarios. Resuls plots are generated as well.
 
-- use your own measurements (SplitLab and Stacksplit output format required)
+MSAT package of Walker & Wookey (2012) is required!
+
+- use your own measurements (SplitLab/Stacksplit output format, custom formatting is also supported)
 - reproduce the modeling results presented in our paper Grund & Ritter (2020), GJI using the shear-wave splitting data available from: https://doi.org/10.5445/IR/1000091427
 
-
-
-
-
-
+![PLOTS_output](https://user-images.githubusercontent.com/23025878/85557282-ec244080-b627-11ea-8ca5-c2ae25e36176.png)

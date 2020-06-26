@@ -10,7 +10,9 @@ comb_vecs = combvec(phi, dt);
 N = length(comb_vecs);  
 
 disp(' ')
-disp(['Total number of single models to generate: ' num2str(N)])
+disp(['Total number of single-layer models to generate: ' num2str(N)])
+disp('Generate models...')
+disp('Single-layer models done!')
 
 % preallocate structs
 modout = repmat(struct('phi_eff',zeros(1,360),... 

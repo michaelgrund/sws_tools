@@ -47,6 +47,8 @@ comb_vecs=combvec(phi1,phi2,dt1,dt2);
     
 disp(' ')
 disp(['Total number of two-layer models to generate: ' num2str(length(comb_vecs))])
+disp('Generate models...')
+disp('Two-layer models done!')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % generate models

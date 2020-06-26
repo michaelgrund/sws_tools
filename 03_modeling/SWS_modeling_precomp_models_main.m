@@ -45,22 +45,22 @@ function SWS_modeling_precomp_models_main()
 domper = 8; % in s
 
 % settings for single layer models
-stepphis = 45; % in degrees   
-stepdts = 1; % in seconds
+stepphis = 5; % in degrees   
+stepdts = 0.2; % in seconds
 
 % settings for two layer models
-stepphim = 45; % in degrees   
-stepdtm = 1; % in seconds
+stepphim = 5; % in degrees   
+stepdtm = 0.2; % in seconds
 
 % settings for dipping layer models
-stepdddir = 45; % in degrees 
-stepdips = 15; % in degrees 
-stepthick = 100; % in km
+stepdddir = 5; % in degrees 
+stepdips = 5; % in degrees 
+stepthick = 20; % in km
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 disp(' ')
-disp('Model setup for shear-wave splitting modeling using two-layer and dipping layer models!')
+disp('Model setup for shear-wave splitting modeling using single-layer, two-layer and dipping layer models!')
 
 modout1 = SWS_modeling_precomp_single_layer(stepphis, stepdts);
 modout2 = SWS_modeling_precomp_twolayers(1/domper, stepphim, stepdtm);

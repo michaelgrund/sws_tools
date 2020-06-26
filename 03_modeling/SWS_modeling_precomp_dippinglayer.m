@@ -17,6 +17,8 @@ comb_vecs=combvec(downdipdir,dips,thickness);
 
 disp(' ')
 disp(['Total number of dipping-layer models to generate: ' num2str(length(comb_vecs))])
+disp('Generate models...')
+disp('Dipping-layer models done!')
 
 N = length(comb_vecs);   
 

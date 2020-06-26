@@ -10,7 +10,30 @@ function modsall_sort = SWS_modeling_calc_misfit_GR(modelsin, modrange_low, modr
 % modrange_upp: upper BAZ limit to model (e.g. 270)
 % SPLITS: splitting measurements of GR2020
 % NULLS: null measurements of GR2020
+%
+% .........................................................................
+% .........................................................................
+% EXAMPLE: 
+%
+% 1) first switch to directory that contains the content of the downloaded
+%    and uzipped splitting data set: <<< mgrund_diss_2019_ELAPP >>>
+%    Then run:
+%           [SPLITS, NULLS] = SWS_modeling_read_evstruct 
 % 
+% 2) define input variables
+% 
+%    modelsin = 'sws_modout_domper8s.mat' (be sure to have that file in the
+%                                          current directory!)
+%    modrange_low = 3
+%    modrange_upp = 90
+%
+% 3) run misfit routine
+% 
+%    modsall_sort = SWS_modeling_calc_misfit_GR(modelsin, modrange_low, modrange_upp, SPLITS, NULLS)
+%
+% .........................................................................
+% .........................................................................
+%
 % be sure to e.g. exclude discrepant pairs (SKS-SKKS) from your dataset 
 % before running this function 
 %
@@ -50,7 +73,9 @@ clc
 close all
 
 % model_out: preprocessed models based on parameters
+disp(['Loading model file <' modelsin '>...'])
 models = load(modelsin);
+
 model_out = models.splitmods;
 
 %================================================================
@@ -231,6 +256,9 @@ for ii=1:length(model_out)
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
+            modsall(count_mods).azi4plot=[];
+            modsall(count_mods).fast4plot=[];
+            modsall(count_mods).dt4plot=[];
           
          elseif  strcmp(curr_mod_type,'single_layer')
 
@@ -244,6 +272,9 @@ for ii=1:length(model_out)
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
+            modsall(count_mods).azi4plot=[];
+            modsall(count_mods).fast4plot=[];
+            modsall(count_mods).dt4plot=[];
   
          elseif strcmp(curr_mod_type,'dipping')
     
@@ -258,6 +289,9 @@ for ii=1:length(model_out)
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
+            modsall(count_mods).azi4plot=model_out(ii).mod_paras.azi4plot;
+            modsall(count_mods).fast4plot=model_out(ii).mod_paras.fast4plot;
+            modsall(count_mods).dt4plot=model_out(ii).mod_paras.dt4plot;
           
          end
 

@@ -54,6 +54,7 @@ clc
 close all
 
 % model_out: preprocessed models based on parameters
+disp(['Loading model file <' modelsin '>...'])
 models = load(modelsin);
 model_out = models.splitmods;
 

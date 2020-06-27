@@ -110,17 +110,17 @@ colmod_bf_1=[0.6350 0.0780 0.1840];  % color best model
 colmod_bf_2max=[175 175 175]./256; % color others if plot_mod_max > 1      
 
 % SPLITS plotting
-fs=8; 
-ms=7;
-fs_RMSE=7;
+fs=8; % fontsize
+ms=7; % marker size
+fs_RMSE=7; % fontsize text RMSE values
 lw_symb=1; % width of edge of symbols
-lw_mod=1.2;
+lw_mod=1.2; % model line width
 
 % NULLS plotting
-ms_null=6.5;
+ms_null=6.5; % marker size nulls
 lw_symb_null=lw_symb; % width of edge of symbols
-col_edge_null='k';
-col_face_null='w';
+col_edge_null='k'; % edge color nulls
+col_face_null='w'; % face color nulls
 
 %================================================================
 % error checks
@@ -134,6 +134,9 @@ end
 % Type in station name
 disp(' ')
 findname=input('Please insert station name (e.g. PVF):','s');
+
+%!!!!!!!!!!!!!!!!
+% TODO error handlig if name not exists
 
 % quality is only good/fair 
 indxNULL= strcmp({NULLS.staname},findname);

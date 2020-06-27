@@ -45,17 +45,17 @@ function SWS_modeling_precomp_models_main()
 domper = 8; % in s
 
 % settings for single layer models
-stepphis = 5; % in degrees   
-stepdts = 0.2; % in seconds
+stepphis = 45; % in degrees   
+stepdts = 1; % in seconds
 
 % settings for two layer models
-stepphim = 5; % in degrees   
-stepdtm = 0.2; % in seconds
+stepphim = 45; % in degrees   
+stepdtm = 1; % in seconds
 
 % settings for dipping layer models
-stepdddir = 5; % in degrees 
-stepdips = 5; % in degrees 
-stepthick = 20; % in km
+stepdddir = 45; % in degrees 
+stepdips = 15; % in degrees 
+stepthick = 100; % in km
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -67,10 +67,9 @@ modout2 = SWS_modeling_precomp_twolayers(1/domper, stepphim, stepdtm);
 modout3 = SWS_modeling_precomp_dippinglayer(1/domper, stepdddir, stepdips, stepthick);
 
 % merge models
-splitmods = vertcat(modout1, modout2, modout3);
-
 disp(' ')
 disp('Merge models and save into file...' )
+splitmods = vertcat(modout1, modout2, modout3);
 
 % save to mat-file
 save(['sws_modout_domper' num2str(domper) 's.mat'],'splitmods', '-v7.3')

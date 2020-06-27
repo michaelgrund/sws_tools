@@ -78,6 +78,17 @@ models = load(modelsin);
 
 model_out = models.splitmods;
 
+modsall_sort = make_modeling(model_out, modrange_low, modrange_upp, SPLITS, NULLS);
+
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% nested function, allows to re-run the modeling procedure for individual
+% stations without importing the (huge) model file each time again
+
+function modsall_sort = make_modeling(model_out, modrange_low, modrange_upp, SPLITS, NULLS)
+
 %================================================================
 % INITIAL SETTINGS
 % mainly for later plotting etc.
@@ -313,7 +324,7 @@ end
 
 %================================================================
 % sort models based on total RMSE
-[b,index]=sort([modsall.RMSE]); 
+[~,index]=sort([modsall.RMSE]); 
 modsall_sort=modsall(index); % entry 1 corresponds to minimum overall RMSE
 
 % keep only XXX best models
@@ -350,5 +361,22 @@ for ii=plotnum
 end
 
 %###########################################
+
+%================================================================
+disp(' ')
+plotother=input('Model other station of the GR2020 data set?  ([0]=no, [1]=yes):');
+disp(' ')
+
+if plotother == 1
+    modsall_sort = make_modeling(model_out, modrange_low, modrange_upp, SPLITS, NULLS);
+else
+    return
+end
+%================================================================
+
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % EOF  

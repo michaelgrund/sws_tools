@@ -549,7 +549,7 @@ filename=['PLOT_modeling_' modsall_sort(1).staname '_stereoplot_syn_' num2str(pl
 
 vers_out=SWS_modeling_check_matlab_version();
 
-if vers_out == 1
+if vers_out == 0
     saveas(gcf,[filename '.png'])
     %%% uncomment if you want plots in pdf format, takes time...
     % print([filename '.pdf'],'-dpdf','-painters') 

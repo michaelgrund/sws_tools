@@ -6,6 +6,10 @@ function SWS_modeling_prep_custom_data()
 % you can use this script especially if your splitting results are not 
 % available in SplitLab/StackSplit output format 
 %
+% after data preparation be sure to use SWS_modeling_calc_misfit_custom
+% to calculate the misfit between the pre-computed splitting models 
+% (see SWS_modeling_precomp_models_main) and your data
+%
 % LICENSE
 %
 % Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 

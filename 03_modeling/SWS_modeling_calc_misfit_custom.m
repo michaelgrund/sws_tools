@@ -14,6 +14,27 @@ function modsall_sort = SWS_modeling_calc_misfit_custom(modelsin, modrange_low, 
 % modrange_low: lower BAZ limit to model (e.g. 10)
 % modrange_upp: upper BAZ limit to model (e.g. 270)
 %
+% .........................................................................
+% .........................................................................
+% EXAMPLE 
+%
+% 1) change to a working directory of your choice
+%
+% 2) prepare your data using SWS_modeling_prep_custom_data
+%
+% 3) define input variables
+% 
+%    modelsin = 'sws_modout_domper8s.mat' (be sure to have that file in the
+%                                          current directory!)
+%    modrange_low = 3
+%    modrange_upp = 90
+%
+% 4) run misfit routine
+%    
+%    modsall_sort = SWS_modeling_calc_misfit_custom(modelsin, modrange_low, modrange_upp)
+%
+% .........................................................................
+% .........................................................................
 %
 % be sure to e.g. exclude discrepant pairs (SKS-SKKS) from your dataset 
 % before running this function 

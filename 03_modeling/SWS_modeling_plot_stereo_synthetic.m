@@ -127,11 +127,6 @@ hold on
 %==========================================================
 % mark null area in shaded gray
 
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-% uses function <<< plot_arc >>> to plot wedge, modified
-% function is <<< plot_arc3D >>> to also add a layer in 3rd dimension!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 if modsall_sort(1).modrange_low < modsall_sort(1).modrange_upp
 
     if (modsall_sort(1).modrange_low ~=0 || modsall_sort(1).modrange_upp~=360)
@@ -139,13 +134,13 @@ if modsall_sort(1).modrange_low < modsall_sort(1).modrange_upp
         % first plot whole range in gray as bottom layer
         startwedge=0;
         endwedge=360;
-        plot_arc3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
+        plot_wedge3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
             0,0,0.2635,colfill);
 
         % then plot modelled range again on top in white ;)
         startwedge=modsall_sort(1).modrange_low;
         endwedge=modsall_sort(1).modrange_upp;
-        plot_arc3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
+        plot_wedge3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
             0,0,0.2635,col_wedge);
 
     end 
@@ -158,18 +153,18 @@ elseif modsall_sort(1).modrange_low > modsall_sort(1).modrange_upp
         % first plot whole range in gray as botom layer
         startwedge=0;
         endwedge=360;
-        plot_arc3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
+        plot_wedge3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
             0,0,0.2635,colfill);
 
         % then plot modelled range again on top in white ;) in two steps
         startwedge=0;
         endwedge=modsall_sort(1).modrange_upp;
-        plot_arc3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
+        plot_wedge3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
             0,0,0.2635,col_wedge);
 
         startwedge=modsall_sort(1).modrange_low;
         endwedge=360;
-        plot_arc3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
+        plot_wedge3D(deg2rad(startwedge-90),deg2rad(endwedge-90),...
             0,0,0.2635,col_wedge);
 
     end 
@@ -403,11 +398,6 @@ if strcmp(modsall_sort(plotnum).mod_type, 'two_layers')
 elseif strcmp(modsall_sort(plotnum).mod_type, 'dipping')
 
     %mark dip angle schematic in lower left corner
-
-    %!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    %uses function <<< plot_arc >>> to plot wedge
-    %!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     colfill=[210 210 210]./256;
     startwedge=90;
     endwedge=90+dips;
@@ -415,7 +405,7 @@ elseif strcmp(modsall_sort(plotnum).mod_type, 'dipping')
     xdirset=0.0;
     ydirset=-.26;
 
-    plot_arc(deg2rad(startwedge-90),deg2rad(endwedge-90),...
+    plot_wedge(deg2rad(startwedge-90),deg2rad(endwedge-90),...
         -startval+xdirset-lengthbar/2,ydirset,0.12,colfill);
     plot([-startval+xdirset-lengthbar/2 -startval+lengthbar/1.65],...
         [ydirset ydirset],'-','linewidth',linew-1,'color','k')
@@ -560,3 +550,45 @@ else
 end
 
 %==========================================================
+
+end
+
+%============================================================== 
+%============================================================== 
+% helper functions
+
+function hndl = plot_wedge(start_val,end_val,h,k,r,colfill)
+%
+% based on plot_arc by Matt Fig
+%
+t = linspace(start_val,end_val);
+x = r * cos(t) + h;
+y = r * sin(t) + k;
+x = [x h x(1)];
+y = [y k y(1)];
+hndl = fill(x, y, 'r');
+set(hndl, 'facecolor', colfill, 'edgecolor', 'white', 'facealpha', 1)
+axis([h-r-1 h+r+1 k-r-1 k+r+1]) 
+axis tight;
+
+end
+
+
+function hndl = plot_wedge3D(start_val,end_val,h,k,r,colfill)
+%
+% based on plot_arc by Matt Fig
+%
+t = linspace(start_val,end_val);
+x = r * cos(t) + h;
+y = r * sin(t) + k;
+x = [x h x(1)];
+y = [y k y(1)];
+hndl = fill3(x, y, ones(length(x))*0.5, 'r');
+set(hndl, 'facecolor', colfill, 'edgecolor', 'white', 'facealpha', 1)
+axis([h-r-1 h+r+1 k-r-1 k+r+1]) 
+axis tight;
+
+end
+
+%==========================================================
+% EOF 

@@ -24,8 +24,8 @@ function modsall_sort = SWS_modeling_calc_misfit_custom(modelsin, modrange_low, 
 %
 % 3) define input variables
 % 
-%    modelsin = 'sws_modout_domper8s.mat' (be sure to have that file in the
-%                                          current directory!)
+%    modelsin = 'sws_modout_domper8s.mat' % (be sure to have that file in the
+%                                         % current directory!)
 %    modrange_low = 3
 %    modrange_upp = 90
 %

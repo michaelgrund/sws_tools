@@ -40,7 +40,7 @@ vers_out=SWS_modeling_check_matlab_version();
 
 %================================================================
 % plot models together with measured data
-figure(1)
+figure()
 
 %================================================================
 % subplot 1 phi
@@ -76,22 +76,28 @@ plot(BAZ,models_sort(1).phi_eff,'linewidth',lw_mod,'color',colmod_bf_1)
 hold on
 
 % plot measured values
+
 sizeSC = size(meas_phiSC);
-for FF=1:sizeSC
-    h1(FF)=errorbar(meas_BAZ_floor(FF),meas_phiSC(FF,2),...
-        abs(meas_phiSC(FF,2)-meas_phiSC(FF,1)),...
-        abs(meas_phiSC(FF,2)-meas_phiSC(FF,3)),...
-        'ok','markerfacecolor',colfill(meas_phiSC(FF,4),:),...
-        'markersize',ms-1,'LineWidth',lw_symbols,'markeredgecolor',...
-        coledge(meas_phiSC(FF,4),:),'color',...
-        coledge(meas_phiSC(FF,4),:));
+
+if sizeSC(2) == 3
+    for FF=1:sizeSC
+        h1(FF)=errorbar(meas_BAZ_floor(FF),meas_phiSC(FF,2),...
+            abs(meas_phiSC(FF,2)-meas_phiSC(FF,1)),...
+            abs(meas_phiSC(FF,2)-meas_phiSC(FF,3)),...
+            'ok','markerfacecolor',colfill(meas_phiSC(FF,4),:),...
+            'markersize',ms-1,'LineWidth',lw_symbols,'markeredgecolor',...
+            coledge(meas_phiSC(FF,4),:),'color',...
+            coledge(meas_phiSC(FF,4),:));
+    end
 end
 
-for ii=1:length(meas_phiSC_null(:,2))
-    % plot measured null values                               
-    plot(meas_BAZ_floor_null(ii),meas_phiSC_null(ii,2),...
-        'ok','markerfacecolor',color_face_null,'markersize',ms_null-2,...
-        'LineWidth',lw_symbols_null,'markeredgecolor',col_edge_null);
+if ~isempty(meas_phiSC_null)
+    for ii=1:length(meas_phiSC_null(:,2))
+        % plot measured null values
+        plot(meas_BAZ_floor_null(ii),meas_phiSC_null(ii,2),...
+            'ok','markerfacecolor',color_face_null,'markersize',ms_null-2,...
+            'LineWidth',lw_symbols_null,'markeredgecolor',col_edge_null);
+    end
 end
 
 ylabel('\phi in \circ','fontsize',fs)
@@ -152,14 +158,17 @@ plot(BAZ,models_sort(1).dt_eff,'linewidth',lw_mod,'color',colmod_bf_1)
 hold on
 
 % plot measured values
-for FF=1:sizeSC
-    h2(FF)=errorbar(meas_BAZ_floor(FF),meas_dtSC(FF,2),...
-        abs(meas_dtSC(FF,2)-meas_dtSC(FF,1)),...
-        abs(meas_dtSC(FF,2)-meas_dtSC(FF,3)),...
-        'ok','markerfacecolor',colfill(meas_phiSC(FF,4),:),...
-        'markersize',ms-1,'LineWidth',lw_symbols,'markeredgecolor',...
-        coledge(meas_phiSC(FF,4),:),...
-        'color',coledge(meas_phiSC(FF,4),:));
+
+if sizeSC == 3
+    for FF=1:sizeSC
+        h2(FF)=errorbar(meas_BAZ_floor(FF),meas_dtSC(FF,2),...
+            abs(meas_dtSC(FF,2)-meas_dtSC(FF,1)),...
+            abs(meas_dtSC(FF,2)-meas_dtSC(FF,3)),...
+            'ok','markerfacecolor',colfill(meas_phiSC(FF,4),:),...
+            'markersize',ms-1,'LineWidth',lw_symbols,'markeredgecolor',...
+            coledge(meas_phiSC(FF,4),:),...
+            'color',coledge(meas_phiSC(FF,4),:));
+    end
 end
 
 %=========================
@@ -177,10 +186,12 @@ plot([a(2)*0.9 a(2)*0.9], [a(3) a(4)], 'color', cy)
 %=========================
 
 % plot measured null values, all delay times of nulls are set to zero (0)   
-for ii=1:length(meas_dtSC_null(:,2))
-    plot(meas_BAZ_floor_null(ii),[0],'ok','markerfacecolor',...
-    color_face_null,'markersize',ms_null-2,'LineWidth',lw_symbols_null,...
-    'markeredgecolor',col_edge_null);
+if ~isempty(meas_dtSC_null)
+    for ii=1:length(meas_dtSC_null(:,2))
+        plot(meas_BAZ_floor_null(ii),[0],'ok','markerfacecolor',...
+            color_face_null,'markersize',ms_null-2,'LineWidth',lw_symbols_null,...
+            'markeredgecolor',col_edge_null);
+    end
 end
 
 %=========================
@@ -193,11 +204,13 @@ wcols=unique(colfill(meas_phiSC(:,4),:),'rows');
 swcols=size(wcols);
 
 
-% plot measured null values, all delay times of nulls are set to zero (0)   
-for ii=1:length(meas_dtSC_null(:,2))
-    plot(meas_BAZ_floor_null(ii),[0],'ok','markerfacecolor',...
-    color_face_null,'markersize',ms_null-2,'LineWidth',lw_symbols_null,...
-    'markeredgecolor',col_edge_null);
+% plot measured null values, all delay times of nulls are set to zero (0) 
+if ~isempty(meas_dtSC_null)
+    for ii=1:length(meas_dtSC_null(:,2))
+        plot(meas_BAZ_floor_null(ii),[0],'ok','markerfacecolor',...
+            color_face_null,'markersize',ms_null-2,'LineWidth',lw_symbols_null,...
+            'markeredgecolor',col_edge_null);
+    end
 end
 
 
@@ -310,7 +323,7 @@ end
 %================================================================
 %================================================================
 % plot overview and statistics of modeling
-figure(2)
+figure()
 
 s11=subplot(2,1,1);
 modtype1 = {models_sort.mod_type};

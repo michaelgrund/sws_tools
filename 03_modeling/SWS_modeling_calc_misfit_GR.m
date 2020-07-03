@@ -22,8 +22,8 @@ function modsall_sort = SWS_modeling_calc_misfit_GR(modelsin, modrange_low, modr
 % 
 % 2) define input variables
 % 
-%    modelsin = 'sws_modout_domper8s.mat' (be sure to have that file in the
-%                                          current directory!)
+%    modelsin = 'sws_modout_domper8s.mat' % (be sure to have that file in the
+%                                         % current directory!)
 %    modrange_low = 3
 %    modrange_upp = 90
 %
@@ -135,248 +135,264 @@ end
 disp(' ')
 findname=input('Please insert station name (e.g. PVF):','s');
 
-%!!!!!!!!!!!!!!!!
-% TODO error handlig if name not exists
-
 % quality is only good/fair 
-indxNULL= strcmp({NULLS.staname},findname);
 indxSP= strcmp({SPLITS.staname},findname);
+indxNULL= strcmp({NULLS.staname},findname);
 
 RES_split=SPLITS(indxSP);
 RES_nulls=NULLS(indxNULL);
 
-staname_split=findname;
-%
-%================================================================
-% fitting method:
-
-disp(' ')
-whichfit=input('Fitting method: [1] only phi (RMSE), [2] joint phi/dt (RMSE)');
-disp(' ')
-
-%================================================================
-% Ask for phase results that should be plotted
-
-phaselist_split={RES_split.SplitPhase};
-phaselist_null={RES_nulls.SplitPhase};
-phaselist_all=unique(horzcat(phaselist_split,phaselist_null));
-
-disp(' ')
-disp('Available phase results: ')
-disp(' ')
-
-for ii=1:length(phaselist_all)+1
-    if ii==1
-      disp('   [0] ALL') 
-    else  
-        disp(['   [' num2str(ii-1) '] only ' phaselist_all{ii-1}])
-    end
-end
-
-disp(' ')
-wphases=input('Which phases you wanna use (Enter number [XX] from the given list)?:');
-disp(' ')
-
-if isempty(wphases)
-    wphases=0;
-elseif ~isempty(wphases) && ~ismember(wphases,[0:1:length(phaselist_all)])
-    error('You selected a non-available entry ;) Try again!')
-end
-
-if wphases~=0
-    phases2use=phaselist_all(wphases);
-    find_index_split= strcmp(phaselist_split,phases2use);
-    find_index_null= strcmp(phaselist_null,phases2use);
+if ~isempty(RES_split)
     
-    RES_split=RES_split(find_index_split);
-    RES_nulls=RES_nulls(find_index_null);
-end
-
-%================================================================
-% prepare variables
-
-% splits
-meas_phiSC=cell2mat({RES_split.phiSC}'); % create vector with [lower err phi; phi; upper err phi]
-meas_phiSC(:,4)=1; % 1 in 4th column means single splits for later coloring
-meas_dtSC=cell2mat({RES_split.dtSC}'); % create vector with [lower err dt; dt; upper err dt]
-meas_BAZ=cell2mat({RES_split.BAZ}');
-
-% round corresponding BAZs of measured SWS parameters (no big difference), 
-% since theoretical values are only available as integers, otherwise no
-% comparison possible!
-meas_BAZ_floor=floor(meas_BAZ); 
-               
-% same for the nulls                                
-meas_phiSC_null=cell2mat({RES_nulls.phiSC}'); 
-meas_dtSC_null=cell2mat({RES_nulls.dtSC}');     
-meas_BAZ_null=cell2mat({RES_nulls.BAZ}');
-meas_BAZ_floor_null=floor(meas_BAZ_null);  
-
-meas_phiSC4plot=meas_phiSC;
-meas_dtSC4plot=meas_dtSC;
-meas_BAZ_floor4plot=meas_BAZ_floor;
-
-%================================================================
-% sort to model range
-
-findvals=find(meas_BAZ_floor > modrange_low & meas_BAZ_floor < modrange_upp);
-
-meas_BAZ_floor=meas_BAZ_floor(findvals);
-meas_phiSC=meas_phiSC(findvals,:);
-meas_dtSC=meas_dtSC(findvals,:);
-
-%================================================================
-% calc deviations of measured SWS parameters from theoretical distributions
-% for each synthetic model, then compute RMSE
-
-count_mods=1;
-
-res_dt=zeros(length(meas_phiSC),1);
-res_phi=res_dt;
-
-for ii=1:length(model_out)
-
-    curr_mod_phi=model_out(ii).phi_eff;
-    curr_mod_dt=model_out(ii).dt_eff;
-    curr_mod_type=model_out(ii).type;
-
-    for kk=1:length(meas_phiSC)
+    staname_split=findname;
+    
+    %================================================================
+    % fitting method:
+    
+    disp(' ')
+    whichfit=input('Fitting method: [1] only phi (RMSE), [2] joint phi/dt (RMSE)');
+    disp(' ')
+    
+    %================================================================
+    % Ask for phase results that should be plotted
+    
+    phaselist_split={RES_split.SplitPhase};
+    phaselist_null={RES_nulls.SplitPhase};
+    phaselist_all=unique(horzcat(phaselist_split,phaselist_null));
+    
+    disp(' ')
+    disp('Available phase results: ')
+    disp(' ')
+    
+    for ii=1:length(phaselist_all)+1
+        if ii==1
+            disp('   [0] ALL')
+        else
+            disp(['   [' num2str(ii-1) '] only ' phaselist_all{ii-1}])
+        end
+    end
+    
+    disp(' ')
+    wphases=input('Which phases you wanna use (Enter number [XX] from the given list)?:');
+    disp(' ')
+    
+    if isempty(wphases)
+        wphases=0;
+    elseif ~isempty(wphases) && ~ismember(wphases,[0:1:length(phaselist_all)])
+        error('You selected a non-available entry ;) Try again!')
+    end
+    
+    if wphases~=0
+        phases2use=phaselist_all(wphases);
+        find_index_split= strcmp(phaselist_split,phases2use);
+        find_index_null= strcmp(phaselist_null,phases2use);
         
-        % find theoretical value for BAZ of corresponding measured value
-        find_theo_phi=curr_mod_phi(meas_BAZ_floor(kk));
-        find_theo_dt=curr_mod_dt(meas_BAZ_floor(kk));
-       
-        %calc residuum
-        res_phi(kk,1)=abs(find_theo_phi-meas_phiSC(kk,2));
+        RES_split=RES_split(find_index_split);
+        RES_nulls=RES_nulls(find_index_null);
+    end
+    
+    %================================================================
+    % prepare variables
+    
+    % splits
+    meas_phiSC=cell2mat({RES_split.phiSC}'); % create vector with [lower err phi; phi; upper err phi]
+    meas_phiSC(:,4)=1; % 1 in 4th column means single splits for later coloring
+    meas_dtSC=cell2mat({RES_split.dtSC}'); % create vector with [lower err dt; dt; upper err dt]
+    meas_BAZ=cell2mat({RES_split.BAZ}');
+    
+    % round corresponding BAZs of measured SWS parameters (no big difference),
+    % since theoretical values are only available as integers, otherwise no
+    % comparison possible!
+    meas_BAZ_floor=floor(meas_BAZ);
+    
+    % same for the nulls
+    meas_phiSC_null=cell2mat({RES_nulls.phiSC}');
+    meas_dtSC_null=cell2mat({RES_nulls.dtSC}');
+    meas_BAZ_null=cell2mat({RES_nulls.BAZ}');
+    meas_BAZ_floor_null=floor(meas_BAZ_null);
+    
+    meas_phiSC4plot=meas_phiSC;
+    meas_dtSC4plot=meas_dtSC;
+    meas_BAZ_floor4plot=meas_BAZ_floor;
+    
+    %================================================================
+    % sort to model range
+    
+    findvals=find(meas_BAZ_floor > modrange_low & meas_BAZ_floor < modrange_upp);
+    
+    meas_BAZ_floor=meas_BAZ_floor(findvals);
+    meas_phiSC=meas_phiSC(findvals,:);
+    meas_dtSC=meas_dtSC(findvals,:);
+    
+    %================================================================
+    % calc deviations of measured SWS parameters from theoretical distributions
+    % for each synthetic model, then compute RMSE
+    
+    count_mods=1;
+    
+    res_dt=zeros(length(meas_phiSC),1);
+    res_phi=res_dt;
+    
+    for ii=1:length(model_out)
         
-        % if there is a residuum > 90, calc 180-res_phi to consider 
-        % the flip from -90° to +90°
-        if res_phi(kk,1) > 90  
-            res_phi(kk,1)=180-res_phi(kk,1);
+        curr_mod_phi=model_out(ii).phi_eff;
+        curr_mod_dt=model_out(ii).dt_eff;
+        curr_mod_type=model_out(ii).type;
+        
+        sizeSC = size(meas_phiSC);
+        
+        for kk=1:sizeSC
+            
+            % find theoretical value for BAZ of corresponding measured value
+            find_theo_phi=curr_mod_phi(meas_BAZ_floor(kk));
+            find_theo_dt=curr_mod_dt(meas_BAZ_floor(kk));
+            
+            %calc residuum
+            res_phi(kk,1)=abs(find_theo_phi-meas_phiSC(kk,2));
+            
+            % if there is a residuum > 90, calc 180-res_phi to consider
+            % the flip from -90° to +90°
+            if res_phi(kk,1) > 90
+                res_phi(kk,1)=180-res_phi(kk,1);
+            end
+            
+            res_dt(kk,1)=abs(find_theo_dt-meas_dtSC(kk,2));
         end
         
-        res_dt(kk,1)=abs(find_theo_dt-meas_dtSC(kk,2));
-    end
-
-         if strcmp(curr_mod_type,'two_layers')
-             
+        if strcmp(curr_mod_type,'two_layers')
+            
             modsall(count_mods).phi_eff=curr_mod_phi;
             modsall(count_mods).dt_eff=curr_mod_dt;
             modsall(count_mods).mod_type=curr_mod_type;
             modsall(count_mods).phi=model_out(ii).mod_paras.phi_in;
-            modsall(count_mods).dt=model_out(ii).mod_paras.dt_in;      
-            modsall(count_mods).modrange_low=modrange_low; 
-            modsall(count_mods).modrange_upp=modrange_upp; 
+            modsall(count_mods).dt=model_out(ii).mod_paras.dt_in;
+            modsall(count_mods).modrange_low=modrange_low;
+            modsall(count_mods).modrange_upp=modrange_upp;
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
             modsall(count_mods).azi4plot=[];
             modsall(count_mods).fast4plot=[];
             modsall(count_mods).dt4plot=[];
-          
-         elseif  strcmp(curr_mod_type,'single_layer')
-
+            
+        elseif  strcmp(curr_mod_type,'single_layer')
+            
             modsall(count_mods).phi_eff=curr_mod_phi;
             modsall(count_mods).dt_eff=curr_mod_dt;
             modsall(count_mods).mod_type=curr_mod_type;
             modsall(count_mods).phi=model_out(ii).mod_paras.phi_in;
-            modsall(count_mods).dt=model_out(ii).mod_paras.dt_in;     
-            modsall(count_mods).modrange_low=modrange_low; 
-            modsall(count_mods).modrange_upp=modrange_upp; 
+            modsall(count_mods).dt=model_out(ii).mod_paras.dt_in;
+            modsall(count_mods).modrange_low=modrange_low;
+            modsall(count_mods).modrange_upp=modrange_upp;
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
             modsall(count_mods).azi4plot=[];
             modsall(count_mods).fast4plot=[];
             modsall(count_mods).dt4plot=[];
-  
-         elseif strcmp(curr_mod_type,'dipping')
-    
+            
+        elseif strcmp(curr_mod_type,'dipping')
+            
             modsall(count_mods).phi_eff=curr_mod_phi;
             modsall(count_mods).dt_eff=curr_mod_dt;
             modsall(count_mods).mod_type=curr_mod_type;
             modsall(count_mods).downdipdir=model_out(ii).mod_paras.downdipdir;
             modsall(count_mods).dip=model_out(ii).mod_paras.dip;
-            modsall(count_mods).thick=model_out(ii).mod_paras.thick; 
-            modsall(count_mods).modrange_low=modrange_low; 
-            modsall(count_mods).modrange_upp=modrange_upp; 
+            modsall(count_mods).thick=model_out(ii).mod_paras.thick;
+            modsall(count_mods).modrange_low=modrange_low;
+            modsall(count_mods).modrange_upp=modrange_upp;
             modsall(count_mods).RMSE_phi=sqrt(sum(res_phi.^2)/length(meas_phiSC));
             modsall(count_mods).RMSE_dt=sqrt(sum(res_dt.^2)/length(meas_phiSC));
             modsall(count_mods).staname=staname_split;
             modsall(count_mods).azi4plot=model_out(ii).mod_paras.azi4plot;
             modsall(count_mods).fast4plot=model_out(ii).mod_paras.fast4plot;
             modsall(count_mods).dt4plot=model_out(ii).mod_paras.dt4plot;
-          
-         end
-
-          if whichfit==2
-          % use phi and dt for joint fitting
-            modsall(ii).RMSE= modsall(ii).RMSE_phi/90+modsall(ii).RMSE_dt/4;  
+            
+        end
+        
+        if whichfit==2
+            % use phi and dt for joint fitting
+            modsall(ii).RMSE= modsall(ii).RMSE_phi/90+modsall(ii).RMSE_dt/4;
             nameend='joint';
-          
-          elseif whichfit==1
-
-          % only use phi for fitting
+            
+        elseif whichfit==1
+            
+            % only use phi for fitting
             modsall(ii).RMSE=modsall(ii).RMSE_phi/90;
             nameend='only_phi';
+            
+        end
+        
+        count_mods=count_mods+1;
+    end
+    
+    %================================================================
+    % sort models based on total RMSE
+    [~,index]=sort([modsall.RMSE]);
+    modsall_sort=modsall(index); % entry 1 corresponds to minimum overall RMSE
+    
+    % keep only XXX best models
+    modsall_sort=modsall_sort(1:keep_mods);
+    
+    %================================================================
+    % plotting results
+    
+    % single splits
+    colorsedge(1,:)=[0 0 0];
+    colorsfill(1,:)=[66 91 169]./256;
+    
+    % multievent
+    colorsedge(2,:)=[0 0 0];
+    colorsfill(2,:)=[79 197 104]./256;
+    
+    %###########################################
+    
+    % model fit and model distribution
+    SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
+        meas_BAZ_floor_null,meas_phiSC_null,meas_dtSC_null,...
+        modrange_low,modrange_upp,colmod_bf_1,colmod_bf_2max,lw_mod,...
+        colorsfill,colorsedge,ms,ms_null,lw_symb,...
+        lw_symb_null,col_face_null,col_edge_null,fs,...
+        fs_RMSE,modrange_col,modrange_edcol,meas_BAZ_floor4plot,...
+        meas_phiSC4plot,meas_dtSC4plot,staname_split,nameend)
+    
+    % stereoplot displaying the splitting parameter distribution of the
+    % best models (based on lowest RMSE, see above)
+    plotnum = 1; % e.g. 1:5 to plot stereoplot for 5 best models
+    
+    for ii=plotnum
+        SWS_modeling_plot_stereo_synthetic(modsall_sort,ii)
+    end
+    
+    %###########################################
+    
+    %================================================================
+    disp(' ')
+    plotother=input('Model other station of the GR2020 data set?  ([0]=no, [1]=yes):');
+    disp(' ')
+    
+    if plotother == 1
+        modsall_sort = make_modeling(model_out, modrange_low, modrange_upp, SPLITS, NULLS);
+    else
+        return
+    end
+    %================================================================
 
-          end
-          
-    count_mods=count_mods+1;
-end
-
-%================================================================
-% sort models based on total RMSE
-[~,index]=sort([modsall.RMSE]); 
-modsall_sort=modsall(index); % entry 1 corresponds to minimum overall RMSE
-
-% keep only XXX best models
-modsall_sort=modsall_sort(1:keep_mods);
-
-%================================================================
-% plotting results 
-
-% single splits
-colorsedge(1,:)=[0 0 0];
-colorsfill(1,:)=[66 91 169]./256;
-
-% multievent
-colorsedge(2,:)=[0 0 0];
-colorsfill(2,:)=[79 197 104]./256;
-
-%###########################################
-
-% model fit and model distribution
-SWS_modeling_plot_results(BAZ,modsall_sort,plot_mod_max,...
-    meas_BAZ_floor_null,meas_phiSC_null,meas_dtSC_null,...
-    modrange_low,modrange_upp,colmod_bf_1,colmod_bf_2max,lw_mod,...
-    colorsfill,colorsedge,ms,ms_null,lw_symb,...
-    lw_symb_null,col_face_null,col_edge_null,fs,...
-    fs_RMSE,modrange_col,modrange_edcol,meas_BAZ_floor4plot,...
-    meas_phiSC4plot,meas_dtSC4plot,staname_split,nameend)
-
-% stereoplot displaying the splitting parameter distribution of the
-% best models (based on lowest RMSE, see above)
-plotnum = 1; % e.g. 1:5 to plot stereoplot for 5 best models 
-
-for ii=plotnum
-    SWS_modeling_plot_stereo_synthetic(modsall_sort,ii)
-end
-
-%###########################################
-
-%================================================================
-disp(' ')
-plotother=input('Model other station of the GR2020 data set?  ([0]=no, [1]=yes):');
-disp(' ')
-
-if plotother == 1
-    modsall_sort = make_modeling(model_out, modrange_low, modrange_upp, SPLITS, NULLS);
 else
-    return
-end
-%================================================================
+    
+    disp(' ')
+    disp('No splits to fit a model are included for this station!')
+    disp(' ')
+    plotother=input('Model other station of the GR2020 data set?  ([0]=no, [1]=yes):');
+    disp(' ')
 
+    if plotother == 1
+        modsall_sort = make_modeling(model_out, modrange_low, modrange_upp, SPLITS, NULLS);
+    else
+        modsall_sort = [];
+    end
+end
+ 
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

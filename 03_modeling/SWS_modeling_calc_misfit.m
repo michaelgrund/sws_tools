@@ -27,8 +27,8 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 %
 % 2) define input variables
 % 
-%    modelsin = 'sws_modout_domper8s.mat' (be sure to have that file in the
-%                                          current directory!)
+%    modelsin = 'sws_modout_domper8s.mat' % (be sure to have that file in the
+%                                         % current directory!)
 %    modrange_low = 3
 %    modrange_upp = 90
 %    datasplit = 'splitresults_PERM_FIN_KEF.txt'

@@ -47,9 +47,7 @@ Read and visualize the shear-wave splitting data available from: https://doi.org
 
 ## [03_modeling](https://github.com/michaelgrund/sws_tools/tree/master/03_modeling)
 
-Under construction!
-
-Model shear-wave splitting results using synthetic splitting parameters computed for single-layer, two-layer and dipping layer scenarios. Resuls plots are generated as well. 
+Model shear-wave splitting results using synthetic splitting parameters computed for single-layer, two-layer and dipping layer scenarios. Results plots are generated as well. 
 
 MSAT package of **_Walker & Wookey (2012)_** (https://github.com/andreww/MSAT) is required!
 

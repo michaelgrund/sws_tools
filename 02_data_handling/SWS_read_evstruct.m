@@ -86,7 +86,7 @@ if ~isempty(varargin) && strcmp(varargin,'stereo')
     % make new directory to store generated stereoplots of the current
     % session
     cd(currdir)
-    savedir=['PLOTTING_stereoplots_' datestr(now,'dd-mmm-yyyy_HH:MM:SS')];
+    savedir=['PLOTTING_stereoplots_' datestr(now,'dd-mmm-yyyy_HH_MM_SS')];
     mkdir(savedir)
 
     %............................
@@ -103,7 +103,7 @@ if ~isempty(varargin) && strcmp(varargin,'stereoall')
     % make new directory to store generated stereoplots of the current
     % session
     cd(currdir)
-    savedir=['PLOTTING_stereoplots_' datestr(now,'dd-mmm-yyyy_HH:MM:SS')];
+    savedir=['PLOTTING_stereoplots_' datestr(now,'dd-mmm-yyyy_HH_MM_SS')];
     mkdir(savedir)   
 
     disp(' ') 

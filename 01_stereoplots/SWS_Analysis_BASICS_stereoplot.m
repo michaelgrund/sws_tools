@@ -1,7 +1,7 @@
 function SWS_Analysis_BASICS_stereoplot(colmap)
 %===============================================================================
 % Function to directly read single (SplitLab, SL) and multi-event (StackSplit, SS) 
-% resultfiles, prepare stereoplots and save them as publication-ready pdf, png, jpg etc.
+% result files, prepare stereoplots and save them as publication-ready pdf, png, jpg etc.
 % Modified after the original < stereoplot > function of SplitLab.
 %
 % Main author: Michael Grund (michael.grund@kit.edu)
@@ -9,6 +9,7 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 % created: 2018-06-11 -MG-
 %     mod: 2020-01-10 -MG- adjusted some content to work with more recent matlab versions
 %     mod: 2020-06-03 -MG- added query for sector plotting
+%     mod: 2020-07-06 -MG- minor updates
 %===============================================================================
 % How to:
 %
@@ -24,9 +25,10 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 % If bars should be color-coded with respect to the fast axis, insert the
 % colormap of your choice as input, e.g.:
 %    
+%     SWS_Analysis_BASICS_stereoplot('winter')
+%     SWS_Analysis_BASICS_stereoplot('hot')
 %     SWS_Analysis_BASICS_stereoplot('lajolla') 
 %     SWS_Analysis_BASICS_stereoplot('viridis')
-%     SWS_Analysis_BASICS_stereoplot('winter')
 %
 % If no argument is given, the default colormap parula (flipped) is used. 
 %
@@ -70,10 +72,6 @@ marks=20; % size of null circles
 linewcirc=3.5; % linewidth of null circle edges
 colfill=[190,190,190]./256; % colorfill of sector plotting (if applied)
 annotcol='k'; % color of radial annotation
-
-% output settings
-outform='pdf'; % file format: pdf (default), png, jpg...
-outres='600'; % resolution in dpi: 600 (default), 300, 100...
 
 % no phi color-coding
 splitcol=[.3 .3 .3];
@@ -603,7 +601,18 @@ set(f1,'PaperSize',[14 14]); %set paper size
 % set(f1, 'PaperPosition', [figsize(1)-4.1 figsize(2)-7.5  figsize(3) figsize(4)]);
 
 %........................................
-print (['-d' outform], '-painters',['-r' outres], [filename '.' outform]) 
+
+saveas(gcf,[filename '.png'])
+
+% if you want to save the plots in other formats try:
+
+%%%%%%% output settings
+% outform='png'; % file format: png (default), pdf, jpg...
+% outres='600'; % resolution in dpi: 600 (default), 300, 100...
+%%%%%%%
+
+% print (['-d' outform], '-painters',['-r' outres], [filename '.' outform]) 
+% exportgraphics(gcf,[filename '.png'],'Resolution',600) % works in 2020a and newer
 
 %........................................
 % % alternatively on Linux systems print as eps and then convert to pdf

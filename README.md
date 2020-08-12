@@ -7,7 +7,7 @@ MATLAB tools for modeling and plotting of shear-wave splitting data
 
 If you make use of the content in this repository please acknowledge our paper published in GJI and/or my PhD thesis in whose framework several of the scripts and functions were developed:
 
-- **_Grund, M. & Ritter, J.R.R. (2020)_**, Shear-wave splitting beneath Fennoscandia - Evidence for dipping structures and laterally varying multi-layer anisotropy, Geophysical Journal International, XXXX DOI
+- **_Grund, M. & Ritter, J.R.R. (2020)_**, Shear-wave splitting beneath Fennoscandia - Evidence for dipping structures and laterally varying multi-layer anisotropy, Geophysical Journal International, https://doi.org/10.1093/gji/ggaa388
 
 - **_Grund, M. (2019)_**, Exploring geodynamics at different depths with shear wave splitting, Dissertation, Karlsruhe Institute of Technology (KIT), https://doi.org/10.5445/IR/1000091425 
 
@@ -51,9 +51,9 @@ Model shear-wave splitting results using synthetic splitting parameters computed
 
 MSAT package of **_Walker & Wookey (2012)_** (https://github.com/andreww/MSAT) is required!
 
-- reproduce the modeling results presented in our paper **_Grund & Ritter (2020, ADD DOI or link)_** using the shear-wave splitting data available from: https://doi.org/10.5445/IR/1000091427
+- reproduce the modeling results presented in our paper **_Grund & Ritter (2020, https://doi.org/10.1093/gji/ggaa388)_** using the shear-wave splitting data available from: https://doi.org/10.5445/IR/1000091427
 - use your own measurements (**SplitLab**/**Stacksplit** output format, custom formatting is also supported)
 
-Descriptions on how to set up different models and how to handle individual data sets can be found in the _Supporting Information_ of **_Grund & Ritter (2020, ADD DOI or link)_**.
+Descriptions on how to set up different models and how to handle individual data sets can be found in the _Supporting Information_ of **_Grund & Ritter (2020, https://doi.org/10.1093/gji/ggaa388)_**.
 
 ![PLOTS_output](https://user-images.githubusercontent.com/23025878/85557282-ec244080-b627-11ea-8ca5-c2ae25e36176.png)

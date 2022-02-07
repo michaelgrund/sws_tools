@@ -382,10 +382,10 @@ if strcmp(modsall_sort(plotnum).mod_type, 'two_layers')
 
     % index 1 nominates the lower layer,
     % index 2 represents the upper layer
-    phi1=modsall_sort(plotnum).phi(2);
-    phi2=modsall_sort(plotnum).phi(1);
-    dt1=modsall_sort(plotnum).dt(2);
-    dt2=modsall_sort(plotnum).dt(1);
+    phi1=modsall_sort(plotnum).phi(1);
+    phi2=modsall_sort(plotnum).phi(2);
+    dt1=modsall_sort(plotnum).dt(1);
+    dt2=modsall_sort(plotnum).dt(2);
 
     fontsize_leg=8;
     text(-startval-0.015-lengthbar/2,-.2215,...

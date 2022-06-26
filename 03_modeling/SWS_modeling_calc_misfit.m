@@ -17,7 +17,7 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 %
 % all data (datasplit, datanull, datastack) needs to be in standard SplitLab and/or
 % StackSplit output format! If one file is not available, set the
-% corresponding parameter to empty (e.g. datastack =[]).
+% corresponding parameter to empty (e.g. datastack="").
 %
 % .........................................................................
 % .........................................................................

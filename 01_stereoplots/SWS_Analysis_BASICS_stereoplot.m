@@ -47,8 +47,15 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 % 2) MatPlotLib 2.0 Colormaps: Perceptually Uniform and Beautiful 
 %    (see: https://de.mathworks.com/matlabcentral/fileexchange/62729-matplotlib-2-0-colormaps-perceptually-uniform-and-beautiful)
 %
-% 3) Scientific colour-maps by F. Crameri (Zenodo. http://doi.org/10.5281/zenodo.1243862)
-%    (see: http://www.fabiocrameri.ch/colourmaps.php)
+% 3) Scientific colour maps. F. Crameri (2021) Zenodo.
+%    http://doi.org/10.5281/zenodo.1243862
+%    http://www.fabiocrameri.ch/colourmaps.php
+%    - MATLAB: v1.08 https://de.mathworks.com/matlabcentral/fileexchange/68546-crameri-perceptually-uniform-scientific-colormaps
+%    (last access 2022 June 25)
+%    >>> v1.08: bug in > crameri.m < - uncomment line 97
+%    This line standardizes all colormap names to lower-case. As MATLAB is
+%    a case-sensitive programming language colormaps containing upper-case
+%    letters are not found in the provided MATLAB structure anymore. <<<
 %
 % To plot colored backgrounds or limited sectors the function < plot_arc3D > is 
 % attached which is based on < plot_arc > from Matt Fig, see also CHANGEABLE SETTINGS below
@@ -138,12 +145,10 @@ else
     end
     
     % search for input cmap
-    if idx==1 && ~isempty(which([colmap '.mat']))
-            loadmap=load([colmap '.mat']);
-            getfname=fieldnames(loadmap);
-            usecmap=loadmap.(getfname{1});        
-    elseif idx==1 && isempty(which([colmap '.mat']))
-            warning('Scientific colour-maps by F. Crameri not found! Check your MATLAB search path!')
+    if idx==1 && ~isempty(which('CrameriColourMaps7.0.mat'))
+            usecmap=crameri(colmap, 181);
+    elseif idx==1 && isempty(which('CrameriColourMaps7.0.mat'))
+            warning('Scientific colour maps by F. Crameri not found! Check your MATLAB search path!')
             return
     elseif  idx2==1 && ~isempty(which(colmap))
             usecmap=colormap([colmap '(181)']); 

@@ -318,7 +318,7 @@ hold on
 % Nulls
 for KK=1:length(RES_nulls)
     if ~isempty(RES_nulls) && fast_col==0
-        plotm(90-inc_nulls(KK), bazi_nulls(KK) ,'o','color',nullcol, 'MarkerSize',marks,'linewidth',linewcirc);
+        plotm(90-inc_nulls(KK), bazi_nulls(KK) ,'o','color',nullcol, 'MarkerSize',marks,'linewidth',linewcirc,'markerFacecolor','w');
     elseif  ~isempty(RES_nulls) && fast_col==1
         cmap=usecmap;
         colormap(cmap);

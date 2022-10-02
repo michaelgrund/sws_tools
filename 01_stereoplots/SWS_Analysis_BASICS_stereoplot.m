@@ -491,7 +491,9 @@ colormap(usecmap);
 
 else
     set(hndl,'color',splitcol,'linewidth',2.5)
-    set(hndlstack,'color',stackcol,'linewidth',2.5)
+    if exist('RES_STACK','var') && plotmulti==1
+        set(hndlstack,'color',stackcol,'linewidth',2.5)
+    end
 end
 
 else

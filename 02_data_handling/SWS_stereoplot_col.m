@@ -1,15 +1,15 @@
 function SWS_stereoplot_col(fast_col,RES_split,RES_nulls,savedir)
 %
 % This function is a modified version of SplitLabs < stereoplot.m >
-% function (original author: A. Wuestefeld). It allows to plot the 
+% function (original author: A. Wüstefeld). It allows to plot the
 % splitting parameters given via the structs RES_split and RES_nulls in 
-% steroplot view over backazimuth and incidence angle. Additionally, it 
+% stereoplot view over backazimuth and incidence angle. Additionally, it
 % allows to color-code the individual bars with respect to the measured 
 % fast axis using the SC method.
 %
-% The function is primarly modified to read the full data set published by
+% The function is primarily  modified to read the full data set published by
 % Grund & Ritter (2020). Functionality with other data sets is not
-% guranteed. For the required mat-file structure see the data available
+% guaranteed. For the required mat-file structure see the data available
 % from: 
 %
 %  https://publikationen.bibliothek.kit.edu/1000091427
@@ -69,7 +69,7 @@ else
     return
 end
 
-m = round(m/10)*10; %make gridline every 10deg
+m = round(m/10)*10; %make gridline every 10 deg
 lim = [-inf m+5];
 
 axesm ('stereo', 'Frame', 'on', 'Grid', 'on' ,'Origin',[90 0],...

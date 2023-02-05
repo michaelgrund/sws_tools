@@ -15,7 +15,7 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 %
 % after processing the whole data of a station with SL (and SS)
 %
-% 1)  go to your results folder (folder where result lists of SL and SS measurments are saved)
+% 1)  go to your results folder (folder where result lists of SL and SS measurements are saved)
 %     required: splitresults_*.txt, splitresultsNULL_*.txt
 %     optional: *_stackresults.mat
 %

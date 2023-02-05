@@ -75,7 +75,7 @@ split_dtSC_err_max = [1.3, 1.4, 1.3];
 % nulls
 
 % conventions are the same as for the splits above
-% comment the following lines if you dont have nulls
+% comment the following lines if you don't have nulls
 null_phase = {'SKS','PKS'};
 null_baz = [90,120];
 
@@ -91,7 +91,7 @@ null_dtSC_err_max = [3.5,3.8];
 % stacks
 
 % conventions are the same as for the splits above
-% comment the following lines if you dont have stacks
+% comment the following lines if you don't have stacks
 stack_baz = [45,250];
 
 stack_phi_err_min = [0,10];

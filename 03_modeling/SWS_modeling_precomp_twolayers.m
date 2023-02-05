@@ -42,7 +42,7 @@ dt1=stepdt:stepdt:4; % avoid dt=0 s
 phi2=-90:stepphi:90;
 dt2=stepdt:stepdt:4; % avoid dt=0 s
 
-% get all possible combinantions
+% get all possible combinations
 comb_vecs=combvec(phi1,phi2,dt1,dt2);
     
 disp(' ')
@@ -91,7 +91,7 @@ end
 function [phi_eff_out, dt_eff_out]=nest(dfreq, BAZ, modphis, moddts)
 
     parfor (jj=1:length(BAZ), 8) % parallel computing to speed up calculation
-    %for jj=1:length(BAZ) % uncomment, if problems occur with parfoor      
+    %for jj=1:length(BAZ) % uncomment, if problems occur with parfor
         [phi_eff_out(jj), dt_eff_out(jj)] = ...     
          MS_effective_splitting_N(dfreq, BAZ(jj), ...  
          modphis', moddts','mode', 'S&S');

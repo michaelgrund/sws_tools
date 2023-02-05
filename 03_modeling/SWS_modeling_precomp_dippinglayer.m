@@ -12,7 +12,7 @@ downdipdir=0:stepdddir:360;
 dips=stepdips:stepdips:75; % start with stepdips to avoid horizontal layer
 thickness=stepthick:stepthick:500; % start with stepthick to avoid layer of zero thickness
 
-% get all possible combinantions
+% get all possible combinations
 comb_vecs=combvec(downdipdir,dips,thickness);
 
 disp(' ')

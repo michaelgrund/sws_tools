@@ -49,7 +49,7 @@ s1=subplot(2,1,1);
 % plot model range only if not full range is used
 if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=360
     
-    % frist make whole background gray
+    % first make whole background gray
     xdir=[0 0 360 360];
     ydir=[-90 90 90 -90];
     
@@ -64,7 +64,7 @@ if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=36
     hold on
 end
 
-% plot best models #2 -#max
+% plot best models #2 - #max
 for ii=2:plot_mod_max % 570:600
      plot(BAZ,models_sort(ii).phi_eff,'linewidth',lw_mod,...
          'color',colmod_bf_2max) 
@@ -146,7 +146,7 @@ if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=36
     hold on
 end
 
-% plot best models #2 -#max
+% plot best models #2 - #max
 for ii=2:plot_mod_max 
      plot(BAZ,models_sort(ii).dt_eff,'linewidth',lw_mod,'color',colmod_bf_2max) 
      hold on

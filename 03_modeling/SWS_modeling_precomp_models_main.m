@@ -13,7 +13,7 @@ function SWS_modeling_precomp_models_main()
 %
 % LICENSE
 %
-% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
+% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT).
 % ORCID: https://orcid.org/0000-0001-8759-2018
 % GitHub: https://github.com/michaelgrund/sws_tools
 % 

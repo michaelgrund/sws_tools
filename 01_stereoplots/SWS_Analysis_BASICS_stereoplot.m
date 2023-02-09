@@ -4,7 +4,8 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 % result files, prepare stereoplots and save them as publication-ready pdf, png, jpg etc.
 % Modified after the original < stereoplot > function of SplitLab.
 %
-% Main author: Michael Grund (https://orcid.org/0000-0001-8759-2018)
+% Main author: Michael Grund
+% ORCID: https://orcid.org/0000-0001-8759-2018
 % GitHub: https://github.com/michaelgrund/sws_tools
 %
 % created: 2018-06-11 -MG-

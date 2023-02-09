@@ -40,11 +40,11 @@ function modsall_sort = SWS_modeling_calc_misfit_GR(modelsin, modrange_low, modr
 % feel free to modify/adjust the code for your needs
 %
 % bugs etc. can be reported by opening a "New issue" in the GitHub
-% repository
+% repository at https://github.com/michaelgrund/sws_tools
 %
 % LICENSE
 %
-% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
+% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT). 
 % ORCID: https://orcid.org/0000-0001-8759-2018
 % GitHub: https://github.com/michaelgrund/sws_tools
 % 

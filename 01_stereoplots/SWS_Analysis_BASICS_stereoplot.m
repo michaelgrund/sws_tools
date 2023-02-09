@@ -5,6 +5,7 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 % Modified after the original < stereoplot > function of SplitLab.
 %
 % Main author: Michael Grund (https://orcid.org/0000-0001-8759-2018)
+% GitHub: https://github.com/michaelgrund/sws_tools
 %
 % created: 2018-06-11 -MG-
 %     mod: 2020-01-10 -MG- adjusted some content to work with more recent matlab versions

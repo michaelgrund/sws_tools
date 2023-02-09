@@ -8,6 +8,8 @@ function [RES_split, RES_nulls, RES_stack]=SWS_modeling_read_data(dir_res_split,
 %
 %  created:  2016-08-22 -MG-
 %  modified: 2018-03-01 -MG-
+%
+% GitHub: https://github.com/michaelgrund/sws_tools
 %=========================================================================================================== 
 
 if isempty(varargin)

@@ -5,6 +5,7 @@ function SWS_histogram(phisall,dtsall)
 % Grund & Ritter (2019). 
 %
 % 2019-05-02 -MG- (https://orcid.org/0000-0001-8759-2018)
+% GitHub: https://github.com/michaelgrund/sws_tools
 %
 % see also function: SWS_read_evstruct
 %===============================================================================

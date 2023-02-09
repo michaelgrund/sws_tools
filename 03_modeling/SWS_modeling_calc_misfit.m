@@ -48,7 +48,7 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 % feel free to modify/adjust the code for your needs or submit improvements
 %
 % bugs etc. can be reported by opening a "New issue" in the GitHub
-% repository https://github.com/michaelgrund/sws_tools
+% repository at https://github.com/michaelgrund/sws_tools
 %
 % LICENSE
 %

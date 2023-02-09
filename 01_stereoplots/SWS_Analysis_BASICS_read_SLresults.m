@@ -4,7 +4,7 @@ function [RES_split, RES_nulls]=SWS_Analysis_BASICS_read_SLresults(varargin)
 %
 % output: structs for splits and nulls based on the selected quality
 %
-% Main author: Michael Grund (michael.grund@kit.edu)
+% Main author: Michael Grund (https://orcid.org/0000-0001-8759-2018)
 %
 % created: 2016-08-22 -MG-
 %     mod: 2019-06-17 -MG-

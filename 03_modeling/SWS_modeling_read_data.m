@@ -4,7 +4,7 @@ function [RES_split, RES_nulls, RES_stack]=SWS_modeling_read_data(dir_res_split,
 %
 % OUTPUT: structs for splits, nulls (and stacks) based on the selected quality
 %
-% Main author: Michael Grund (michael.grund@kit.edu)
+% Main author: Michael Grund (https://orcid.org/0000-0001-8759-2018)
 %
 %  created:  2016-08-22 -MG-
 %  modified: 2018-03-01 -MG-

@@ -12,7 +12,7 @@ function SWS_modeling_plot_stereo_synthetic(modsall_sort,plotnum)
 % LICENSE
 %
 % Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
-% Email: michael.grund@kit.edu
+% ORCID: https://orcid.org/0000-0001-8759-2018
 % 
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by

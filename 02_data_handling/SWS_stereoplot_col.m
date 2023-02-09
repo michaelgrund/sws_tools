@@ -14,7 +14,7 @@ function SWS_stereoplot_col(fast_col,RES_split,RES_nulls,savedir)
 %
 %  https://publikationen.bibliothek.kit.edu/1000091427
 %
-% 2019-04-10 -MG- (michael.grund@kit.edu)
+% 2019-04-10 -MG- (https://orcid.org/0000-0001-8759-2018)
 %
 % see also function: SWS_read_evstruct
 %===============================================================================

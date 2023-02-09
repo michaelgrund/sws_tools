@@ -28,7 +28,7 @@ function [SPLITS,NULLS]=SWS_read_evstruct(varargin)
 %        overall distribution for fast axis (phi) and delay time (dt),
 %        similar to Fig. 7.6 in the dissertation
 %
-% 2019-04-10 -MG- (michael.grund@kit.edu)
+% 2019-04-10 -MG- (https://orcid.org/0000-0001-8759-2018)
 %
 % see also functions: SWS_stereoplot_col, SWS_histogram
 %===============================================================================

@@ -16,7 +16,7 @@ function [SPLITS,NULLS]=SWS_modeling_read_evstruct(varargin)
 %
 %    [SPLITS,NULLS]=SWS_modeling_read_evstruct 
 %
-% 2020-06-04 -MG- (michael.grund@kit.edu)
+% 2020-06-04 -MG- (https://orcid.org/0000-0001-8759-2018)
 %
 %===============================================================================
 

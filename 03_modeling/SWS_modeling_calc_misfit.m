@@ -144,7 +144,7 @@ dir_res_split=dir(datasplit);
 dir_res_nulls=dir(datanull);
 dir_res_stack=dir(datastack);
 
-% read in SL and SS data results
+% read in SplitLab and StackSplit data results
 % only good & fair, no query from function >>> SWS_modelling_read_data <<< appears
 use_QUAL=2; 
 

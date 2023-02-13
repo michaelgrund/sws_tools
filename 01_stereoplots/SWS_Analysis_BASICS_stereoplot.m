@@ -4,7 +4,9 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 % result files, prepare stereoplots and save them as publication-ready pdf, png, jpg etc.
 % Modified after the original < stereoplot > function of SplitLab.
 %
-% Main author: Michael Grund (michael.grund@kit.edu)
+% Main author: Michael Grund
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 %
 % created: 2018-06-11 -MG-
 %     mod: 2020-01-10 -MG- adjusted some content to work with more recent matlab versions
@@ -13,9 +15,9 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 %===============================================================================
 % How to:
 %
-% after processing the whole data of a station with SL (and SS)
+% after processing the whole data of a station with SL (and StackSplit)
 %
-% 1)  go to your results folder (folder where result lists of SL and SS measurments are saved)
+% 1)  go to your results folder (folder where result lists of SL and StackSplit measurements are saved)
 %     required: splitresults_*.txt, splitresultsNULL_*.txt
 %     optional: *_stackresults.mat
 %

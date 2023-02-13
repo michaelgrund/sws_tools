@@ -48,12 +48,13 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 % feel free to modify/adjust the code for your needs or submit improvements
 %
 % bugs etc. can be reported by opening a "New issue" in the GitHub
-% repository
+% repository at https://github.com/michaelgrund/sws_tools
 %
 % LICENSE
 %
-% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
-% Email: michael.grund@kit.edu
+% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT).
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 % 
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -143,7 +144,7 @@ dir_res_split=dir(datasplit);
 dir_res_nulls=dir(datanull);
 dir_res_stack=dir(datastack);
 
-% read in SL and SS data results
+% read in SplitLab and StackSplit data results
 % only good & fair, no query from function >>> SWS_modelling_read_data <<< appears
 use_QUAL=2; 
 

@@ -4,7 +4,9 @@ function SWS_histogram(phisall,dtsall)
 % axes and delay times included in the full data set published by
 % Grund & Ritter (2019). 
 %
-% 2019-05-02 -MG- (michael.grund@kit.edu)
+% 2019-05-02 -MG- 
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 %
 % see also function: SWS_read_evstruct
 %===============================================================================

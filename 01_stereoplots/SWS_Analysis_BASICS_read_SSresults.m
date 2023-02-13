@@ -2,7 +2,9 @@ function RES_out=SWS_Analysis_BASICS_read_SSresults(dir_res_stack,scaling_factor
 %===============================================================================
 % read StackSplit results (stacked error surfaces)
 %
-% Main author: Michael Grund (michael.grund@kit.edu)
+% Main author: Michael Grund 
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 %
 % created: 2018-08-22 -MG-
 %===============================================================================

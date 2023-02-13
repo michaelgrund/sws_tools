@@ -2,7 +2,7 @@ function [SPLITS,NULLS]=SWS_modeling_read_evstruct(varargin)
 %
 % This function reads structs with data of the full data set published by
 % Grund & Ritter (2020). Functionality with other data sets is not
-% guranteed. For the required mat-file structure see the data available
+% guaranteed. For the required mat-file structure see the data available
 % from KITopenData via: 
 %
 %  https://publikationen.bibliothek.kit.edu/1000091427
@@ -10,13 +10,15 @@ function [SPLITS,NULLS]=SWS_modeling_read_evstruct(varargin)
 % How to use:
 %
 % 1) switch to directory that contains the content of the downloaded
-%    and uzipped splitting data set: <<< mgrund_diss_2019_ELAPP >>>
+%    and unzipped splitting data set: <<< mgrund_diss_2019_ELAPP >>>
 %
 % 2) run this m-file in the command window to generate outputs:
 %
 %    [SPLITS,NULLS]=SWS_modeling_read_evstruct 
 %
-% 2020-06-04 -MG- (michael.grund@kit.edu)
+% 2020-06-04 -MG-
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 %
 %===============================================================================
 

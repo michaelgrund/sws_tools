@@ -12,8 +12,9 @@ function SWS_modeling_prep_custom_data()
 %
 % LICENSE
 %
-% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
-% Email: michael.grund@kit.edu
+% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT).
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 % 
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -75,7 +76,7 @@ split_dtSC_err_max = [1.3, 1.4, 1.3];
 % nulls
 
 % conventions are the same as for the splits above
-% comment the following lines if you dont have nulls
+% comment the following lines if you don't have nulls
 null_phase = {'SKS','PKS'};
 null_baz = [90,120];
 
@@ -91,7 +92,7 @@ null_dtSC_err_max = [3.5,3.8];
 % stacks
 
 % conventions are the same as for the splits above
-% comment the following lines if you dont have stacks
+% comment the following lines if you don't have stacks
 stack_baz = [45,250];
 
 stack_phi_err_min = [0,10];

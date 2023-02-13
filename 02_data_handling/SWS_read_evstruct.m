@@ -2,7 +2,7 @@ function [SPLITS,NULLS]=SWS_read_evstruct(varargin)
 %
 % This function reads structs with data of the full data set published by
 % Grund & Ritter (2020). Functionality with other data sets is not
-% guranteed. For the required mat-file structure see the data available
+% guaranteed. For the required mat-file structure see the data available
 % from KITopenData via: 
 %
 %  https://publikationen.bibliothek.kit.edu/1000091427
@@ -13,7 +13,7 @@ function [SPLITS,NULLS]=SWS_read_evstruct(varargin)
 %    addpath('.../SWStools/02_data_handling') or the Set Path dialog box
 %
 % 2) switch to directory that contains the content of the downloaded
-%    and uzipped splitting data set: <<< mgrund_diss_2019_ELAPP >>>
+%    and unzipped splitting data set: <<< mgrund_diss_2019_ELAPP >>>
 %
 % 3) run this m-file in the command window to generate different outputs
 %    (depending on your choice): 
@@ -21,14 +21,16 @@ function [SPLITS,NULLS]=SWS_read_evstruct(varargin)
 %    (a) [SPLITS,NULLS]=SWS_read_evstruct => gives only the full structs 
 %        (e.g. for further analysis)
 %    (b) SWS_read_evstruct('stereo') => allows to directly generate (single) 
-%        stereoplots for the analyzed stations via futher user input
+%        stereoplots for the analyzed stations via further user input
 %    (c) SWS_read_evstruct('stereoall') => automatically generate
 %        stereoplots for all 266 seismic stations
 %    (d) SWS_read_evstruct('histo') => generates a histogram showing the 
 %        overall distribution for fast axis (phi) and delay time (dt),
 %        similar to Fig. 7.6 in the dissertation
 %
-% 2019-04-10 -MG- (michael.grund@kit.edu)
+% 2019-04-10 -MG-
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 %
 % see also functions: SWS_stereoplot_col, SWS_histogram
 %===============================================================================

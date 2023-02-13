@@ -50,7 +50,7 @@ s1=subplot(2,1,1);
 % plot model range only if not full range is used
 if modrange_low~=0 && modrange_upp~=360 || ...
    modrange_low==0 && modrange_upp~=360 || ...
-   modrange_low~=0 && modrange_upp==360 ||
+   modrange_low~=0 && modrange_upp==360
     
     % first make whole background gray
     xdir=[0 0 360 360];
@@ -136,7 +136,7 @@ s2=subplot(2,1,2);
 % plot model range only if not full range is used
 if modrange_low~=0 && modrange_upp~=360 || ...
    modrange_low==0 && modrange_upp~=360 || ...
-   modrange_low~=0 && modrange_upp==360 ||
+   modrange_low~=0 && modrange_upp==360
     
     xdir=[0 0 360 360];
     ydir=[0 4 4 0];

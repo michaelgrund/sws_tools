@@ -48,7 +48,9 @@ figure()
 s1=subplot(2,1,1);
 
 % plot model range only if not full range is used
-if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=360
+if modrange_low~=0 && modrange_upp~=360 || ...
+   modrange_low==0 && modrange_upp~=360 || ...
+   modrange_low~=0 && modrange_upp==360 ||
     
     % first make whole background gray
     xdir=[0 0 360 360];
@@ -132,7 +134,9 @@ text(0.018,0.165,['\bfRMSE_{tot} = ' num2str(models_sort(1).RMSE,'%4.2f') ', RMS
 s2=subplot(2,1,2);
 
 % plot model range only if not full range is used
-if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=360
+if modrange_low~=0 && modrange_upp~=360 || ...
+   modrange_low==0 && modrange_upp~=360 || ...
+   modrange_low~=0 && modrange_upp==360 ||
     
     xdir=[0 0 360 360];
     ydir=[0 4 4 0];

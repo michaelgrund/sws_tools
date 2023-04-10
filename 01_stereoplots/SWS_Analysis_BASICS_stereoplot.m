@@ -50,12 +50,13 @@ function SWS_Analysis_BASICS_stereoplot(colmap)
 % 3) Scientific colour maps. F. Crameri (2021) Zenodo.
 %    http://doi.org/10.5281/zenodo.1243862
 %    http://www.fabiocrameri.ch/colourmaps.php
-%    - MATLAB: v1.08 https://de.mathworks.com/matlabcentral/fileexchange/68546-crameri-perceptually-uniform-scientific-colormaps
-%    (last access 2022 June 25)
-%    >>> v1.08: bug in > crameri.m < - uncomment line 97
-%    This line standardizes all colormap names to lower-case. As MATLAB is
-%    a case-sensitive programming language colormaps containing upper-case
-%    letters are not found in the provided MATLAB structure anymore. <<<
+%    - MATLAB: https://de.mathworks.com/matlabcentral/fileexchange/68546-crameri-perceptually-uniform-scientific-colormaps
+%      (last access 2023/04/10)
+%      Please note a bug in "crameri.m" of v1.08:
+%      Line 97 standardizes all colormap names to be lower-case. As MATLAB
+%      is a case-sensitive programming language colormaps containing 
+%      upper-case letters are not found in the provided MATLAB structure.
+%      This should be fixed in v1.09.
 %
 % To plot colored backgrounds or limited sectors the function < plot_arc3D > is 
 % attached which is based on < plot_arc > from Matt Fig, see also CHANGEABLE SETTINGS below

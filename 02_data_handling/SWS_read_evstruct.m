@@ -82,7 +82,7 @@ end
 
 
 %==================================================================================
-% STEREOLOTS individual
+% STEREOPLOTS individual
 if ~isempty(varargin) && strcmp(varargin,'stereo')
     
     % make new directory to store generated stereoplots of the current
@@ -99,7 +99,7 @@ end
 %==================================================================================
 
 %==================================================================================
-% STEREOLOTS all
+% STEREOPLOTS all
 if ~isempty(varargin) && strcmp(varargin,'stereoall')
     
     % make new directory to store generated stereoplots of the current

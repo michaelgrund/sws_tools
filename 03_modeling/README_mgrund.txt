@@ -1,43 +1,52 @@
-sws_tools/03_modeling
+# Instructions how to perform a modeling run for a single seismic station
 
-Instructions how to perform a modeling run for a single seismic station
+- Created: M. Grund 2020/06/02
+- Completed: Y. Fröhlich 2023/07/31
+- Details: [Supporting Information](https://academic.oup.com/gji/article/223/3/1525/5893297#supplementary-data) of [Grund & Ritter (2020)](https://doi.org/10.1093/gji/ggaa388)
 
-M. Grund 2020/06/02
-
-offical MATLAB Toolboxes required for running the modeling routines:
+Official MATLAB Toolboxes required for running the modeling routines:
 
 - Deep Learning Toolbox
 - Mapping Toolbox
 
 ======================================================================================
-- MSAT package required! First download from https://www1.gly.bris.ac.uk/MSAT/
 
-1) Install MSAT.
+The _MATLAB Seismic Anisotropy Toolkit_ (MSAT) is required:
+
+1) Download MSAT from https://www1.gly.bris.ac.uk/MSAT/ or https://github.com/andreww/MSAT.
 
 2) Add the whole MSAT package to your MATLAB path.
 
-3) optional: if you want to get familiar with the modeling in MSAT and behaviour 
-   of different settings change to the directory MSAT/examples/splitting_model/ 
-   in which the script split_model.m is located (this script is described 
-   in the paper of Walker and Wookey (2012)). There you can play around
-   with different parameters and see how these affect the splitting parameters.
+3) Optional: If you want to get familiar with the modeling in MSAT and behaviour
+   of different settings change to the directory `MSAT/examples/splitting_model/`
+   in which the script `split_model.m` is located (this script is described in the
+   paper of [Walker and Wookey (2012))](https://doi.org/10.1016/j.cageo.2012.05.031).
+   There you can play around with different parameters and see how these affect the
+   splitting parameters.
 
 ======================================================================================
 
-First we precompute the different models (required disc space for exemplary settings 
-are given below):
+First we pre-compute the different models. Required disc space for exemplary settings:
 
-- two layer models : function XXXX (disc space for phis between -90 to 90 and 5° steps and dts between 0 and 4 s, steps 0.2 s for each layer: XXXX GB)
-- one and dipping layer models: function XXXX (disc space for XXX, XXX and XXXX: XXXX GB)
+- one-layer models: function `SWS_modeling_precomp_single_layer.m`
+  - phi = [-90:5:90] deg and dt = [0.2:0.2:4] s
+  - disc space: 7 MB
+- two-layer models: function `SWS_modeling_precomp_twolayers.m`
+  - phi = [-90:5:90] deg and dt = [0.2:0.2:4] s in each layer
+  - disc space: 5.1 GB
+- dipping layer models: function `SWS_modeling_precomp_dippinglayer.m` and `SWS_modeling_calc_dipping.m`
+  - downdip direction = [0:5:360] deg, dip angle = [5:5:75] deg, layer thickness = [25:25:500] km
+  - disc space: 500 MB
 
-This step is time consuming since all possible variations are computed. 
+&rarr; Total disc space: 5.7 GB
+
+This step is time consuming since all possible variations are computed.
 
 ======================================================================================
 
-Data input is expected in SplitLab and/or StackSplit output format. 
+Data input is expected in _SplitLab_ and _StackSplit_ output formats.
 
-
-Then we merge all these models in a single file (function XXXX) with columns:
+Then we merge all these models in a single MATLAB structure (function `SWS_modeling_precomp_models_main.m`) with columns:
 1) phi_eff: effective phi values over backazimuth
 2) dt_eff: effective dt values over backazimuth
 3) two-layer parameters (if current model is two-layer)
@@ -45,10 +54,10 @@ Then we merge all these models in a single file (function XXXX) with columns:
 
 ======================================================================================
 
-Then the measured data is used to compare it against all pre computed models and
-a RMSE is calculated
+Then the measured data is used to compare it against all pre-computed models and
+a RMSE is calculated.
 
 ======================================================================================
 
-Finally, we take the minimum RMSE or something else metric to get the model which best 
+Finally, we take the minimum RMSE or something else metric to get the model which best
 describes the data.

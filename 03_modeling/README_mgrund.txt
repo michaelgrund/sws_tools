@@ -1,7 +1,7 @@
 # Instructions how to perform a modeling run for a single seismic station
 
 - Created: M. Grund 2020/06/02
-- Completed: Y. Fröhlich 2023/07/31
+- Completed: Y. FrÃ¶hlich 2023/07/31
 - Details: [Supporting Information](https://academic.oup.com/gji/article/223/3/1525/5893297#supplementary-data) of [Grund & Ritter (2020)](https://doi.org/10.1093/gji/ggaa388)
 
 Official MATLAB Toolboxes required for running the modeling routines:

@@ -17,7 +17,7 @@ The _MATLAB Seismic Anisotropy Toolkit_ (MSAT) is required:
 
 2) Add the whole MSAT package to your MATLAB path.
 
-3) Optional: If you want to get familiar with the modeling in MSAT and behaviour
+3) Optional: If you want to get familiar with the modeling in MSAT and behavior
    of different settings change to the directory `MSAT/examples/splitting_model/`
    in which the script `split_model.m` is located (this script is described in the
    paper of [Walker and Wookey (2012))](https://doi.org/10.1016/j.cageo.2012.05.031).

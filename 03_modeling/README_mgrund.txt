@@ -46,11 +46,11 @@ This step is time consuming since all possible variations are computed.
 
 Data input is expected in _SplitLab_ and _StackSplit_ output formats.
 
-Then we merge all these models in a single MATLAB structure (function `SWS_modeling_precomp_models_main.m`) with columns:
-1) phi_eff: effective phi values over backazimuth
-2) dt_eff: effective dt values over backazimuth
-3) two-layer parameters (if current model is two-layer)
-4) dipping layer parameters (if current model is dipping layer)
+Then we merge all these models in a single MATLAB structure (function `SWS_modeling_precomp_models_main.m`) with fields:
+1) `phi_eff`: effective phi values over backazimuth
+2) `dt_eff`: effective dt values over backazimuth
+3) `mod_paras`: model parameters depending on model type
+4) `type`: string corresponding to the model type ('single_layer', 'two_layers', 'dipping')
 
 ======================================================================================
 

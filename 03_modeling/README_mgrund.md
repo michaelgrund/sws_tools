@@ -9,7 +9,7 @@ Official MATLAB Toolboxes required for running the modeling routines:
 - Deep Learning Toolbox
 - Mapping Toolbox
 
-======================================================================================
+--------------------------------------------------------------------------------------
 
 The _MATLAB Seismic Anisotropy Toolkit_ (MSAT) is required:
 
@@ -24,7 +24,7 @@ The _MATLAB Seismic Anisotropy Toolkit_ (MSAT) is required:
    There you can play around with different parameters and see how these affect the
    splitting parameters.
 
-======================================================================================
+--------------------------------------------------------------------------------------
 
 First we pre-compute the different models. Required disc space for exemplary settings:
 
@@ -48,7 +48,7 @@ Then we merge all these models into a single MATLAB structure (function `SWS_mod
 3) `mod_paras`: model parameters depending on model type
 4) `type`: string corresponding to the model type ('single_layer', 'two_layers', 'dipping')
 
-======================================================================================
+--------------------------------------------------------------------------------------
 
 Then the measured data is used to compare it against all pre-computed models and a RMSE
 is calculated. Data input is expected in _SplitLab_ and _StackSplit_ output formats.

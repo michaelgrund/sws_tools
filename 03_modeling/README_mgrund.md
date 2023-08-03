@@ -6,7 +6,7 @@
 
 --------------------------------------------------------------------------------------
 
-Official MATLAB Toolboxes required for running the modeling routines:
+Official MATLAB Toolboxes, which are required for running this modeling routines:
 
 - Deep Learning Toolbox
 - Mapping Toolbox

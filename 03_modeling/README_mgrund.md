@@ -42,7 +42,7 @@ First we pre-compute the different models. Required disc space for exemplary set
 
 This step is time consuming since all possible variations are computed.
 
-Then we merge all these models into a single MATLAB structure (function `SWS_modeling_precomp_models_main.m`) with fields:
+Then we merge all these models in a single MATLAB structure (function `SWS_modeling_precomp_models_main.m`) with fields:
 1) `phi_eff`: effective phi values over backazimuth
 2) `dt_eff`: effective dt values over backazimuth
 3) `mod_paras`: model parameters depending on model type

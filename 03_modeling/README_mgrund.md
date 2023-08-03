@@ -4,14 +4,14 @@
 - Completed: Y. Fröhlich 2023/07/31
 - Details: [Supporting Information](https://academic.oup.com/gji/article/223/3/1525/5893297#supplementary-data) of [Grund & Ritter (2020)](https://doi.org/10.1093/gji/ggaa388)
 
+--------------------------------------------------------------------------------------
+
 Official MATLAB Toolboxes required for running the modeling routines:
 
 - Deep Learning Toolbox
 - Mapping Toolbox
 
---------------------------------------------------------------------------------------
-
-The _MATLAB Seismic Anisotropy Toolkit_ (MSAT) is required:
+Futhermore, the _MATLAB Seismic Anisotropy Toolkit_ (MSAT) is required:
 
 1) Download MSAT from https://www1.gly.bris.ac.uk/MSAT/ or https://github.com/andreww/MSAT.
 

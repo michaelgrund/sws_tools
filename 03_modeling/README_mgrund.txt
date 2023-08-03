@@ -42,11 +42,7 @@ First we pre-compute the different models. Required disc space for exemplary set
 
 This step is time consuming since all possible variations are computed.
 
-======================================================================================
-
-Data input is expected in _SplitLab_ and _StackSplit_ output formats.
-
-Then we merge all these models in a single MATLAB structure (function `SWS_modeling_precomp_models_main.m`) with fields:
+Then all these models are merged into a single MATLAB structure (function `SWS_modeling_precomp_models_main.m`) with fields:
 1) `phi_eff`: effective phi values over backazimuth
 2) `dt_eff`: effective dt values over backazimuth
 3) `mod_paras`: model parameters depending on model type
@@ -54,10 +50,8 @@ Then we merge all these models in a single MATLAB structure (function `SWS_model
 
 ======================================================================================
 
-Then the measured data is used to compare it against all pre-computed models and
-a RMSE is calculated.
-
-======================================================================================
+Then the measured data is used to compare it against all pre-computed models and a RMSE
+is calculated. Data input is expected in _SplitLab_ and _StackSplit_ output formats.
 
 Finally, we take the minimum RMSE or something else metric to get the model which best
 describes the data.

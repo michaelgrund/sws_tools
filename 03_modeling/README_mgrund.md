@@ -35,7 +35,7 @@ First we pre-compute the different models. Required disc space for exemplary set
   - phi = [-90:5:90] deg and dt = [0.2:0.2:4] s in each layer
   - disc space: 5.1 GB
 - dipping layer models: functions `SWS_modeling_precomp_dippinglayer.m` and `SWS_modeling_calc_dipping.m`
-  - downdip direction = [0:5:360] deg, dip angle = [5:5:75] deg, layer thickness = [25:25:500] km
+  - down-dip direction = [0:5:360] deg, dip angle = [5:5:75] deg, layer thickness = [25:25:500] km
   - disc space: 500 MB
 
 &rarr; Total disc space: 5.7 GB

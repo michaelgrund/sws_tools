@@ -32,7 +32,7 @@ function [fast_eff,tlag_eff,azi4plot, fast4plot, tlag4plot]=SWS_modeling_calc_di
       azi = [min_azi:del_azi:max_azi]-downdipdir-180; % 0 is down dip direction (perp. to
                         % strike), note that this is the seismic 
                         % backazimuth + 180 degrees. Wave is assumed to be 
-                        % polarised in this direction.  
+                        % polarized in this direction.
                  
       % since here azi=0° is downdip direction (fast axis points in direction of downdip), 
       % for an estimated ~90° downdip direction one have to add 90 (subtract 270)° 

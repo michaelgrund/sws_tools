@@ -9,8 +9,9 @@ function SWS_modeling_plot_results(BAZ,models_sort,plot_mod_max,...
 %
 % LICENSE
 %
-% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
-% Email: michael.grund@kit.edu
+% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT).
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 % 
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -47,9 +48,11 @@ figure()
 s1=subplot(2,1,1);
 
 % plot model range only if not full range is used
-if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=360
+if (modrange_low~=0 && modrange_upp~=360) || ...
+   (modrange_low==0 && modrange_upp~=360) || ...
+   (modrange_low~=0 && modrange_upp==360)
     
-    % frist make whole background gray
+    % first make whole background gray
     xdir=[0 0 360 360];
     ydir=[-90 90 90 -90];
     
@@ -64,7 +67,7 @@ if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=36
     hold on
 end
 
-% plot best models #2 -#max
+% plot best models #2 - #max
 for ii=2:plot_mod_max % 570:600
      plot(BAZ,models_sort(ii).phi_eff,'linewidth',lw_mod,...
          'color',colmod_bf_2max) 
@@ -118,7 +121,7 @@ set(gca,'TickDir','out');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% plot RMSE vlaue 
+% plot RMSE value
 text(0.018,0.165,['\bfRMSE_{tot} = ' num2str(models_sort(1).RMSE,'%4.2f') ', RMSE_{\phi} = ' num2str(models_sort(1).RMSE_phi,'%4.2f') '\circ, RMSE_{\deltat} = ' num2str(models_sort(1).RMSE_dt,'%4.2f') ' s'], ...    
 'Units', 'normalized', ...   
 'HorizontalAlignment', 'left', ...
@@ -131,7 +134,9 @@ text(0.018,0.165,['\bfRMSE_{tot} = ' num2str(models_sort(1).RMSE,'%4.2f') ', RMS
 s2=subplot(2,1,2);
 
 % plot model range only if not full range is used
-if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=360
+if (modrange_low~=0 && modrange_upp~=360) || ...
+   (modrange_low==0 && modrange_upp~=360) || ...
+   (modrange_low~=0 && modrange_upp==360)
     
     xdir=[0 0 360 360];
     ydir=[0 4 4 0];
@@ -146,7 +151,7 @@ if modrange_low~=0 && modrange_upp~=360 || modrange_low == 0 && modrange_upp~=36
     hold on
 end
 
-% plot best models #2 -#max
+% plot best models #2 - #max
 for ii=2:plot_mod_max 
      plot(BAZ,models_sort(ii).dt_eff,'linewidth',lw_mod,'color',colmod_bf_2max) 
      hold on

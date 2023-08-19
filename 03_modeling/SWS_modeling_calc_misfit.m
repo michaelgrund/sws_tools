@@ -17,7 +17,7 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 %
 % all data (datasplit, datanull, datastack) needs to be in standard SplitLab and/or
 % StackSplit output format! If one file is not available, set the
-% corresponding parameter to empty (e.g. datastack =[]).
+% corresponding parameter to empty (e.g. datastack="").
 %
 % .........................................................................
 % .........................................................................
@@ -27,17 +27,17 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 %
 % 2) define input variables
 % 
-%    modelsin = 'sws_modout_domper8s.mat' % (be sure to have that file in the
+%    modelsin = 'sws_modout_domper8s.mat'; % (be sure to have that file in the
 %                                         % current directory!)
-%    modrange_low = 3
-%    modrange_upp = 90
-%    datasplit = 'splitresults_PERM_FIN_KEF.txt'
-%    datanull = 'splitresultsNULL_PERM_FIN_KEF.txt',
-%    datastack = 'KEF_stackresults.mat'
+%    modrange_low = 3;
+%    modrange_upp = 90;
+%    datasplit = 'splitresults_PERM_FIN_KEF.txt';
+%    datanull = 'splitresultsNULL_PERM_FIN_KEF.txt';
+%    datastack = 'KEF_stackresults.mat';
 %
 % 3) run misfit routine
 %    
-%    modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack)
+%    modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrange_upp, datasplit, datanull, datastack);
 %
 % .........................................................................
 % .........................................................................
@@ -48,12 +48,13 @@ function modsall_sort = SWS_modeling_calc_misfit(modelsin, modrange_low, modrang
 % feel free to modify/adjust the code for your needs or submit improvements
 %
 % bugs etc. can be reported by opening a "New issue" in the GitHub
-% repository
+% repository at https://github.com/michaelgrund/sws_tools
 %
 % LICENSE
 %
-% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT), 
-% Email: michael.grund@kit.edu
+% Copyright (C) 2020  Michael Grund, Karlsruhe Institute of Technology (KIT).
+% ORCID: https://orcid.org/0000-0001-8759-2018
+% GitHub: https://github.com/michaelgrund/sws_tools
 % 
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -143,7 +144,7 @@ dir_res_split=dir(datasplit);
 dir_res_nulls=dir(datanull);
 dir_res_stack=dir(datastack);
 
-% read in SL and SS data results
+% read in SplitLab and StackSplit data results
 % only good & fair, no query from function >>> SWS_modelling_read_data <<< appears
 use_QUAL=2; 
 
